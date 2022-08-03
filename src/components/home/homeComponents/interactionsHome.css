@@ -1,0 +1,34 @@
+.containerButtons{
+    width: 100%;
+    height: 100%;
+    display: grid !important;
+    max-width: none !important;
+    padding: 0 !important;
+    grid-template-columns: 100%;
+    grid-template-rows: 25% 45% 30%;
+    justify-items: center;
+}
+.cardContainerButtons1{
+    width: 80%;
+    height: 100%;
+}
+.cardContentButtons1{
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: 70% 30%;
+}
+.descriptionButton{
+    grid-column: 1/2;
+    grid-row: 1/2;
+}
+.personButton{
+    grid-column: 2/3;
+    grid-row: 1/2;
+}
+.spaceAtenas{
+    grid-column: 1/3;
+    grid-row: 2/3;
+}

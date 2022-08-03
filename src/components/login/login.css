@@ -5,6 +5,9 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    background-image: url(../../landing/images/background_intranet.png);
+    background-size: cover ;
+    background-repeat: no-repeat;
 }
 .email, .password{
     height: auto;
@@ -13,6 +16,28 @@
 .adorment{
     height: 100%;
     width: auto;
+}
+.email div, .password div{
+    width: 100%;
+    height: 100%;
+    background: #e6f4fe;
+}
+.email label{
+    color: #000 !important
+}
+.Form{
+    align-items:center;
+    justify-content:space-evenly;
+    background: #fff;
+    border-radius: 2.2em;
+}
+.logoAtenasLogin{
+    width: auto;
+    height: 20%;
+}
+.button{
+    background: #e6f4fe !important;
+    color: #000 !important;
 }
 
 /* breackpoint movil */
@@ -29,8 +54,6 @@
     .Form{
         width:95%;
         height:80%;
-        align-items:center;
-        justify-content:space-evenly
     }
     .email, .password{
         width: 90%;
@@ -71,8 +94,6 @@
         .Form{
             width:95%;
             height:80%;
-            align-items:center;
-            justify-content:space-evenly
         }
         .email, .password{
             width: 90%;
@@ -94,14 +115,12 @@
     .Form{
         width:70%;
         height:80%;
-        align-items:center;
-        justify-content:space-evenly;
-        background: #fff;
-        border-radius: 2.2em;
     }
     .email, .password{
         width: 70%;
         height: 10%;
+        color: #000 !important;
+
     }
     .email div, .password div{
         width: 100%;
@@ -109,6 +128,7 @@
         background: #e6f4fe;
     }
     .button{
-        width: 50%;
+        width: 35%;
+        background: #e6f4fe
     }
 }

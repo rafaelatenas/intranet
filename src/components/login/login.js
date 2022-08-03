@@ -2,8 +2,10 @@ import React from "react"
 import axios from "axios"
 import { TextField, FormControl, InputLabel, OutlinedInput, IconButton, Button, Container, Box, InputAdornment, FormHelperText } from "@mui/material"
 import { VisibilityOff, Visibility } from "@mui/icons-material"
+import atsLogo from '../../landing/images/Logo_Atenas.png'
 import './login.css'
 import ReCAPTCHA from "react-google-recaptcha"
+import { NavLink } from "react-router-dom"
 
 const recaptchaRef = React.createRef();
 
@@ -122,10 +124,11 @@ class Login extends React.Component{
       <section className="login">
         <Box className="card-login">
           <FormControl className="Form">
+            <img className="logoAtenasLogin" src={atsLogo} alt="Logo de Atenas Grupo Consultor" title=""></img>
             <TextField error={this.state.formErrors.Email === ''? false: true} helperText={this.state.formErrors.Email} className='email' 
               variant="outlined" label="Ateniese" type='text' name='Email' value={this.state.Email} onChange={this.handleUserInput}/>
             <FormControl error={this.state.formErrors.Password === ''? false: true} className='password'>
-              <InputLabel  style={this.state.formErrors.Password === ''? { zIndex:'30', background:'#e6f4fe'}:{ zIndex:'30', background:'#fff'} } htmlFor="outlined-adornment-password">Contraseña</InputLabel>
+              <InputLabel  style={{ zIndex:'30', color:'#000'} } htmlFor="outlined-adornment-password">Contraseña</InputLabel>
               <OutlinedInput id="outlined-adornment-password" type={this.state.showPassword?  'text' : 'password'} name='Password' value={this.state.Password} onChange={this.handleUserInput}
                 endAdornment={
                 <IconButton style={{width:'10%',height:'100%'}} aria-label="toggle password visibility" onClick={this.handleClickShowPassword}  edge="end">
@@ -137,6 +140,7 @@ class Login extends React.Component{
             </FormControl>
               
             <Button className="button" variant="outlined" disabled={!this.state.ValidToken} onClick={this.enviarDatos}>Confirmar</Button>
+            <NavLink to={'home'}><p>¿Olvidó su Clave?</p></NavLink>
           </FormControl>
             <ReCAPTCHA 
               className="recaptcha"
