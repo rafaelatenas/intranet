@@ -65,11 +65,11 @@ class Login extends React.Component{
   enviarDatos=(e)=>{ 
     e.preventDefault();
     const {Email,Password}=this.state;
-    var responseKey = recaptchaRef.current.getValue();
+   // var responseKey = recaptchaRef.current.getValue();
     var datosEnviar={
       email:Email,
       password:Password,
-      captcha:responseKey
+     // captcha:responseKey
     } 
     axios.post(process.env.REACT_APP_API_ENDPOINT+"login",datosEnviar).then(result => {
       var nombre=result.data.NombresUsuarios;
@@ -95,30 +95,30 @@ class Login extends React.Component{
     })
   }
     /* Validación Google */
-  handleChange = value => {
-    if (value !== null) {
-      this.isHuman()
-    }
-  }
-  isHuman=async()=>{
-    var responseKey = {captcha: recaptchaRef.current.getValue()};
-    axios.post(process.env.REACT_APP_API_ENDPOINT+"ValidationCaptcha",responseKey)
-    .then(result => {
-      console.log(result)
-      switch (result.data.success) {
-        case true:
-          this.setState({ValidToken:true})
-          break;
-        case false:
-          this.setState({ValidToken:false})
-          break;
-        default:
-          break;
-      }
-    }).catch(err => {
-      console.log(err)
-    })
-  }
+  // handleChange = value => {
+  //   if (value !== null) {
+  //     this.isHuman()
+  //   }
+  // }
+  // isHuman=async()=>{
+  //   var responseKey = {captcha: recaptchaRef.current.getValue()};
+  //   axios.post(process.env.REACT_APP_API_ENDPOINT+"ValidationCaptcha",responseKey)
+  //   .then(result => {
+  //     console.log(result)
+  //     switch (result.data.success) {
+  //       case true:
+  //         this.setState({ValidToken:true})
+  //         break;
+  //       case false:
+  //         this.setState({ValidToken:false})
+  //         break;
+  //       default:
+  //         break;
+  //     }
+  //   }).catch(err => {
+  //     console.log(err)
+  //   })
+  // }
   render(){
     return(
       <section className="login">
@@ -142,13 +142,13 @@ class Login extends React.Component{
             <Button className="button" variant="outlined" disabled={!this.state.ValidToken} onClick={this.enviarDatos}>Confirmar</Button>
             <NavLink to={'home'}><p>¿Olvidó su Clave?</p></NavLink>
           </FormControl>
-            <ReCAPTCHA 
+            {/* <ReCAPTCHA 
               className="recaptcha"
               onChange={this.handleChange}
               sitekey={process.env.REACT_APP_PUBLIC_KEY}
               badge='bottomleft'
               ref={recaptchaRef}
-            />
+            /> */}
         </Box>
       </section>
     )

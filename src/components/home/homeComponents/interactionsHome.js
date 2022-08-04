@@ -1,7 +1,9 @@
-import { Button, Card, CardContent, Container } from "@mui/material";
+import { Button, Card, CardContent, Container, IconButton } from "@mui/material";
 import React from "react";
 import './interactionsHome.css'
-
+import temporal from '../../../landing/images/imagenTemporal.png'
+import AtenasAcademy from '../../../landing/images/AtenasAcademy.png'
+import { NavLink } from "react-router-dom";
 class ButtonsInteracction extends React.Component{
     render(){
         return(
@@ -12,8 +14,13 @@ class ButtonsInteracction extends React.Component{
                             <p className="nameButton">Nombre y Apellido</p>
                             <p className="chargeButton">Cargo que ocupa</p>
                         </div>
-                        <img src="" alt="" title="" className="personButton"/>
-                        <Button className="spaceAtenas"> <p>Mi espacio <strong>ATENAS</strong></p></Button>
+                        <img src={temporal} alt="Nombre de Usuario" title="" className="personButton"/>
+                        <IconButton className="spaceAtenas">
+                            <NavLink to={'/'} className='link'>
+                                <p style={{color:'#616161'}}>Mi espacio <strong style={{color:'#0c5091'}}>ATENAS</strong></p>
+                            </NavLink>
+                        </IconButton>
+                        {/* <Button className="spaceAtenas"> <p>Mi espacio <strong>ATENAS</strong></p></Button> */}
                     </CardContent>
                 </Card>
                 <Card className="cardContainerButtons2">
@@ -21,9 +28,14 @@ class ButtonsInteracction extends React.Component{
                         <p>hola</p>
                     </CardContent>
                 </Card>
-                <Card className="cardContainerButtons2">
-                    <CardContent className="cardContentButtons2">
-                        <p>hola</p>
+                <Card className="cardContainerButtons3">
+                    <CardContent className="cardContentButtons3">
+                        <p>Descargables</p>
+                        <IconButton className="IconButton3">
+                            <NavLink to={'/home/courses'}>
+                                <img className="imgButton3" src={AtenasAcademy} alt="Logo Atenas Academy" title=""/>
+                            </NavLink>
+                        </IconButton>
                     </CardContent>
                 </Card>
             </Container>
