@@ -1,23 +1,24 @@
+/*General*/
 .containerButtons{
     width: 100%;
     height: 100%;
     display: grid !important;
     max-width: none !important;
     padding: 0 !important;
-    grid-template-columns: 100%;
+    /* grid-template-columns: 100%;
     grid-template-rows: 25% 45% 30%;
-    justify-items: center;
+    justify-items: center; */
 }
 .cardContainerButtons1{
-    width: 80%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: none !important;
+    padding: 5%;
 }
 .cardContentButtons1{
-    width: 80%;
+    width: 100%;
     height: 80%;
     display: grid;
     grid-template-columns: 60% 40%;
@@ -52,10 +53,11 @@
     height: 70%;
     border-radius: 1em !important;
     border: 2px solid #0c5091 !important;
+    padding: 0 !important;
 }
 .link{
-    width: 69%;
-    height: 100%;
+    width: 100%;
+    height: auto;
     text-decoration: none;
 }
 .link p{
@@ -63,13 +65,6 @@
     font-size: 0.65em;
     font-weight: bold;
 }
-/* Container 2 de la Seccion Botones*/
-.cardContainerButtons2{
-    width: 100%;
-    height: 100%;
-    box-shadow: none !important;
-}
-/* Container 3 de la Seccion Botones*/
 .cardContainerButtons3{
     width: 100%;
     height: 100%;
@@ -83,12 +78,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 .cardContentButtons3 p{
     margin: 0;
     width: auto;
-    height: 10%;
-    color:#616161;
+    height: auto;
+    color: #616161;
     font-weight: bold;
 
 }
@@ -103,4 +99,84 @@
 .imgButton3{
     width: 100%;
     height: 100%;
+}
+/*Movil*/
+/*Movil Especial*/
+@media screen and (max-width:320pc) {
+    .link p{
+        font-size: .5em;
+    }
+}
+@media screen and (max-width:500px){
+    .containerButtons{
+        grid-template-columns: 50% 50%;
+        grid-template-rows: 100%;
+    }
+    .cardContainerButtons1{
+        width: 100%;
+        grid-column: 2/3;
+        grid-row: 1/2;
+        max-width: 200px;
+    }
+    .descriptionButton p{
+        font-size: .75em;
+    }
+    .personButton{
+        max-width: 85px;
+        min-width: 77px;
+        max-height: 100px;
+    }
+    .IconButton3 {
+        width: 75%;
+        border-radius: .8em !important;
+        max-width: 150px;
+    }
+    .cardContentButtons3 p{
+        font-size: .7em;
+    }
+}
+/*Tablet*/
+/*Desktop*/
+@media screen and (min-width:501px) and (max-width:950px){
+    .containerButtons{
+        grid-template-columns: 100%;
+        grid-template-rows: 25% 45% 30%;
+    }
+    .cardContainerButtons1{
+        width: 100%;
+        grid-column: 1/2;
+        grid-row: 1/2;
+        min-width: 150px;
+    }
+    .descriptionButton p{
+        font-size: .70em;
+    }
+    .personButton{
+        max-width: 85px;
+        min-width: 77px;
+        max-height: 100px;
+    }
+    .IconButton3 {
+        width: 75%;
+        border-radius: .8em !important;
+        max-width: 150px;
+    }
+}
+
+.containerButtons{
+    width: 100%;
+    height: 100%;
+    display: grid !important;
+    max-width: none !important;
+    padding: 0 !important;
+    /* grid-template-columns: 100%;
+    grid-template-rows: 25% 45% 30%;
+    justify-items: center; */
+}
+
+/* Container 2 de la Seccion Botones*/
+.cardContainerButtons2{
+    width: 100%;
+    height: 100%;
+    box-shadow: none !important;
 }

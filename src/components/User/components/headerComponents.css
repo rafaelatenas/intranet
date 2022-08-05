@@ -13,3 +13,13 @@
     width: auto;
     height: 80%;
 }
+.buttonMenu{
+    width: auto;
+    height: auto;
+    margin-right: 1% !important;
+    background: rgb(255, 255, 255) !important;
+    max-width: 65px;
+    max-height: 65px;
+    min-width: 40px;
+    min-height: 40px;
+}

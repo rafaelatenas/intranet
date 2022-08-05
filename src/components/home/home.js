@@ -8,6 +8,15 @@ import { NavLink } from "react-router-dom";
 import { Logout } from "@mui/icons-material"
 
 class Home extends React.Component{
+
+    constructor(props){
+        super(props);
+        this.state={
+            activo:''
+        }
+    }
+
+
     render(){
         return(
             <Container className="containerHome">
@@ -28,7 +37,8 @@ class Home extends React.Component{
                         <Ateniense/>
                     </Container>
                     <Container className="buttonsContainer">
-                        <ButtonsInteracction/>
+                        <ButtonsInteracction
+                        />
                     </Container>
                 </Box>
             </Container>
