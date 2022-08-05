@@ -12,16 +12,22 @@ class Home extends React.Component{
 
     constructor(props){
         super(props);
+        this.handleActiveClick = this.handleActiveClick.bind(this);
         this.state={
-            activo:''
+            activo:'',
+            
         }
     }
+    handleActiveClick(data) {
+        this.setState({activo:data})
+    }
 
-
-    render(){
+    render(){console.log(this.state.activo)
         return(
             <Container className="containerHome">
-                <HeaderComponent/>
+                <HeaderComponent
+                    data={this.state.activo}
+                />
                 {/* <Box className="boxHeader">
                     <IconButton style={{width:'auto', height:'100%', marginLeft:'1%'}}>
                         <NavLink to={'/home'} style={{width:'auto', height:'100%', display:'flex', alignItems:'center'}}>
@@ -40,6 +46,7 @@ class Home extends React.Component{
                     </Container>
                     <Container className="buttonsContainer">
                         <ButtonsInteracction
+                            evento={this.handleActiveClick}
                         />
                     </Container>
                 </Box>

@@ -6,7 +6,7 @@ import AtenasAcademy from '../../../landing/images/AtenasAcademy.png'
 import { NavLink } from "react-router-dom";
 class ButtonsInteracction extends React.Component{
     constructor(props){
-        console.log(props.props)
+        console.log(props.evento)
         super(props);
         this.state={
             widthScreen: window.innerWidth
@@ -29,7 +29,7 @@ class ButtonsInteracction extends React.Component{
         <Card className="cardContainerButtons3">
             <CardContent className="cardContentButtons3">
                 <p>Descargables</p>
-                <IconButton className="IconButton3">
+                <IconButton className="IconButton3" onClick={this.props.evento(1)}>
                     <NavLink to={'/home/courses'}>
                         <img className="imgButton3" src={AtenasAcademy} alt="Logo Atenas Academy" title=""/>
                     </NavLink>

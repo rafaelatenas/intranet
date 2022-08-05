@@ -8,6 +8,7 @@ import {MenuRounded, AccountCircleRounded, DashboardRounded, FileDownloadDoneRou
 class HeaderComponent extends React.Component{
 
     constructor(props){
+        console.log(props)
         super(props);
         this.state={
             anchorEl:null,
