@@ -8,7 +8,6 @@ import {MenuRounded, AccountCircleRounded, DashboardRounded, FileDownloadDoneRou
 class HeaderComponent extends React.Component{
 
     constructor(props){
-        console.log(props)
         super(props);
         this.state={
             anchorEl:null,
@@ -60,7 +59,7 @@ class HeaderComponent extends React.Component{
                 >
                     <MenuList>
                         {this.opciones.map((opcion)=>(
-                        <NavLink to={opcion.url} style={{textDecoration:'none'}}>
+                        <NavLink to={opcion.url} style={{textDecoration:'none'}} key={opcion.key}>
                             <MenuItem key={opcion.key} onClick={()=>this.handleCloseMenu(opcion.key)} style={this.state.select === opcion.key?{background:'#033d7247',color:'#616161', fontWeight:'bold'}:{background:'',color:'#616161', fontWeight:'bold'}}>
                                 <ListItemIcon>
                                     {opcion.Icon}

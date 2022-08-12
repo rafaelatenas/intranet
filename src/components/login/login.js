@@ -142,13 +142,13 @@ class Login extends React.Component{
             <Button className="button" variant="outlined" disabled={!this.state.ValidToken} onClick={this.enviarDatos}>Confirmar</Button>
             <NavLink to={'home'}><p>¿Olvidó su Clave?</p></NavLink>
           </FormControl>
-            {/* <ReCAPTCHA 
+            <ReCAPTCHA 
               className="recaptcha"
               onChange={this.handleChange}
               sitekey={process.env.REACT_APP_PUBLIC_KEY}
               badge='bottomleft'
               ref={recaptchaRef}
-            /> */}
+            />
         </Box>
       </section>
     )
