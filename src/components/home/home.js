@@ -1,12 +1,9 @@
 import { Box, Container, IconButton } from "@mui/material"
 import React from "react"
 import './home.css'
-import logoAtenas from '../../landing/images/Logo_Atenas_EliseBlanca.png'
 import Ateniense from "./homeComponents/ateniense"
 import ButtonsInteracction from "./homeComponents/interactionsHome"
-import { NavLink } from "react-router-dom";
-import { Logout } from "@mui/icons-material"
-import HeaderComponent from "../User/components/headerComponent"
+import HeaderComponent from "../components/headerComponent"
 
 class Home extends React.Component{
 

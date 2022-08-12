@@ -1,6 +1,6 @@
 import { Box, IconButton, ListItemIcon, Menu, MenuItem, MenuList } from "@mui/material";
 import React from "react";
-import logoAtenas from '../../../landing/images/Logo_Atenas_EliseBlanca.png'
+import logoAtenas from '../../landing/images/Logo_Atenas_EliseBlanca.png'
 import { NavLink } from "react-router-dom";
 import './headerComponents.css'
 import {MenuRounded, AccountCircleRounded, DashboardRounded, FileDownloadDoneRounded, Logout} from '@mui/icons-material';

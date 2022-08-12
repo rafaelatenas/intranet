@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, Container, IconButton, Modal, Typography } from "@mui/material";
 import React from "react";
-import HeaderComponent from "./components/headerComponent";
+import HeaderComponent from '../components/headerComponent'
 import footerAtenas from '../../landing/images/footerAtenas.png'
 import './contentUser.css'
 import videos from '../../landing/images/video.png'
