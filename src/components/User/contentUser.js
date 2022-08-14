@@ -23,7 +23,7 @@ class ContentUsers extends React.Component{
         {name:'Cursos', key:3, imagen:cursos}
     ]
     contenido = [
-        {key:1, name:'Imagine dragons-Enemy', imagen:'8DEEOdz1v0c'},
+        {key:1, name:'Imagine dragons-Enemy', imagen:'9YffrCViTVk'},
         {key:2, name:'Bea Miler-Play ground', imagen:'cLJa3JgyWzI'},
         {key:3, name:'Curtis Harding ft.Jazmine Sullivan-Our love', imagen:'cLJa3JgyWzI'},
         {key:4, name:'Bones UK-Dirty little animals', imagen:'wi59j7swVmY'},
@@ -49,7 +49,8 @@ class ContentUsers extends React.Component{
             {this.contenido.map((content)=>(
                 <Card key={content.key} className="CardContent">
                     <CardContent className="CardItem">
-                        <iframe width="50%" height="50%" src={`https://www.youtube.com/embed/${content.imagen}`} title="running away | dreamcore playlist •°" frameborder="0" allow="accelerometer; autoplay:1; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                        <img src={`https://img.youtube.com/vi/${content.imagen}/1.jpg`}/>
+                        {/* <iframe width="50%" height="50%" src={`https://www.youtube.com/embed/${content.imagen}`} title="running away | dreamcore playlist •°" frameborder="0" allow="accelerometer; autoplay:1; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe> */}
                         <p>{content.name}</p>
                     </CardContent>
                 </Card>   
