@@ -162,7 +162,7 @@ export default function Login (){
                 )
             }}
             />
-            <Button className="button" variant="outlined" href='/keen-treacle-2297b4.netlify.app/home'>Confirmar</Button>
+            <Button className="button" variant="outlined" href='/home'>Confirmar</Button>
             <Button onClick={()=>openModalPassword()}>¿Olvido su Clave?</Button>
           </FormControl>
           <Modal
