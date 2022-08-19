@@ -7,7 +7,8 @@ export const AuthContext = createContext({
 });
 
 export function AuthContextProvider({children}){
-    const [isAuthenticated, setAuthenticated] = useState(sessionStorage.getItem('success'));
+    const [isAuthenticated, setAuthenticated] = useState(false)
+    // useState(sessionStorage.getItem('success'));
     const IdUser = 2;
     console.log(isAuthenticated)
     const login = useCallback(function () {

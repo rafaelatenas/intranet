@@ -5,7 +5,7 @@ export default function Private(){
     const {isAuthenticated,IdUser} = useAuthContext();
     console.log(isAuthenticated,IdUser)
     if(!isAuthenticated){
-       return <Navigate to='/retailservices/'/>
+       return <Navigate to='/'/>
     }
     return (<Outlet/>)
 }

@@ -17,12 +17,19 @@
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 10% 90%;
-    align-items: center;
-    justify-items: center;
+    align-items: end;
+    justify-items: start;
 }
 .spaceProfile{
     grid-column: 1/2;
     grid-row: 1/2;
+    border: solid 1px #000;
+    border-radius: 1em;
+    height: 60%;
+    width: 15%;
+    padding: .5% 1%;
+    text-align: center;
+    margin: 0% !important;
 }
 .containerContentProfile{
     width: 100%;
