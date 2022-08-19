@@ -1,0 +1,44 @@
+.containerProfile{
+    width: 100%;
+    height: 100%;
+    max-width: none !important;
+    padding: 0% !important;
+    margin: 0% !important;
+    display: grid !important;
+    grid-template-columns: 100%;
+    grid-template-rows: 15% 85%;
+    align-items: center;
+    justify-items: center;
+}
+.boxPofile{
+    width: 100%;
+    height: 100%;
+    grid-row: 2/3;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 10% 90%;
+    align-items: center;
+    justify-items: center;
+}
+.spaceProfile{
+    grid-column: 1/2;
+    grid-row: 1/2;
+}
+.containerContentProfile{
+    width: 100%;
+    height: 100%;
+    grid-column: 1/2;
+    grid-row: 2/3;
+    max-width: none !important;
+    padding: 0% !important;
+    margin: 0% !important;
+    display: grid !important;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 100%;
+}
+.photoProfile{
+    grid-column: 2/3;
+    width: 100%;
+    height: 100%;
+    padding: 0% 2%;
+}

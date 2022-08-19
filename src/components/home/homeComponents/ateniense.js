@@ -1,10 +1,10 @@
+import { Box } from "@mui/material";
 import React from "react";
 
-class Ateniense extends React.Component{
-    render(){
-        return(
-            <p>hola</p>
-        )
-    }
+export default function Ateniense() {
+    return(
+        <Box>
+            
+        </Box>
+    )
 }
-export default Ateniense;

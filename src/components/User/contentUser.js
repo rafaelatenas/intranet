@@ -49,8 +49,12 @@ class ContentUsers extends React.Component{
             {this.contenido.map((content)=>(
                 <Card key={content.key} className="CardContent">
                     <CardContent className="CardItem">
-                        <iframe width="50%" height="50%" src={`https://www.youtube.com/embed/${content.imagen}`} title="running away | dreamcore playlist •°" frameborder="0" allow="accelerometer; autoplay:1; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-                        <p>{content.name}</p>
+                        <IconButton onClick={()=>console.log(content.name)}>
+                            <img src={`http://img.youtube.com/vi/${content.imagen}/0.jpg`}/>
+                        {/* <iframe width="50%" height="50%" src={`https://www.youtube.com/embed/${content.imagen}`} title="running away | dreamcore playlist •°" frameborder="0" allow="accelerometer; autoplay:1; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe> */}
+                            <p>{content.name}</p>
+                        </IconButton>
+                        
                     </CardContent>
                 </Card>   
             ))}

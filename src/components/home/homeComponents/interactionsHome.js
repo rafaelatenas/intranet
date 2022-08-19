@@ -48,7 +48,7 @@ class ButtonsInteracction extends React.Component{
                         </div>
                         <img src={temporal} alt="Nombre de Usuario" title="" className="personButton"/>
                         <IconButton className="spaceAtenas">
-                            <NavLink to={'/'} className='link'>
+                            <NavLink to={'/home/profile'} className='link'>
                                 <p style={{color:'#616161'}}>Mi espacio <strong style={{color:'#0c5091'}}>ATENAS</strong></p>
                             </NavLink>
                         </IconButton>
