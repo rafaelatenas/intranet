@@ -10,7 +10,7 @@ class ManagementPanel extends React.Component{
 
     render(){
         return(
-<h2>hola</h2>
+            <h2>hola</h2>
         )
     }
 
