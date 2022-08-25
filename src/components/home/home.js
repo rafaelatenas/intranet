@@ -25,18 +25,7 @@ class Home extends React.Component{
                 <HeaderComponent
                     data={this.state.activo}
                 />
-                {/* <Box className="boxHeader">
-                    <IconButton style={{width:'auto', height:'100%', marginLeft:'1%'}}>
-                        <NavLink to={'/home'} style={{width:'auto', height:'100%', display:'flex', alignItems:'center'}}>
-                            <img className="logoHeader" src={logoAtenas} alt="Logo Atenas Grupo Consultor. Elise Blanca" title=""></img>   
-                        </NavLink>
-                    </IconButton>
-                    <IconButton style={{width:'auto', height: 'auto', marginRight:'1%'}}>
-                        <NavLink to={'/'} className='logOut'>
-                            <Logout/>
-                        </NavLink>
-                    </IconButton>
-                </Box> */}
+
                 <Box className="boxContainer">
                     <Container className="atenienseContainer">
                         <Ateniense/>
