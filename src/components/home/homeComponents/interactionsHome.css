@@ -1,13 +1,12 @@
-/*General*/
+/*Movil*/
 .containerButtons{
-    width: 100%;
     height: 100%;
-    display: grid !important;
+    display: flex !important;
     max-width: none !important;
     padding: 0 !important;
-    /* grid-template-columns: 100%;
-    grid-template-rows: 25% 45% 30%;
-    justify-items: center; */
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
 }
 .cardContainerButtons1{
     height: 100%;
@@ -16,6 +15,9 @@
     justify-content: center;
     box-shadow: none !important;
     padding: 5%;
+    max-width: 300px;
+    max-height: 300px;
+    /* border-radius: 1.2em !important; */
 }
 .cardContentButtons1{
     width: 100%;
@@ -29,10 +31,10 @@
 .descriptionButton{
     grid-column: 1/2;
     grid-row: 1/2;
-    height: 100%;
+    height: 40%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 .descriptionButton p{
     margin: 0;
@@ -70,6 +72,7 @@
     height: 100%;
     box-shadow: none !important;
     border-radius: 0 !important;
+    max-height: 280px;
 }
 .cardContentButtons3{
     padding: 0 !important;
@@ -100,8 +103,7 @@
     width: 100%;
     height: 100%;
 }
-/*Movil*/
-/*Movil Especial*/
+/*
 @media screen and (max-width:320pc) {
     .link p{
         font-size: .5em;
@@ -134,10 +136,10 @@
     .cardContentButtons3 p{
         font-size: .7em;
     }
-}
+} */
 /*Tablet*/
 /*Desktop*/
-@media screen and (min-width:501px) and (max-width:950px){
+/* @media screen and (min-width:501px) and (max-width:950px){
     .containerButtons{
         grid-template-columns: 100%;
         grid-template-rows: 25% 45% 30%;
@@ -161,9 +163,9 @@
         border-radius: .8em !important;
         max-width: 150px;
     }
-}
+} */
 
-.containerButtons{
+/* .containerButtons{
     width: 100%;
     height: 100%;
     display: grid !important;
@@ -171,12 +173,12 @@
     padding: 0 !important;
     /* grid-template-columns: 100%;
     grid-template-rows: 25% 45% 30%;
-    justify-items: center; */
-}
+    justify-items: center; 
+} */
 
 /* Container 2 de la Seccion Botones*/
-.cardContainerButtons2{
+/* .cardContainerButtons2{
     width: 100%;
     height: 100%;
     box-shadow: none !important;
-}
+} */

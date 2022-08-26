@@ -1,32 +1,30 @@
 .boxateniense{
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-columns: 95% 5%;
-    grid-template-rows: 100%;
+    display: flex;
     align-items: center;
     justify-items: center;
     background: #fff;
+    justify-content: center;
 }
 .headerAteniense{
-    width: 100%;
+    width: 90%;
     height: 25%;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     flex-direction: column;
+    background: #fff;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
 }
 .logoateninese{
     width: auto;
     height: 50%;
 }
 .containerBody{
-    width: 90%;
+    width: 100%;
     height: 100%;
-    /* grid-column: 1/3; */
-    /* grid-row: 1/3; */
-    /* background: #fff; */
-    /* overflow-y: scroll; */
     display: inline-flex;
     flex-direction: column;
     align-items: center;
@@ -35,13 +33,11 @@
 }
 .containerBody1{
     width: 90%;
-    margin-top: 5%;
     height: 100%;
     grid-column: 1/3;
     grid-row: 1/3;
     background: #fff;
     overflow-y: scroll;
-    border-radius: 2em;
 }
 .adminAteniense{
     grid-column: 2/3;

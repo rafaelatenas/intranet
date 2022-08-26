@@ -1,5 +1,5 @@
 import { Box, Card, CardContent, Container, IconButton, Modal, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import HeaderComponent from '../components/headerComponent'
 import footerAtenas from '../../landing/images/footerAtenas.png'
 import './contentUser.css'
@@ -7,22 +7,19 @@ import videos from '../../landing/images/video.png'
 import documentos from '../../landing/images/book.png'
 import cursos from '../../landing/images/cursos.png'
 import {CloseRounded} from "@mui/icons-material";
+import { makeStyles } from "@mui/styles";
 
-class ContentUsers extends React.Component{
-
-    constructor(props){
-        super(props);
-        this.state={
-            openModalContent:false,
-            screenWidht: window.innerWidth,
-        }
-    }
-    recursos = [
+function ContentUsers(){
+    const card = document.querySelectorAll('.cardSource1')
+    const styles = useStyles;
+    const [openModalContent, setOpenModalContent] = useState(false);
+    const screenWidht = window.innerWidth;
+    const recursos = [
         {name:'Documentos', key:1, imagen:documentos},
         {name:'Videos', key:2, imagen:videos},
         {name:'Cursos', key:3, imagen:cursos}
     ]
-    contenido = [
+    const contenido = [
         {key:1, name:'Imagine dragons-Enemy', imagen:'8DEEOdz1v0c'},
         {key:2, name:'Bea Miler-Play ground', imagen:'cLJa3JgyWzI'},
         {key:3, name:'Curtis Harding ft.Jazmine Sullivan-Our love', imagen:'cLJa3JgyWzI'},
@@ -33,21 +30,36 @@ class ContentUsers extends React.Component{
         {key:8, name:'Miyavi&PVRIS-Snakes', imagen:'wi59j7swVmY'},
         {key:9, name:'Ramsey-Good bye', imagen:'wi59j7swVmY'}
     ]
-    handleElements = (e)=>{
+    const handleElements = (e)=>{
         console.log(e)
     }
-    handleOpenElement = (e)=>{
-        this.setState({openModalContent:true})
-        this.handleElements(e)
+    const handleOpenElement = (e)=>{
+        setOpenModalContent(true)
+        handleElements(e)
     }
-    handleCloseElement = (e)=>{
-        this.setState({openModalContent:false})
+    const handleCloseElement = (e)=>{
+        setOpenModalContent(false)
     }
-    BoxElements = 
-    <Container onClick={this.handleCloseElement} className="ContainerElements">
+    const updateGallery =()=>{
+        [...card].forEach(el => {
+            console.log(el)
+            el.classList.remove('gallery-item-1');
+            el.classList.remove('gallery-item-2');
+            el.classList.remove('gallery-item-3');
+        })
+    }
+    const slide =(e)=>{
+        console.log(e)
+        if (e.type ==="touchstart") {
+            [...card].unshift([...card].pop())
+        }
+        updateGallery()
+    }
+    const BoxElements = 
+    <Container onClick={handleCloseElement} className="ContainerElements">
         <Box className="BoxElements">
-            {this.contenido.map((content)=>(
-                <Card key={content.key} className="CardContent">
+            {contenido.map((content)=>(
+                <Card key={content.key} id={`card${content.key}`} className="CardContent">
                     <CardContent className="CardItem">
                         <IconButton onClick={()=>console.log(content.name)}>
                             <img src={`http://img.youtube.com/vi/${content.imagen}/0.jpg`}/>
@@ -60,29 +72,34 @@ class ContentUsers extends React.Component{
             ))}
         </Box>
     </Container>;
-    render(){
-        return(
-            <Container className="ContainerContentUser">
-                <HeaderComponent/>
-                <Container className="containerSources">
-                    <p className="TitleofContainer">Descargables</p>
-                    <Box className="boxSources">
-                        {this.recursos.map((recurso)=>(
-                            <Card className="cardSource1" key={recurso.key}>
-                                <CardContent className="contentSource1">
-                                    <IconButton className="buttonContent" onClick={()=>this.handleOpenElement(recurso.key)}>
-                                        <p>{recurso.name}</p>
-                                        <img src={recurso.imagen} alt={`Logo Atenas de ${recurso.name}`} title=""/>
-                                    </IconButton>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </Box>
-                    <img className="imageFooter" src={footerAtenas} alt="" title=""/>
-                    {this.state.openModalContent?this.BoxElements:''}
-                </Container>
+
+    return(
+        <Container className="ContainerContentUser">
+            <HeaderComponent/>
+            <Container className="containerSources">
+                <p className="TitleofContainer">Descargables</p>
+                <Box className="boxSources" >
+                    {recursos.map((recurso)=>(
+                        <Card className={`cardSource1`} key={recurso.key} onTouchStart={(e)=>slide(e)}>
+                            <CardContent className="contentSource1">
+                                <IconButton className="buttonContent" onClick={()=>handleOpenElement(recurso.key)}>
+                                    <p>{recurso.name}</p>
+                                    <img src={recurso.imagen} alt={`Logo Atenas de ${recurso.name}`} title=""/>
+                                </IconButton>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </Box>
+                <img className="imageFooter" src={footerAtenas} alt="" title=""/>
+                {openModalContent?BoxElements:''}
             </Container>
-        )
-    }
+        </Container>
+    )
 }
 export default ContentUsers;
+
+const useStyles = makeStyles({
+    slides: {
+        
+    }
+})
