@@ -2,22 +2,23 @@ import { Box, Card, CardContent, Container, IconButton, Modal, Typography } from
 import React, { useState } from "react";
 import HeaderComponent from '../components/headerComponent'
 import footerAtenas from '../../landing/images/footerAtenas.png'
-import './contentUser.css'
+import './downloadable.css'
 import videos from '../../landing/images/video.png'
 import documentos from '../../landing/images/book.png'
 import cursos from '../../landing/images/cursos.png'
-import {CloseRounded} from "@mui/icons-material";
-import { makeStyles } from "@mui/styles";
+import SwipeableViews from "react-swipeable-views";
+import { useTheme } from "styled-components";
+import { autoPlay } from 'react-swipeable-views-utils';
 
-function ContentUsers(){
+function Documents(){
+
     const card = document.querySelectorAll('.cardSource1')
-    const styles = useStyles;
     const [openModalContent, setOpenModalContent] = useState(false);
     const screenWidht = window.innerWidth;
     const recursos = [
-        {name:'Documentos', key:1, imagen:documentos},
-        {name:'Videos', key:2, imagen:videos},
-        {name:'Cursos', key:3, imagen:cursos}
+        {name:'Documentos', key:1, url:'documents', imagen:documentos},
+        {name:'Videos', key:2, url:'videos', imagen:videos},
+        {name:'Cursos', key:3, url:'courses', imagen:cursos}
     ]
     const contenido = [
         {key:1, name:'Imagine dragons-Enemy', imagen:'8DEEOdz1v0c'},
@@ -40,7 +41,9 @@ function ContentUsers(){
     const handleCloseElement = (e)=>{
         setOpenModalContent(false)
     }
-    
+
+
+
     const BoxElements = 
     <Container onClick={handleCloseElement} className="ContainerElements">
         <Box className="BoxElements">
@@ -59,33 +62,50 @@ function ContentUsers(){
         </Box>
     </Container>;
 
+
+    const [activeStep, setActiveStep] = React.useState(0);
+    const handleStepChange = (step) => {
+    setActiveStep(step);
+    };
+    const SwipeableViewsMobile = 
+        <SwipeableViews
+            index={activeStep+1} onChangeIndex={handleStepChange}
+            enableMouseEvents className="carousel"
+        >
+            {recursos.map((recurso)=>(
+                <Card key={recurso.key} className='cardSource1'>
+                    <CardContent className="contentSource1">
+                        <IconButton className="buttonContent" onClick={()=>handleOpenElement(recurso.key)}>
+                            <p>{recurso.name}</p>
+                            <img src={recurso.imagen} alt={`Logo Atenas de ${recurso.name}`} title=""/>
+                        </IconButton>
+                    </CardContent>
+                </Card>
+            ))}
+        </SwipeableViews>
+    const CardsViewsDesktop = 
+        <Box className="boxSources">
+            {recursos.map((recurso)=>(
+                <Card key={recurso.key} className='cardSource1'>
+                    <CardContent className="contentSource1">
+                        <IconButton className="buttonContent" href={`/home/resources/${recurso.url}`}>
+                            <p>{recurso.name}</p>
+                            <img src={recurso.imagen} alt={`Logo Atenas de ${recurso.name}`} title=""/>
+                        </IconButton>
+                    </CardContent>
+                </Card>
+            ))}
+        </Box>
     return(
         <Container className="ContainerContentUser">
             <HeaderComponent/>
             <Container className="containerSources">
                 <p className="TitleofContainer">Descargables</p>
-                <Box className="boxSources" >
-                    {recursos.map((recurso)=>(
-                        <Card className={`cardSource1`} key={recurso.key}>
-                            <CardContent className="contentSource1">
-                                <IconButton className="buttonContent" onClick={()=>handleOpenElement(recurso.key)}>
-                                    <p>{recurso.name}</p>
-                                    <img src={recurso.imagen} alt={`Logo Atenas de ${recurso.name}`} title=""/>
-                                </IconButton>
-                            </CardContent>
-                        </Card>
-                    ))}
-                </Box>
-                <img className="imageFooter" src={footerAtenas} alt="" title=""/>
+                {screenWidht>700?CardsViewsDesktop:SwipeableViewsMobile}
+                <img className="imageFooter" src={footerAtenas} alt="Pie de Pagina Atenas" title=""/>
                 {openModalContent?BoxElements:''}
             </Container>
         </Container>
     )
 }
-export default ContentUsers;
-
-const useStyles = makeStyles({
-    slides: {
-        
-    }
-})
+export default Downloadable;

@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from './components/login/login';
 import Home from './components/home/home';
 import ManagementPanel from './components/management-panel/managementPanel';
-import ContentUsers from './components/User/contentUser';
+import Downloadable from './components/User/downloadable';
 import { AuthContextProvider } from './context/authContext';
 import Public from './context/public';
 import Private from './context/public';
@@ -25,7 +25,7 @@ function App() {
           <Route path="/home" element={<Private/>}>
             <Route index element={<Home/>}/>
               <Route exact path="/home/profile" element={<Profile/>}/>
-              <Route exact path="/home/courses" element={<ContentUsers/>}/>
+              <Route exact path="/home/resources" element={<Downloadable/>}/>
               <Route exact path="/home/management/" element={<ManagementPanel/>}/>
           </Route>
         </Routes>
