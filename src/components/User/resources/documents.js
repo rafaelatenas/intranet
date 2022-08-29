@@ -1,11 +1,11 @@
 import { Box, Card, CardContent, Container, IconButton, Modal, Typography } from "@mui/material";
 import React, { useState } from "react";
-import HeaderComponent from '../components/headerComponent'
-import footerAtenas from '../../landing/images/footerAtenas.png'
-import './downloadable.css'
-import videos from '../../landing/images/video.png'
-import documentos from '../../landing/images/book.png'
-import cursos from '../../landing/images/cursos.png'
+import HeaderComponent from '../../components/headerComponent'
+import footerAtenas from '../../../landing/images/footerAtenas.png'
+import './documents.css'
+import videos from '../../../landing/images/video.png'
+import documentos from '../../../landing/images/book.png'
+import cursos from '../../../landing/images/cursos.png'
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "styled-components";
 import { autoPlay } from 'react-swipeable-views-utils';
@@ -108,4 +108,4 @@ function Documents(){
         </Container>
     )
 }
-export default Downloadable;
+export default Documents;

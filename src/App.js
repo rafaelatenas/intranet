@@ -10,6 +10,7 @@ import Public from './context/public';
 import Private from './context/public';
 import Profile from './components/User/userProfile';
 import NotFound from './components/notFound';
+import Documents from './components/User/resources/documents';
 function App() {
   return (
     <AuthContextProvider>
@@ -25,7 +26,9 @@ function App() {
           <Route path="/home" element={<Private/>}>
             <Route index element={<Home/>}/>
               <Route exact path="/home/profile" element={<Profile/>}/>
-              <Route exact path="/home/resources" element={<Downloadable/>}/>
+              <Route exact path="/home/resources" element={<Downloadable/>}>
+                <Route exact path="/home/resources" element={<Documents/>}/>
+              </Route>
               <Route exact path="/home/management/" element={<ManagementPanel/>}/>
           </Route>
         </Routes>

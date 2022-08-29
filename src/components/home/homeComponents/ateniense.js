@@ -25,11 +25,11 @@ export default function Ateniense() {
         <Box className="boxateniense">
             {/* { visible?BotonAteninese:''} */}
             <Box className="containerBody">
-                <div className="headerAteniense">
+                
+                <Box className="containerBody1"><div className="headerAteniense">
                     <img className="logoateninese" src={logoAteniense} alt="Logo Ateniense" title=""/>
                     <h3 style={{margin:0, opacity:.6}}>Julio 2022</h3>
                 </div>
-                <Box className="containerBody1">
                     <img style={{width:'100%', height:'auto'}} src={xxl} alt="Logo Ateniense" title=""/>
                     <img style={{width:'100%', height:'auto'}} src={xl} alt="Logo Ateniense" title=""/>
                     <img style={{width:'100%', height:'auto'}} src={l} alt="Logo Ateniense" title=""/>
