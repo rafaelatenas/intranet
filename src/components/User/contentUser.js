@@ -40,21 +40,7 @@ function ContentUsers(){
     const handleCloseElement = (e)=>{
         setOpenModalContent(false)
     }
-    const updateGallery =()=>{
-        [...card].forEach(el => {
-            console.log(el)
-            el.classList.remove('gallery-item-1');
-            el.classList.remove('gallery-item-2');
-            el.classList.remove('gallery-item-3');
-        })
-    }
-    const slide =(e)=>{
-        console.log(e)
-        if (e.type ==="touchstart") {
-            [...card].unshift([...card].pop())
-        }
-        updateGallery()
-    }
+    
     const BoxElements = 
     <Container onClick={handleCloseElement} className="ContainerElements">
         <Box className="BoxElements">
@@ -80,7 +66,7 @@ function ContentUsers(){
                 <p className="TitleofContainer">Descargables</p>
                 <Box className="boxSources" >
                     {recursos.map((recurso)=>(
-                        <Card className={`cardSource1`} key={recurso.key} onTouchStart={(e)=>slide(e)}>
+                        <Card className={`cardSource1`} key={recurso.key}>
                             <CardContent className="contentSource1">
                                 <IconButton className="buttonContent" onClick={()=>handleOpenElement(recurso.key)}>
                                     <p>{recurso.name}</p>

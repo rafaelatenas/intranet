@@ -31,6 +31,7 @@ function App() {
         </Routes>
     </BrowserRouter>
     </AuthContextProvider>
+    
     // <BrowserRouter>
     //   <Routes>
     //     <Route exact path="/" element={<Login/>}/>
