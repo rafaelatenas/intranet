@@ -157,13 +157,13 @@ export default function Login (){
             InputProps={{
               endAdornment:(
                 <IconButton style={{width:'10%',height:'100%'}} aria-label="toggle password visibility" onClick={handleClickShowPassword}  edge="end">
-                  {showPassword ? <VisibilityOff/> : <Visibility/>}
+                  {showPassword ? <VisibilityOff className="icon"/> : <Visibility className="icon"/>}
                 </IconButton>
                 )
             }}
             />
             <Button className="button" variant="outlined" href='/home'>Confirmar</Button>
-            <Button onClick={()=>openModalPassword()}>¿Olvido su Clave?</Button>
+            <Button className="buttonRecovery" onClick={()=>openModalPassword()}>¿Olvido su Clave?</Button>
           </FormControl>
           <Modal
             className='ModalRecovery'
