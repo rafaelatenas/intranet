@@ -100,10 +100,11 @@ function Documents(){
         <Container className="ContainerContentUser">
             <HeaderComponent/>
             <Container className="containerSources">
-                <p className="TitleofContainer">Descargables</p>
+                <h1>Documentos</h1>
+                {/* <p className="TitleofContainer">Descargables</p>
                 {screenWidht>700?CardsViewsDesktop:SwipeableViewsMobile}
                 <img className="imageFooter" src={footerAtenas} alt="Pie de Pagina Atenas" title=""/>
-                {openModalContent?BoxElements:''}
+                {openModalContent?BoxElements:''} */}
             </Container>
         </Container>
     )

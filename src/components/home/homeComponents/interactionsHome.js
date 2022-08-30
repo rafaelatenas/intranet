@@ -24,7 +24,7 @@ function ButtonsInteracction(props){
             <CardContent className="cardContentButtons3">
                 <p>Descargables</p>
                 <IconButton className="IconButton3" onClick={()=>props.evento(1)}>
-                    <NavLink to={'/home/courses'}>
+                    <NavLink to={'/home/resources'}>
                         <img className="imgButton3" src={AtenasAcademy} alt="Logo Atenas Academy" title=""/>
                     </NavLink>
                 </IconButton>
