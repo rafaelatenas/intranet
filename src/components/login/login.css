@@ -21,6 +21,7 @@
     width: 100%;
     height: 100%;
     background: #e6f4fe;
+    overflow: visible;
 }
 .Form{
     align-items:center;
@@ -44,7 +45,7 @@
     }
     .Form{
         width:95%;
-        height:70%;
+        height:60%;
     }
     .email, .password{
         width: 90%;
@@ -60,6 +61,7 @@
     }
     .error{
         height: 15% !important;
+        min-height: 60px;
     }
     .ModalRecovery{
         width: 100%;
@@ -75,17 +77,17 @@
         background-position: center;
         width: 50% !important;
         height: 45%;
-        min-width: 280px;
+        min-width: 310px;
         max-width: 500px !important;
         display: flex !important;
         align-items: center;
         justify-content: center;
         padding: 0 !important;
-        max-height: 280px;
+        max-height: 320px;
     }
     .boxRecovery{
-        width: 73%;
-        height: 95%;
+        width: 80%;
+        height: 90%;
         max-width: 400px;
         display: flex;
         align-items: center;
@@ -93,10 +95,19 @@
         flex-direction: column;
     }
     .logoLogin{
-        width: 90%;
+        width: 65%;
         height: auto;
-        max-width: 287px;
+        max-width: 210px;
+        max-height: 90px;
     }
+    .gruopCheked{
+        flex-wrap: nowrap;
+    }
+    .gruopCheked label, .controlLabel span{
+        font-size: 14px;
+        color: #000;
+    }
+
     @media screen and (min-width:500px) {
         .email div, .password div{
             font-size: 20px;
@@ -111,19 +122,22 @@
             min-width: 400px;
             min-height: 400px;
         }
+        .gruopCheked label, .controlLabel span{
+            font-size: 18px;
+        }
     }
     @media screen and (min-width:768px) {
         .card-login{
             display: flex;
             width: 80%;
-            height: 100%;
+            height: 80%;
             flex-direction: column;
             justify-content: space-around;
             align-items: center;
         }
         .Form{
             width: 75%;
-            height: 55%;
+            height: 65%;
         }
         .email div, .password div{
             font-size: 22px;
@@ -144,6 +158,9 @@
         .buttonRecovery{
             font-size: 22px !important;
         }
+        .gruopCheked label, .controlLabel span{
+            font-size: 20px;
+        }
     }
     @media screen and (min-height: 1024px) {
         .containerRecovery{
@@ -156,7 +173,7 @@
     .card-login{
         display: flex;
         width: 80%;
-        height: 100%;
+        height: 80%;
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
@@ -164,6 +181,7 @@
     .Form{
         width: 60%;
         height: 60%;
+        max-height: 450px;
     }
     .logoAtenasLogin {
         width: auto;
@@ -207,19 +225,57 @@
         height: auto;
         max-width: 287px;
     }
-    @media screen and (min-width:1440px) {
+    .gruopCheked label, .controlLabel span{
+        font-size: 14px;
+        color: #000;
+    }
+    @media screen and (min-width:1024px) {
         .Form {
             width: 45%;
             height: 65%;
+            max-width: 304px;
+            max-height: 360px;
         }
         .email div, .password div{
-            font-size: 24px !important;
+            font-size: 14px !important;
         }
         .email label, .password label{
-            font-size: 24px !important;
+            font-size: 14px !important;
         }
         .icon{
-            font-size: 35px !important;
+            font-size: 25px !important;
+        }
+        .button{
+            width: 35%;
+            height: 10%;
+            border-radius: 1em !important;
+            font-size: 14px !important;
+        }
+        .buttonRecovery{
+            font-size: 14px !important;
+        }
+        .boxRecovery .email{
+            width:  70%;
+        }
+        .gruopCheked label, .controlLabel span{
+            font-size: 14px;
+        }
+    }
+    @media screen and (min-width:1500px) {
+        .Form {
+            width: 45%;
+            height: 65%;
+            max-width: 460px;
+            max-height: 535px;
+        }
+        .email div, .password div{
+            font-size: 22px !important;
+        }
+        .email label, .password label{
+            font-size: 22px !important;
+        }
+        .icon{
+            font-size: 30px !important;
         }
         .button{
             width: 35%;
@@ -229,6 +285,16 @@
         }
         .buttonRecovery{
             font-size: 22px !important;
+        }
+        .boxRecovery .email{
+            width:  90%;
+        }
+        .boxRecovery button{
+            width: 35%;
+            height: 10%;
+        }
+        .gruopCheked label, .controlLabel span{
+            font-size: 20px;
         }
     }
 }

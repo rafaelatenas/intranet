@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import axios from "axios"
-import { TextField, FormControl, InputLabel, OutlinedInput, IconButton, Button, Container, Box, InputAdornment, FormHelperText, Modal } from "@mui/material"
+import { TextField, FormControl, InputLabel, OutlinedInput, IconButton, Button, Container, Box, InputAdornment, FormHelperText, Modal, FormLabel, FormControlLabel, FormGroup, Checkbox } from "@mui/material"
 import { VisibilityOff, Visibility, EmailOutlined } from "@mui/icons-material"
 import atsLogo from '../../landing/images/Logo_Atenas.png'
 import './login.css'
@@ -101,20 +101,18 @@ export default function Login (){
     })
   }
     /* Validación Google */
-  const handleChangeRecovery = value => {
-    if (value !== null) {
-      isHuman()
-    }
-  }
+  
   const handleChangeLogin = value => {
     if (value !== null) {
       isHuman()
     }
   }
+
   const isHuman=async()=>{
     var responseKey = {captcha: recaptchaRef.current.getValue()};
+    console.log(responseKey)
     axios.post(process.env.REACT_APP_API_ENDPOINT+"ValidationCaptcha",responseKey)
-    .then(result => {
+    .then(result => { console.log(result.data)
     switch (result.data.success) {
       case true:
         setValidToken(true)
@@ -133,7 +131,9 @@ export default function Login (){
     setOpen(!open)
   }
   const handleChecked = (event) => {
+    console.log(event)
     setChecked(event.target.checked);
+    recaptchaRef.current.execute()
   };
   const handleUserEmailRecovery = (e) => {
     const name = e.target.name;
@@ -143,6 +143,10 @@ export default function Login (){
   } 
   const PasswordRecovery=()=>{
     console.log(0)
+  }
+  function onSubmit(token) {
+    console.log(token)
+    // document.getElementById("demo-form").submit();
   }
     return(
       <section className="login">
@@ -186,17 +190,10 @@ export default function Login (){
                     ),
                   }}
                 />
-                <ReCAPTCHA 
-                className="recaptcha"
-                onChange={handleChangeRecovery}
-                sitekey={process.env.REACT_APP_PUBLIC_KEY}
-                badge='bottomleft'
-                ref={recaptchaRef}
-                />
-                {/* <FormGroup>
+                <FormGroup className="gruopCheked">
                   <FormLabel>¿Está seguro de realizar esta acción?</FormLabel>
-                  <FormControlLabel control={CheckboxModal} label="Si, deseo realizar esta acción." />
-                </FormGroup> */}
+                  <FormControlLabel className="controlLabel" control={<Checkbox checked={checked} onClick={(e)=>handleChecked(e)}/>} label="Si, deseo realizar esta acción." />
+                </FormGroup>
                 <Button variant="contained" disabled={!validToken} onClick={()=>PasswordRecovery()}>Confirmar</Button>
             </Box>
             </Container>

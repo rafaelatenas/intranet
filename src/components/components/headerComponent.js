@@ -11,8 +11,9 @@ function HeaderComponent(){
     const [select, setSelect]=useState(1)
 
 
-    const handleOpenMenu=(event)=>{
-        setAnchorEl(event.currentTarget)
+    const handleOpenMenu=()=>{
+        console.log(!anchorEl)
+        setAnchorEl(!anchorEl)
     }
     const handleCloseMenu=(selected)=>{
         setAnchorEl(selected.currentTarget)
@@ -36,7 +37,7 @@ function HeaderComponent(){
                     aria-controls={Boolean(anchorEl) ? 'basic-menu' : undefined}
                     aria-haspopup="true"
                     aria-expanded={Boolean(anchorEl) ? 'true' : undefined}
-                    onClick={(e)=>handleOpenMenu(e)}
+                    onClick={handleOpenMenu}
                 >
                     <MenuRounded style={{fill:'#616161'}}/>
                 </IconButton>
@@ -44,10 +45,18 @@ function HeaderComponent(){
                     id="basic-menu"
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
-                    onClose={handleCloseMenu}
+                    onClose={handleOpenMenu}
                     MenuListProps={{
                     'aria-labelledby': 'basic-button',
                     }}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                      }}
                 >
                     <MenuList>
                         {opciones.map((opcion)=>(

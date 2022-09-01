@@ -3,21 +3,20 @@
     max-width: none !important;
     padding: 0 !important;
 }
-/*Movil*/
 @media screen and (orientation:portrait) {
     .containerHome{
         width: 100%;
         height: 100%;
         display: grid !important;
         margin: 0;
-        grid-template-rows: 15% 1fr;
+        grid-template-rows: 10% 1fr;
         grid-template-columns: 100%;
     }
     .boxContainer{
         display: grid !important;
         grid-row: 2/3;
     }
-    .atenienseContainer{
+    .atenienseContainer, .cardContentButtons2 {
         display: none !important;
     }
     .buttonsContainer{
@@ -26,8 +25,45 @@
         grid-column: 1/2;
         grid-row: 1/2;    
     }
+    
+    @media screen and (min-width:768px) , screen and (min-height: 800px) {
+        .containerHome{
+            grid-template-rows: 15% 1fr;
+        }
+        .boxContainer{
+            grid-template-rows: 25% 75%;
+            grid-template-columns: 100%;
+        }
+        .atenienseContainer{
+            grid-column: 1/2;
+            grid-row: 2/3;
+            display: block !important;
+        }
+        .buttonsContainer{
+            grid-column: 1/2;
+            grid-row: 1/2;
+        }
+    }
+    @media screen and (min-width:1024px){
+        .boxContainer{
+            grid-template-columns: 75% 25%;
+            grid-template-rows: 100%;
+        }
+        .atenienseContainer{
+            grid-column: 1/2;
+            grid-row: 1/2;
+            display: block !important;
+        }
+        .buttonsContainer{
+            grid-column: 2/3;
+            grid-row: 1/2;
+            
+        }
+        .cardContentButtons2 {
+            display: block !important;
+        }
+    }
 }
-/*desktop*/
 @media screen and (orientation:landscape) {
     .containerHome{
         width: 100%;
@@ -49,35 +85,9 @@
         grid-column: 1/2;
         grid-row: 1/2;
     }
+    @media screen and (min-width:1768px){
+        .boxContainer{
+            grid-template-columns: 75% 25% !important;
+        }
+    }
 }
-
-/*Movil*/
-/* @media screen and (min-width:500px){
-    .boxContainer{
-        grid-template-columns: 100%;
-        grid-template-rows: 25% 75%;
-    }
-    .atenienseContainer{
-        grid-column: 1/2;
-        grid-row: 2/3;
-    }
-    .buttonsContainer{
-        grid-column: 1/2;
-        grid-row: 1/2; 
-    }
-} */
-/*Tablet*/
-
-/* @media screen and (min-width:501px) and (max-width:950px){
-    .boxContainer{
-        grid-template-columns: 70% 30%;
-        grid-template-rows: 100%;
-    }
-} */
-/*Desktop*/
-/* @media screen and (min-width:951px){
-    .boxContainer{
-        grid-template-columns: 80% 20%;
-        grid-template-rows: 100%;
-    }
-} */
