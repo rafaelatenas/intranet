@@ -41,3 +41,15 @@ class Home extends React.Component{
     }
 }
 export default Home;
+async function getStaticProps(context) {
+    const client = new Instagram({ username: 'INSTAGRAM_USERNAME', password: 'INSTAGRAM_PASSWORD' });
+    await client.login();
+    const response = await client.getPhotosByUsername({
+        username: 'INSTAGRAM_USERNAME',
+    });
+    return {
+        props: {
+            posts: response.user.edge_owner_to_timeline_media.edges,
+        }, // will be passed to the page component as props
+    };
+}

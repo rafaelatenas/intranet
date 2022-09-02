@@ -8,6 +8,7 @@
     background-image: url(../../landing/images/background_intranet.png);
     background-size: cover ;
     background-repeat: no-repeat;
+    min-height: 500px;
 }
  .email, .password{
     height: auto;
@@ -46,6 +47,7 @@
     .Form{
         width:95%;
         height:60%;
+        min-height: 450px;
     }
     .email, .password{
         width: 90%;

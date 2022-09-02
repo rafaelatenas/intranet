@@ -85,7 +85,8 @@
         grid-column: 1/2;
         grid-row: 1/2;
     }
-    @media screen and (min-width:1768px){
+
+    @media screen and (min-width:1024px){
         .boxContainer{
             grid-template-columns: 75% 25% !important;
         }
