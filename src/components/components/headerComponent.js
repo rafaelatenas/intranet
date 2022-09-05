@@ -1,23 +1,25 @@
-import { Box, IconButton, ListItemIcon, Menu, MenuItem, MenuList } from "@mui/material";
+import { Box, IconButton, ListItemIcon, Menu, MenuItem, MenuList, Popover, Typography } from "@mui/material";
 import React, { useState } from "react";
 import logoAtenas from '../../landing/images/Logo_Atenas_EliseBlanca.png'
 import { NavLink } from "react-router-dom";
 import './headerComponents.css'
 import {MenuRounded, AccountCircleRounded, DashboardRounded, FileDownloadDoneRounded, Logout} from '@mui/icons-material';
+import { height } from "@mui/system";
 
 function HeaderComponent(){
 
+    const widthScreen = window.innerWidth
+    const HeightScreen = window.innerHeight
     const [anchorEl, setAnchorEl]=useState(null)
-    const [select, setSelect]=useState(1)
+    const [select, setSelect]=useState(2)
 
-
-    const handleOpenMenu=()=>{
-        console.log(!anchorEl)
+    const handleOpenMenu=(selected)=>{
         setAnchorEl(!anchorEl)
+        setSelect(selected)
+        console.log(select)
     }
-    const handleCloseMenu=(selected)=>{
-        setAnchorEl(selected.currentTarget)
-        setSelect(selected.currentTarget)
+    const handleCloseMenu=()=>{
+        setAnchorEl(!anchorEl)
     }
     const opciones=[
         {name:'Mi Perfil', key:1, Icon:<AccountCircleRounded/> ,url:'/home/profile'},
@@ -27,7 +29,7 @@ function HeaderComponent(){
     ]
         return(
             <Box className="boxHeaderComponent">
-                <IconButton style={{width:'auto', height:'100%', marginLeft:'1%'}}>
+                   <IconButton style={{width:'auto', height:'100%', marginLeft:'1%'}}>
                     <NavLink to={'/home'} style={{width:'auto', height:'100%', display:'flex', alignItems:'center'}}>
                         <img className="logoHeaderComponent" src={logoAtenas} alt="Logo Atenas Grupo Consultor. Elise Blanca" title=""></img>   
                     </NavLink>
@@ -40,25 +42,46 @@ function HeaderComponent(){
                     onClick={handleOpenMenu}
                 >
                     <MenuRounded style={{fill:'#616161'}}/>
+                    
                 </IconButton>
+                
                 <Menu
+                    id="lock-menu"
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={handleCloseMenu}
+                    anchorReference="anchorPosition"
+                    anchorPosition={{ top:50*1.5 , left: widthScreen }}
+                    MenuListProps={{
+                    'aria-labelledby': 'lock-button',
+                    role: 'listbox',
+                    }}
+                >
+                    {opciones.map((opcion)=>(
+                        <NavLink to={opcion.url} style={{textDecoration:'none'}} key={opcion.key}>
+                            <MenuItem
+                                selected={opcion.key === select}
+                                onClick={()=>handleOpenMenu(opcion.key)}>
+                                <ListItemIcon>
+                                    {opcion.Icon}
+                                </ListItemIcon>
+                                {opcion.name}
+                            </MenuItem>
+                        </NavLink>
+                        ))}
+                </Menu>
+                {/* <Menu
                     id="basic-menu"
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
                     onClose={handleOpenMenu}
                     MenuListProps={{
-                    'aria-labelledby': 'basic-button',
+                        'aria-labelledby': 'lock-button',
+                        role: 'listbox',
                     }}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                      }}
-                      transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                      }}
+                    anchorReference="anchorPosition"
+                    anchorPosition={{ top:50*1.5 , left: `${widthScreen}` }}
                 >
-                    <MenuList>
                         {opciones.map((opcion)=>(
                         <NavLink to={opcion.url} style={{textDecoration:'none'}} key={opcion.key}>
                             <MenuItem key={opcion.key} onClick={()=>handleCloseMenu(opcion.key)} style={select === opcion.key?{background:'#033d7247',color:'#616161', fontWeight:'bold'}:{background:'',color:'#616161', fontWeight:'bold'}}>
@@ -69,8 +92,7 @@ function HeaderComponent(){
                             </MenuItem>
                         </NavLink>
                         ))}
-                    </MenuList>
-                </Menu>
+                </Menu> */}
             </Box>
         )
     }

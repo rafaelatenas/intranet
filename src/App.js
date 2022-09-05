@@ -26,9 +26,8 @@ function App() {
           <Route path="/home" element={<Private/>}>
             <Route index element={<Home/>}/>
               <Route exact path="/home/profile" element={<Profile/>}/>
-              <Route exact path="/home/resources" element={<Downloadable/>}>
-                <Route exact path="/home/resources/documents" element={<Documents/>}/>
-              </Route>
+              <Route exact path="/home/resources" element={<Downloadable/>}/>
+              <Route exact path="/home/resources/documents" element={<Documents/>}/>
               <Route exact path="/home/management/" element={<ManagementPanel/>}/>
           </Route>
         </Routes>

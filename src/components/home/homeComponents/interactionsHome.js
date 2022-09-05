@@ -5,50 +5,49 @@ import temporal from '../../../landing/images/imagenTemporal.png'
 import AtenasAcademy from '../../../landing/images/AtenasAcademy.png'
 import { NavLink } from "react-router-dom";
 import Feed from "./feed";
-import { ConnectingAirportsOutlined } from "@mui/icons-material";
 import axios from "axios";
 
 function ButtonsInteracction(props){
     const widthScreen = window.innerWidth
     /* Instagram Feed */
-    const [data, setData]=useState([])
-    useEffect(() => {
-        // this is to avoid memory leaks
-        const abortController = new AbortController();
+    // const [data, setData]=useState([])
+    // useEffect(() => {
+    //     // this is to avoid memory leaks
+    //     const abortController = new AbortController();
 
-        async function fetchInstagramPost () {
-          try{
-            axios
-                .get(`https://graph.instagram.com/me/media?fields=id,media_type,media_url,caption&access_token=IGQVJXSWtTMURJZAU9BYWRubnFrbUZAhdjdsb2s3SzEyUk9TMHdWc0NXbGg5S3J6Q2p3bGNHVzcyUV9ydHM1eEhjMTdLU0JzUWdIMGZA5NnBKZAnJOVDdHVENsVmUtLVRHdkw0U0hMei1PaWxqdmU3MG9GRgZDZD`)
-                .then((resp) => {
-                    setData(resp.data.data)
-                })
-          } catch (err) {
-              console.log('error', err)
-          }
-        }
+    //     async function fetchInstagramPost () {
+    //       try{
+    //         axios
+    //             .get(`https://graph.instagram.com/me/media?fields=id,media_type,media_url,caption&access_token=IGQVJXSWtTMURJZAU9BYWRubnFrbUZAhdjdsb2s3SzEyUk9TMHdWc0NXbGg5S3J6Q2p3bGNHVzcyUV9ydHM1eEhjMTdLU0JzUWdIMGZA5NnBKZAnJOVDdHVENsVmUtLVRHdkw0U0hMei1PaWxqdmU3MG9GRgZDZD`)
+    //             .then((resp) => {
+    //                 setData(resp.data.data)
+    //             })
+    //       } catch (err) {
+    //           console.log('error', err)
+    //       }
+    //     }
 
-        // manually call the fecth function 
-        fetchInstagramPost();
+    //     // manually call the fecth function 
+    //     fetchInstagramPost();
   
-        return () => {
-            // cancel pending fetch request on component unmount
-            abortController.abort(); 
-        };
-    }, [])
+    //     return () => {
+    //         // cancel pending fetch request on component unmount
+    //         abortController.abort(); 
+    //     };
+    // }, [])
 
 
-    const cardContainerButtons2 = 
-        <Card className="cardContainerButtons3">
-            <CardContent className="cardContentButtons3">
-            {data.map((feed) => 
-            (
-                <Feed key={feed.id} feed={feed} />
-            )
+    // const cardContainerButtons2 = 
+    //     <Card className="cardContainerButtons3">
+    //         <CardContent className="cardContentButtons3">
+    //         {data.map((feed) => 
+    //         (
+    //             <Feed key={feed.id} feed={feed} />
+    //         )
             
-            )}
-            </CardContent>
-        </Card>;
+    //         )}
+    //         </CardContent>
+    //     </Card>;
 
     const cardContainerButtons3 = 
         <Card className="cardContainerButtons3">
@@ -77,7 +76,7 @@ function ButtonsInteracction(props){
                         </IconButton>
                     </CardContent>
                 </Card>
-                {widthScreen<768? '':cardContainerButtons2}
+                {/* {widthScreen<768? '':cardContainerButtons2} */}
                 {cardContainerButtons3}
                 {/* {state.widthScreen<768? '':cardContainerButtons3} */}
             </Container>
