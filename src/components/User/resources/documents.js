@@ -62,7 +62,7 @@ function Documents(){
     const handleName = (e) => {
         setName(e.target.value);
     };
-    const handleRedirect = (panel) =>  {
+    const handleRedirect = (panel) => (event, isExpanded) =>  {
         console.log(panel)
         setUrl(window.URL.createObjectURL(panel))
 
