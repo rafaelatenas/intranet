@@ -19,7 +19,8 @@ function App() {
             {/*Rutas Públicas*/}
           <Route path="/" element={<Public/>}>
             <Route index element={<Login/>}/>
-            {/* <Route exact path='/recoverypassword/:email/:token' element={<Login/>}/> */}
+            {/* <Route exact path='/recoverypassword/:email/:
+            ' element={<Login/>}/> */}
             <Route exact path="*" element={<NotFound/>}/>
           </Route>
             {/*Rutas Privadas*/}

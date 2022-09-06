@@ -16,13 +16,13 @@ function Documents(){
     const [openModalContent, setOpenModalContent] = useState(false);
     const [documents, setDocuments] = useState([{name:'', url:''}]);
     const [documentsT, setDocumentsT] = useState()
-    const [election, setElection] =useState('');
+    const [election, setElection] =useState(false);
+    const [disabled, setDisabled]=useState(true)
     const [url, setUrl] = useState([]);
     const [expanded, setExpanded] = useState(false);
     const [name, setName] = useState('');
     const [error, setError] = useState(false);
     const [redirect, setRedirect] = useState(false)
-    
     const handleElements = (e)=>{
         console.log(e)
     }
@@ -36,6 +36,7 @@ function Documents(){
     
     const handleElection = (event) => {
         setElection(event.target.value);
+        setDisabled(!disabled)
     }
     const handleDocuments = (e) =>{
         if (name==='') {
@@ -56,6 +57,7 @@ function Documents(){
 
     const handleChange = (panel) => (event, isExpanded) => {
       setExpanded(isExpanded ? panel : false);
+      console.log(isExpanded)
     };
     const handleName = (e) => {
         setName(e.target.value);
@@ -65,7 +67,7 @@ function Documents(){
         setUrl(window.URL.createObjectURL(panel))
 
     };
-    console.log(documentsT)
+    console.log(disabled)
 
     const BoxElements = 
     <Container className="ContainerElements">
@@ -158,7 +160,7 @@ function Documents(){
                         
                     </AccordionSummary>
                     <AccordionDetails>
-                    {documentsT.map((doc)=>( 
+                    {Object.values(documentsT).map((doc)=>( console.log(doc),
                             <Typography onClick={()=>handleRedirect(doc)} sx={{ width: 'auto', flexShrink: 0 }}>
                                 <FolderRounded/>{doc.name}
                             </Typography>
