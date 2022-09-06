@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import HeaderComponent from "../components/headerComponent";
 import './managementPanel.css'
 
+
 class ManagementPanel extends React.Component{
 
     constructor(props){
@@ -73,6 +74,7 @@ class ManagementPanel extends React.Component{
                                 value={this.state.area} name={'area'}
                                 onChange={(e)=>this.handleUserInput(e)}
                             />
+
                         </AccordionDetails>
                     </Accordion>
                     <Accordion expanded={this.state.expanded === 'panel2'} onChange={()=>this.handleChange('panel2')}>
