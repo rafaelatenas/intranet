@@ -8,12 +8,26 @@ import m from '../../../landing/images/noticias/2m.jpg'
 import l from '../../../landing/images/noticias/3.0l.jpg'
 import xl from '../../../landing/images/noticias/3.1xl.jpg'
 import xxl from '../../../landing/images/noticias/unaanamed.png'
-
 import {AddPhotoAlternateRounded} from '@mui/icons-material';
 import './ateniense.css'
+
 export default function Ateniense() {
     const visible = true
     const [open, setOpen]=useState(false)
+    /* Funcion Tiempo */
+    const fecha = new Date();
+    const annoActual = fecha.getFullYear();
+    const mesActual = fecha.getMonth() + 1;
+    function obtenerNombreMes (numero) {
+        let miFecha = new Date();
+        if (0 < numero && numero <= 12) {
+          miFecha.setMonth(numero - 1);
+          return new Intl.DateTimeFormat('es-ES', { month: 'long'}).format(miFecha);
+        } else {
+          return null;
+        }
+    }
+
     const handleAdmin=()=>{
         setOpen(!open)
     }
@@ -25,11 +39,12 @@ export default function Ateniense() {
         <Box className="boxateniense">
             {/* { visible?BotonAteninese:''} */}
             <Box className="containerBody">
-                
-                <Box className="containerBody1"><div className="headerAteniense">
+                <div className="headerAteniense">
                     <img className="logoateninese" src={logoAteniense} alt="Logo Ateniense" title=""/>
-                    <h3 style={{margin:0, opacity:.6}}>Julio 2022</h3>
+                    <h3 style={{margin:0, opacity:.6}}>{obtenerNombreMes(mesActual)+' '+annoActual}</h3>
                 </div>
+                <Box className="containerBody1">
+                    
                     <img style={{width:'100%', height:'auto'}} src={xxl} alt="Logo Ateniense" title=""/>
                     <img style={{width:'100%', height:'auto'}} src={xl} alt="Logo Ateniense" title=""/>
                     <img style={{width:'100%', height:'auto'}} src={l} alt="Logo Ateniense" title=""/>

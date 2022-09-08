@@ -7,8 +7,6 @@ import videos from '../../landing/images/video.png'
 import documentos from '../../landing/images/book.png'
 import cursos from '../../landing/images/cursos.png'
 import SwipeableViews from "react-swipeable-views";
-import { useTheme } from "styled-components";
-import { autoPlay } from 'react-swipeable-views-utils';
 
 function Downloadable(){
     const [openModalContent, setOpenModalContent] = useState(false);
@@ -68,7 +66,7 @@ function Downloadable(){
     const SwipeableViewsMobile = 
         <SwipeableViews
             index={activeStep+1} onChangeIndex={handleStepChange}
-            enableMouseEvents className="carousel"
+            className="carousel"
         >
             {recursos.map((recurso)=>(
                 <Card key={recurso.key} className='cardSource1'>

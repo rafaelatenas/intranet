@@ -63,7 +63,7 @@ class ManagementPanel extends React.Component{
                                 onChange={(e)=>this.handleUserInput(e)}
                             />
                             <TextField id="outlined-multiline-flexible" label="Segundo Apellido"
-                                value={this.state.secondLastName} name={'secondName'}
+                                value={this.state.secondLastName} name={'secondLastName'}
                                 onChange={(e)=>this.handleUserInput(e)}
                             />
                             <TextField id="outlined-multiline-flexible" label="Cargo"
@@ -74,7 +74,50 @@ class ManagementPanel extends React.Component{
                                 value={this.state.area} name={'area'}
                                 onChange={(e)=>this.handleUserInput(e)}
                             />
-
+                            <TextField id="outlined-multiline-flexible" label="Dirección"
+                                value={this.state.direction} name={'direction'}
+                                onChange={(e)=>this.handleUserInput(e)}
+                            />
+                            <TextField id="outlined-multiline-flexible" label="Celular"
+                                value={this.state.cell} name={'cell'}
+                                onChange={(e)=>this.handleUserInput(e)}
+                            />
+                            <TextField id="outlined-multiline-flexible" label="Correo"
+                                value={this.state.email} name={'email'}
+                                onChange={(e)=>this.handleUserInput(e)}
+                            />
+                            <TextField id="outlined-multiline-flexible" label="Fecha de Ingreso a la Empresa"
+                                value={this.state.joining} name={'joining'}
+                                onChange={(e)=>this.handleUserInput(e)}
+                            />
+                            <TextField id="outlined-multiline-flexible" label="Día Especial"
+                                value={this.state.specialDay} name={'specialDay'}
+                                onChange={(e)=>this.handleUserInput(e)}
+                            />
+                            <TextField id="outlined-multiline-flexible" label="Profesión"
+                                value={this.state.profession} name={'profession'}
+                                onChange={(e)=>this.handleUserInput(e)}
+                            />
+                            <TextField id="outlined-multiline-flexible" label="Talla de Camisa o Chaqueta"
+                                value={this.state.shirtSize} name={'shirtSize'}
+                                onChange={(e)=>this.handleUserInput(e)}
+                            />
+                            <TextField id="outlined-multiline-flexible" label="Telefono de Oficina"
+                                value={this.state.officePhone} name={'officePhone'}
+                                onChange={(e)=>this.handleUserInput(e)}
+                            />
+                            <TextField id="outlined-multiline-flexible" label="Extensión"
+                                value={this.state.extension} name={'extension'}
+                                onChange={(e)=>this.handleUserInput(e)}
+                            />
+                            <TextField id="outlined-multiline-flexible" label="supervisor"
+                                value={this.state.supervisor} name={'supervisor'}
+                                onChange={(e)=>this.handleUserInput(e)}
+                            />
+                            <TextField id="outlined-multiline-flexible" label="supervisado"
+                                value={this.state.supervised} name={'supervised'}
+                                onChange={(e)=>this.handleUserInput(e)}
+                            />
                         </AccordionDetails>
                     </Accordion>
                     <Accordion expanded={this.state.expanded === 'panel2'} onChange={()=>this.handleChange('panel2')}>

@@ -2,7 +2,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardC
 import React, { useState } from "react";
 import HeaderComponent from '../../components/headerComponent'
 import footerAtenas from '../../../landing/images/footerAtenas.png'
-import './documents.css'
+// import './documents.css'
 import videos from '../../../landing/images/video.png'
 import documentos from '../../../landing/images/book.png'
 import cursos from '../../../landing/images/cursos.png'

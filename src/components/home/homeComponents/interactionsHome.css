@@ -6,7 +6,7 @@
     padding: 0 !important;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 @media screen and (orientation:portrait) {
     .containerButtons{
@@ -43,6 +43,11 @@
         margin: 0;
         color: #616161;
         font-weight: bold;
+        font-size: 14px;
+
+    }
+    .chargeButton{
+        font-size: 14px;
     }
     .personButton{
         grid-column: 2/3;
@@ -156,7 +161,7 @@
 }
 @media screen and (orientation:landscape) {
     .cardContainerButtons1{
-        height: 40%;
+        height: 30%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -167,12 +172,13 @@
     }
     .cardContentButtons1{
         width: 100%;
-        height: 80%;
+        height: 100%;
         display: grid;
         grid-template-columns: 60% 40%;
         grid-template-rows: 70% 30%;
         align-items: end;
         padding: 0 !important;
+        justify-items: center;
     }
     .descriptionButton{
         grid-column: 1/2;
@@ -182,16 +188,22 @@
         flex-direction: column;
         justify-content: space-between;
     }
-    .descriptionButton p{
+    .nameButton, .chargeButton{
         margin: 0;
         color: #616161;
         font-weight: bold;
     }
+    .nameButton{
+        font-size: 14px;
+    }
+    .chargeButton{
+        font-size: 12px;
+    }
     .personButton{
         grid-column: 2/3;
         grid-row: 1/2;
-        height: 90%;
-        width: 100%;
+        height: 80%;
+        width: auto;
         border-radius: 1.2em;
     }
     .spaceAtenas{
@@ -214,36 +226,42 @@
         font-weight: bold;
     }
     .cardContainerButtons3{
-        width: auto;
-        height: 40%;
+        width: 100%;
+        height: 20%;
         box-shadow: none !important;
         max-width: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        max-height: 130px;
     }
     .cardContentButtons3{
         padding: 0 !important;
-        width: 100%;
+        width: 40%;
         height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: space-around;
     }
     .cardContentButtons3 p{
         margin: 0;
-        width: auto;
-        height: 10%;
+        width: 100%;
+        height: auto;
         color: #616161;
         font-weight: bold;
-        font-size: 18px;
+        font-size: 14px;
+        text-align: center;
     }
     .IconButton3{
         padding: 0 !important;
         width: 100%;
         height: 80%;
-        border-radius: 1.2em !important;
+        border-radius: .75em !important;
         color: transparent !important;
         border: 1px solid #61616145 !important;
         max-width: 240px;
+        max-height: 130px;
     }
     .imgButton3{
         width: 100%;
@@ -256,7 +274,7 @@
             padding:0%;
         }
         .descriptionButton{
-            height: 40%;
+            height: 30%;
         }
         .spaceAtenas{
             max-width: 330px;
@@ -283,130 +301,4 @@
         }
     }
 }
-    /* @media screen and (min-width:768px) { 
-        .containerButtons{
-            flex-direction: row-reverse;
-        }
-        .cardContainerButtons1{
-            height: 100%;
-            padding:0%;
-            max-width: 325px;
-            max-height: 325px;
-        }
-        .cardContainerButtons3{
-            width: auto;
-            height: 100%;
-            box-shadow: none !important;
-            max-width: 400px;
-        }
-        .cardContentButtons3{
-            padding: 0 !important;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .cardContentButtons3 p{
-            margin: 0;
-            width: auto;
-            height: 10%;
-            color: #616161;
-            font-weight: bold;
-        
-        }
-        .IconButton3{
-            padding: 0 !important;
-            width: 100%;
-            height: 80%;
-            border-radius: 1.2em !important;
-            color: transparent !important;
-            border: 1px solid #61616145 !important;
-            max-width: 195px;
-        }
-        .imgButton3{
-            width: 100%;
-            height: 100%;
-        }
-    }
-}
-/* 
-.cardContentButtons1{
-    width: 100%;
-    height: 80%;
-    display: grid;
-    grid-template-columns: 60% 40%;
-    grid-template-rows: 70% 30%;
-    align-items: end;
-    padding: 0 !important;
-}
-.descriptionButton{
-    grid-column: 1/2;
-    grid-row: 1/2;
-    height: 40%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.descriptionButton p{
-    margin: 0;
-    color: #616161;
-    font-weight: bold;
-}
-.personButton{
-    grid-column: 2/3;
-    grid-row: 1/2;
-    height: 90%;
-    width: 100%;
-    border-radius: 1.2em;
-}
-.spaceAtenas{
-    grid-column: 1/3;
-    grid-row: 2/3;
-    width: 100%;
-    height: 70%;
-    border-radius: 1em !important;
-    border: 2px solid #0c5091 !important;
-    padding: 0 !important;
-}
-.link{
-    width: 100%;
-    height: auto;
-    text-decoration: none;
-}
-.link p{
-    margin: 0;
-    font-size: 0.65em;
-    font-weight: bold;
-}
-.cardContentButtons3{
-    padding: 0 !important;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.cardContentButtons3 p{
-    margin: 0;
-    width: auto;
-    height: auto;
-    color: #616161;
-    font-weight: bold;
-
-}
-.IconButton3{
-    padding: 0 !important;
-    width: 65%;
-    height: 85%;
-    border-radius: 1.2em !important;
-    color: transparent !important;
-    border: 1px solid #61616145 !important;
-}
-.imgButton3{
-    width: 100%;
-    height: 100%;
-}
- */
+    

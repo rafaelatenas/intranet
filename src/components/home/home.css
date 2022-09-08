@@ -16,23 +16,16 @@
         display: grid !important;
         grid-row: 2/3;
     }
-    .atenienseContainer, .cardContentButtons2 {
-        display: none !important;
+    .atenienseContainer{
+        display: block !important;
     }
-    .buttonsContainer{
-        width: 100%;
-        height: 100%; 
-        grid-column: 1/2;
-        grid-row: 1/2;    
+    .buttonsContainer, .cardContentButtons2 {
+        display: none !important;
     }
     
     @media screen and (min-width:768px) , screen and (min-height: 800px) {
         .containerHome{
             grid-template-rows: 15% 1fr;
-        }
-        .boxContainer{
-            grid-template-rows: 25% 75%;
-            grid-template-columns: 100%;
         }
         .atenienseContainer{
             grid-column: 1/2;
