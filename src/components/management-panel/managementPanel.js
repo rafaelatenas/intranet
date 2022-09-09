@@ -1,6 +1,8 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Container, TextField, Typography } from "@mui/material";
+import { ExpandMoreRounded, PersonAddAlt1Rounded, PersonAddRounded, RecentActorsRounded } from "@mui/icons-material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Container, Paper, Step, StepContent, StepLabel, Stepper, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import HeaderComponent from "../components/headerComponent";
+import CreateUser from "./managementComponents/createUser";
 import './managementPanel.css'
 
 
@@ -9,120 +11,33 @@ class ManagementPanel extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            firstName:'',
-            secondName:'',
-            lastName:'',
-            secondLastName:'',
-            CI:'',
-            birth:'',
-            charge:'',
-            area:'',
-            direction:'',
-            cell:'',
-            email:'',
-            joining:'',
-            specialDay:'',
-            profession:'',
-            shirtSize:'',
-            officePhone:'',
-            extension:'',
-            supervisor:'',
-            supervised:'',
-            expanded:false
+            expanded:false,
+            ElementExpanded:'',
+            stepActive:0,
         }
     }
 
     handleChange = (panel, isExpanded) => {
-        this.setState({expanded:panel});
+        this.setState({ElementExpanded:panel,
+            expanded:!this.state.expanded });
     };
-    handleUserInput =(e)=>{
-        const {name, value} = e.target;
-        this.setState({[name]:value})
-    }
-
-    render(){ console.log(this.state.firstName)
+    
+    render(){console.log(this.state.stepActive)
         return(
             <Container className="ContainerAdmin">
                 <HeaderComponent className='header'/>
                 <Box className="boxAdmin">
-                    <Accordion expanded={this.state.expanded === 'panel1'} onChange={()=>this.handleChange('panel1')}>
-                        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+                    <Accordion className="Accordion" expanded={this.state.ElementExpanded === 'panel1' && this.state.expanded===true} onChange={()=>this.handleChange('panel1')}>
+                        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreRounded/>}>
                             <Typography>Crear Usuario</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <TextField id="outlined-multiline-flexible" label="Primer Nombre"
-                                value={this.state.firstName} name={'firstName'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="Segundo Nombre"
-                                value={this.state.secondName} name={'secondName'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="Primer Apellido"
-                                value={this.state.lastName} name={'lastName'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="Segundo Apellido"
-                                value={this.state.secondLastName} name={'secondLastName'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="Cargo"
-                                value={this.state.charge} name={'charge'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="Área"
-                                value={this.state.area} name={'area'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="Dirección"
-                                value={this.state.direction} name={'direction'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="Celular"
-                                value={this.state.cell} name={'cell'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="Correo"
-                                value={this.state.email} name={'email'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="Fecha de Ingreso a la Empresa"
-                                value={this.state.joining} name={'joining'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="Día Especial"
-                                value={this.state.specialDay} name={'specialDay'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="Profesión"
-                                value={this.state.profession} name={'profession'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="Talla de Camisa o Chaqueta"
-                                value={this.state.shirtSize} name={'shirtSize'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="Telefono de Oficina"
-                                value={this.state.officePhone} name={'officePhone'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="Extensión"
-                                value={this.state.extension} name={'extension'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="supervisor"
-                                value={this.state.supervisor} name={'supervisor'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
-                            <TextField id="outlined-multiline-flexible" label="supervisado"
-                                value={this.state.supervised} name={'supervised'}
-                                onChange={(e)=>this.handleUserInput(e)}
-                            />
+                            <CreateUser/>
                         </AccordionDetails>
                     </Accordion>
-                    <Accordion expanded={this.state.expanded === 'panel2'} onChange={()=>this.handleChange('panel2')}>
-                        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                        <Typography>Collapsible Group Item #1</Typography>
+                    <Accordion className="Accordion" expanded={this.state.ElementExpanded === 'panel2' && this.state.expanded===true} onChange={()=>this.handleChange('panel2')}>
+                        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreRounded/>}>
+                            <Typography>Editar Usuarios</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                         <Typography>

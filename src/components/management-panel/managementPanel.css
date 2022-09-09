@@ -11,9 +11,9 @@
     justify-items: center;
 }
 
-    .ContainerAdmin{
-        background: red;
-    }
+.ContainerAdmin{
+    display: none;
+}
 
 @media screen and (orientation:landscape) and (min-width:1360px){
     .ContainerAdmin{
@@ -22,10 +22,17 @@
     .boxAdmin{
         width: 100%;
         height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
     }
     .containerCreate, .containerEdit{
         padding: 0% !important;
         width: 100%;
         height: 100%;
+    }
+    .Accordion{
+        width: 90%;
     }
 }

@@ -1,0 +1,18 @@
+.boxStep{
+    height: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.boxField{
+    overflow: visible !important;
+    display: inline-flex;
+    width: 100%;
+    justify-content: space-around;
+    min-width: 700px;
+}
+.textField{
+    overflow: visible !important;
+    width: 30%;
+    max-width: 230px;
+}
