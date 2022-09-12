@@ -29,7 +29,7 @@ class ManagementPanel extends React.Component{
                 <Box className="boxAdmin">
                     <Accordion className="Accordion" expanded={this.state.ElementExpanded === 'panel1' && this.state.expanded===true} onChange={()=>this.handleChange('panel1')}>
                         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreRounded/>}>
-                            <Typography>Crear Usuario</Typography>
+                            <Typography>Registrar Usuario</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             <CreateUser/>
@@ -37,7 +37,7 @@ class ManagementPanel extends React.Component{
                     </Accordion>
                     <Accordion className="Accordion" expanded={this.state.ElementExpanded === 'panel2' && this.state.expanded===true} onChange={()=>this.handleChange('panel2')}>
                         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreRounded/>}>
-                            <Typography>Editar Usuarios</Typography>
+                            <Typography>Listar Usuarios</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                         <Typography>

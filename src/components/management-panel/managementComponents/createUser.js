@@ -1,11 +1,14 @@
 import React from "react";
-import { Box, Button, MenuItem, Paper, Step, StepContent, StepLabel, Stepper, TextField, Typography } from "@mui/material";
+import { Box, Button, IconButton, MenuItem, Paper, Step, StepContent, StepLabel, Stepper, TextField, Typography } from "@mui/material";
 import './createUser.css'
+import { AddRounded, PhotoCameraRounded } from "@mui/icons-material";
+import ModalElements from "./elementsToform";
 
 class CreateUser extends React.Component{
 
     constructor(props){
         super(props);
+        this.handleNew=this.handleNew.bind(this)
         this.state={
             firstName:"",
             secondName:"",
@@ -66,13 +69,22 @@ class CreateUser extends React.Component{
                     value: '5',
                     name: 'XXL',
                 },
-            ]
+            ],
+            openModal:false
         }
     }
 
     handleUserInput =(e)=>{
-        const {name, value} = e.target;
+        console.log(e)
+        const {name, value, files} = e.target;
+        if (files != null) {
+            this.setState({[name]:files[0]})
+        }
         this.setState({[name]:value})
+    }
+    handleNew=()=>{
+        console.log(10)
+        this.setState({openModal:!this.state.openModal})
     }
     handleChangeselect = (event) => {
         this.setState({specialDay:event.target.value});
@@ -92,7 +104,7 @@ class CreateUser extends React.Component{
     render(){
         return(
             <Box width={'100%'}>
-                <Stepper width={'100%'} orientation="vertical" activeStep={this.state.stepActive}>
+                <Stepper width={'100%'} orientation="vertical" activeStep={this.state.stepActive} >
                     <Step>
                         <StepLabel>Datos de Usuario</StepLabel>
                         <StepContent>
@@ -132,12 +144,21 @@ class CreateUser extends React.Component{
                                     <TextField className='textField' id="outlined-multiline-flexible" label="Profesión"
                                         value={this.state.profession} name={'profession'}
                                         onChange={(e)=>this.handleUserInput(e)}
-                                    />
+                                        select
+                                    >   
+                                        <Button startIcon={<AddRounded/>} onClick={this.handleNew}style={{textTransform:'capitalize'}}>Agregar Profesión</Button>
+                                        {this.state.sizes.map((size)=>(
+                                            <MenuItem key={size.value} value={size.name}>
+                                                {size.name}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
                                     <TextField className='textField' id="outlined-multiline-flexible" label="Talla de Camisa o Chaqueta"
                                         value={this.state.shirtSize} name={'shirtSize'}
                                         onChange={(e)=>this.handleUserInput(e)}
                                         select
-                                    >
+                                    >   
+                                        <Button startIcon={<AddRounded/>} onClick={this.handleNew}style={{textTransform:'capitalize'}}>Agregar Talla</Button>
                                         {this.state.sizes.map((size)=>(
                                             <MenuItem key={size.value} value={size.name}>
                                                 {size.name}
@@ -149,6 +170,7 @@ class CreateUser extends React.Component{
                                         onChange={(e)=>this.handleUserInput(e)}
                                         select
                                     >
+                                        <Button startIcon={<AddRounded/>} onClick={this.handleNew}style={{textTransform:'capitalize'}}>Agregar Día Especial</Button>
                                         {this.state.special.map((day)=>(
                                             <MenuItem key={day.value} value={day.name}>
                                                 {day.name}
@@ -157,20 +179,20 @@ class CreateUser extends React.Component{
                                     </TextField>
                                 </Box>
                                 <Box className="boxField" style={{maxWidth:770, minWidth:465}}>
-                                    <TextField className='textField' id="outlined-multiline-flexible" label='Imagen'
-                                        value={this.state.image} name={'image'}
-                                        inputProps={{accept:'image/png'}}
-                                        onChange={(e)=>this.handleUserInput(e)} 
-                                        InputLabelProps={{ shrink: true }}
-                                        type='file' style={{minWidth:210}} 
-                                    />
-                                    <TextField className='textField' id="outlined-multiline-flexible" label='Avatar'
-                                        value={this.state.avatar} name={'avatar'}
-                                        inputProps={{accept:'image/png'}}
-                                        onChange={(e)=>this.handleUserInput(e)} 
-                                        InputLabelProps={{ shrink: true }}
-                                        type='file' style={{minWidth:210}}
-                                    />
+                                    <Button aria-label="upload picture" component="label" startIcon={<PhotoCameraRounded/>} style={{minWidth:230, border:'solid 1px rgb(196,196,196)'}}>
+                                        <input hidden accept="image/png" type="file" 
+                                            value={this.state.image} name={'image'}
+                                            onChange={(e)=>this.handleUserInput(e)} 
+                                        />
+                                        <label style={{fontSize:16, color:'#666', textTransform:'capitalize'}}>Imagen</label>
+                                    </Button>
+                                    <Button aria-label="upload picture" component="label" startIcon={<PhotoCameraRounded/>} style={{minWidth:230, border:'solid 1px rgb(196,196,196)'}}>
+                                        <input hidden accept="image/png" type="file" 
+                                            value={this.state.avatar} name={'avatar'}
+                                            onChange={(e)=>this.handleUserInput(e)}
+                                        />
+                                        <label style={{fontSize:16, color:'#666', textTransform:'capitalize'}}>Avatar</label>
+                                    </Button>
                                 </Box>
                             </Box>
                             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
@@ -222,37 +244,78 @@ class CreateUser extends React.Component{
                         </StepContent>
                     </Step>
                     <Step>
+                        
                         <StepLabel>Datos Atenas</StepLabel>
                         <StepContent>
                             <Box className="boxStep">
                                 <Box className="boxField">
-                                    <TextField className="textField" id="outlined-multiline-flexible" label="Cargo"
-                                        value={this.state.charge} name={'charge'}
-                                        onChange={(e)=>this.handleUserInput(e)}
-                                    />
-                                    <TextField className="textField" id="outlined-multiline-flexible" label="Área"
-                                        value={this.state.area} name={'area'}
-                                        onChange={(e)=>this.handleUserInput(e)}
-                                    />
-                                    <TextField className="textField" id="outlined-multiline-flexible" label="Dirección"
-                                        value={this.state.direction} name={'direction'}
-                                        onChange={(e)=>this.handleUserInput(e)}
-                                    />
-                                </Box>
-                                <Box className="boxField">
-                                    <TextField className="textField" id="outlined-multiline-flexible" label="supervisor"
-                                        value={this.state.supervisor} name={'supervisor'}
-                                        onChange={(e)=>this.handleUserInput(e)}
-                                    />
                                     <TextField className="textField" id="outlined-multiline-flexible" label="Fecha de Ingreso a la Empresa"
                                         value={this.state.joining} name={'joining'}
                                         InputLabelProps={{ shrink: true }} type='date'
                                         onChange={(e)=>this.handleUserInput(e)}
                                     />
-                                    <TextField className="textField" id="outlined-multiline-flexible" label="supervisado"
+                                    <TextField className='textField' id="outlined-multiline-flexible" label="Cargo"
+                                        value={this.state.charge} name={'charge'}
+                                        onChange={(e)=>this.handleUserInput(e)}
+                                        select
+                                    >   
+                                        <Button startIcon={<AddRounded/>} onClick={this.handleNew}style={{textTransform:'capitalize'}}>Agregar Profesión</Button>
+                                        {this.state.sizes.map((size)=>(
+                                            <MenuItem key={size.value} value={size.name}>
+                                                {size.name}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                    <TextField className='textField' id="outlined-multiline-flexible" label="Área"
+                                        value={this.state.area} name={'area'}
+                                        onChange={(e)=>this.handleUserInput(e)}
+                                        select
+                                    >   
+                                        <Button startIcon={<AddRounded/>} onClick={this.handleNew}style={{textTransform:'capitalize'}}>Agregar Profesión</Button>
+                                        {this.state.sizes.map((size)=>(
+                                            <MenuItem key={size.value} value={size.name}>
+                                                {size.name}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </Box>
+                                <Box className="boxField">
+                                    <TextField className='textField' id="outlined-multiline-flexible" label="Dirección"
+                                        value={this.state.direction} name={'direction'}
+                                        onChange={(e)=>this.handleUserInput(e)}
+                                        select
+                                    >   
+                                        <Button startIcon={<AddRounded/>} onClick={this.handleNew}style={{textTransform:'capitalize'}}>Agregar Profesión</Button>
+                                        {this.state.sizes.map((size)=>(
+                                            <MenuItem key={size.value} value={size.name}>
+                                                {size.name}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                    <TextField className='textField' id="outlined-multiline-flexible" label="Supervisor"
+                                        value={this.state.supervisor} name={'supervisor'}
+                                        onChange={(e)=>this.handleUserInput(e)}
+                                        select
+                                    >   
+                                        <Button startIcon={<AddRounded/>} onClick={this.handleNew}style={{textTransform:'capitalize'}}>Agregar Profesión</Button>
+                                        {this.state.sizes.map((size)=>(
+                                            <MenuItem key={size.value} value={size.name}>
+                                                {size.name}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                    <TextField className='textField' id="outlined-multiline-flexible" label="Supervisado(s)"
                                         value={this.state.supervised} name={'supervised'}
                                         onChange={(e)=>this.handleUserInput(e)}
-                                    />
+                                        select
+                                    >   
+                                        <Button startIcon={<AddRounded/>} onClick={this.handleNew}style={{textTransform:'capitalize'}}>Agregar Profesión</Button>
+                                        {this.state.sizes.map((size)=>(
+                                            <MenuItem key={size.value} value={size.name}>
+                                                {size.name}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
                                 </Box>
                             </Box>
                             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
@@ -273,6 +336,10 @@ class CreateUser extends React.Component{
                     </Button>
                     </Paper>
                 ):''}
+                <ModalElements 
+                    openModal={this.state.openModal}
+                    closemodal={()=>this.handleNew()}
+                />
             </Box>
         )
     }
