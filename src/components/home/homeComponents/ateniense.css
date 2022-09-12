@@ -87,4 +87,14 @@
     .containerBody{
         padding-top: 1.5%;
     }
+    /*Administracion Ateniense*/
+    .buttonNews{
+        min-width: 150px;
+        min-height: 150px;
+        max-width: 200px;
+    }
+    .buttonNews img{
+        width: 100%;
+        height: auto;
+    }
 }

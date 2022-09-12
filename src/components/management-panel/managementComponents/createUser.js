@@ -82,8 +82,8 @@ class CreateUser extends React.Component{
         }
         this.setState({[name]:value})
     }
-    handleNew=()=>{
-        console.log(10)
+    handleNew=(e)=>{
+        console.log(e)
         this.setState({openModal:!this.state.openModal})
     }
     handleChangeselect = (event) => {
@@ -146,7 +146,7 @@ class CreateUser extends React.Component{
                                         onChange={(e)=>this.handleUserInput(e)}
                                         select
                                     >   
-                                        <Button startIcon={<AddRounded/>} onClick={this.handleNew}style={{textTransform:'capitalize'}}>Agregar Profesión</Button>
+                                        <Button startIcon={<AddRounded/>} onClick={(e)=>this.handleNew(e)}style={{textTransform:'capitalize'}}>Agregar Profesión</Button>
                                         {this.state.sizes.map((size)=>(
                                             <MenuItem key={size.value} value={size.name}>
                                                 {size.name}

@@ -1,8 +1,10 @@
 import { ExpandMoreRounded, PersonAddAlt1Rounded, PersonAddRounded, RecentActorsRounded } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Container, Paper, Step, StepContent, StepLabel, Stepper, TextField, Typography } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import React, { useState } from "react";
 import HeaderComponent from "../components/headerComponent";
 import CreateUser from "./managementComponents/createUser";
+import GridUsers from "./managementComponents/editUser";
 import './managementPanel.css'
 
 
@@ -17,12 +19,11 @@ class ManagementPanel extends React.Component{
         }
     }
 
-    handleChange = (panel, isExpanded) => {
-        this.setState({ElementExpanded:panel,
-            expanded:!this.state.expanded });
+    handleChange = (panel) => {
+        this.setState({ElementExpanded:panel,expanded:!this.state.expanded });
     };
     
-    render(){console.log(this.state.stepActive)
+    render(){
         return(
             <Container className="ContainerAdmin">
                 <HeaderComponent className='header'/>
@@ -40,12 +41,7 @@ class ManagementPanel extends React.Component{
                             <Typography>Listar Usuarios</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                        <Typography>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                            sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                            sit amet blandit leo lobortis eget.
-                        </Typography>
+                            <GridUsers/>
                         </AccordionDetails>
                     </Accordion>
                 </Box>

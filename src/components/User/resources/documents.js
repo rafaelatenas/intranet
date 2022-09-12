@@ -65,9 +65,7 @@ function Documents(){
     const handleRedirect = (panel) => (event, isExpanded) =>  {
         console.log(panel)
         setUrl(window.URL.createObjectURL(panel))
-
     };
-    console.log(disabled)
 
     const BoxElements = 
     <Container className="ContainerElements">

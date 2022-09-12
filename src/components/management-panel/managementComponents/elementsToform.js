@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, TextField } from '@mui/material';
 import { ExpandMoreRounded } from '@mui/icons-material';
 
 const style = {
@@ -30,12 +30,16 @@ export default class ModalElements extends React.Component {
             expanded:false,
             ElementExpanded:'',
             stepActive:0,
+            element:''
         }
     }
-    handleChange = (panel, isExpanded) => {
-        this.setState({ElementExpanded:panel,
-            expanded:!this.state.expanded });
+    handleChange = (panel) => {
+        this.setState({ElementExpanded:panel,expanded:!this.state.expanded });
     };
+    handleUserInput =(e)=>{
+        const {name, value} = e.target;
+        this.setState({[name]:value})
+    }
     render(){
         const {openModal, closemodal}=this.props
         return (
@@ -55,19 +59,18 @@ export default class ModalElements extends React.Component {
                                 <Typography>Crear Nuevo Elemento</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
+                                <TextField id="outlined-multiline-flexible" label="Nuevo Elemento"
+                                    value={this.state.firstName} name={'element'}
+                                    onChange={(e)=>this.handleUserInput(e)}
+                                />
+                                <Button>Crear</Button>
                             </AccordionDetails>
                         </Accordion>
                         <Accordion className="" expanded={this.state.ElementExpanded === 'panel2' && this.state.expanded===true} onChange={()=>this.handleChange('panel2')}>
                             <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreRounded/>}>
-                                <Typography>Listar Usuarios</Typography>
+                                <Typography>Listar Elementos</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                            <Typography>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                                sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                                sit amet blandit leo lobortis eget.
-                            </Typography>
                             </AccordionDetails>
                         </Accordion>
                     </Box>
