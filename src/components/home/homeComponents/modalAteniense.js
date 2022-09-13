@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Accordion, AccordionDetails, AccordionSummary, IconButton, TextField } from '@mui/material';
-import { CloseRounded, ExpandMoreRounded } from '@mui/icons-material';
+import { CloseRounded, ExpandMoreRounded, PreviewRounded } from '@mui/icons-material';
 import './ateniense.css'
 
 const style = {
@@ -14,8 +14,8 @@ const style = {
     transform: 'translate(-50%, -50%)',
     maxWidth: 920,
     maxHeight:800,
-    width:'80%',
-    height:'100%',
+    width:'60%',
+    height:'90%',
     bgcolor: 'background.paper',
     borderRadius:'1em',
     boxShadow: 24,
@@ -30,7 +30,8 @@ export default class ModalAteniense extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            element:[],
+            photo:[],
+            namephoto:'',
             expanded:false,
             ElementExpanded:'',
             stepActive:0,
@@ -42,14 +43,19 @@ export default class ModalAteniense extends React.Component {
     handleChange = (panel) => {
         this.setState({ElementExpanded:panel,expanded:!this.state.expanded });
     };
-    handleDocuments=(e)=>{
-        this.setState({element:e})
-        this.setState({url:window.URL.createObjectURL(e)})
+    handleInputs=(e)=>{
+        const {name, value, files}= e.target
+        if (name != 'photo') {
+            this.setState({[name]:value})
+        }
+        console.log(files[0])
+        this.setState({[name]:files[0]})
+        this.setState({url:window.URL.createObjectURL(files[0])})
     }
     handleShowPhoto =()=>{
         this.setState({openPhoto:!this.state.openPhoto})
     }
-    render(){console.log(this.state.element.name)
+    render(){
         const {openModal, closemodal}=this.props
         return (
             <Modal
@@ -68,10 +74,18 @@ export default class ModalAteniense extends React.Component {
                                 <Typography>Subir Nueva Noticia</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <Button variant="contained" component="label">
-                                    Subir Imagen
-                                    <input type="file" hidden onChange={(e)=>this.handleDocuments(e.target.files[0])}/>
-                                </Button>
+                                <Box sx={{display:'inline-flex',justifyContent: 'space-around',width:'100%', overflow:'visible'}}>
+                                    <Button variant="contained" component="label">
+                                        Nueva Noticia
+                                        <input type="file" accept='image/png, image/jpeg' name='photo' hidden onChange={(e)=>this.handleInputs(e)}/>
+                                    </Button>
+                                    <TextField className='textField' id="outlined-multiline-flexible" label="Nombre"
+                                        value={this.state.namephoto} name={'namephoto'} onChange={(e)=>this.handleInputs(e)}
+                                    />
+                                    <Button onClick={()=>this.handleShowPhoto()}>
+                                        <PreviewRounded/>
+                                    </Button>
+                                </Box>
                             </AccordionDetails>
                         </Accordion>
                         <Accordion className="" expanded={this.state.ElementExpanded === 'panel2' && this.state.expanded===true} onChange={()=>this.handleChange('panel2')}>
@@ -82,16 +96,6 @@ export default class ModalAteniense extends React.Component {
                                 
                             </AccordionDetails>
                         </Accordion>
-                        <Accordion className="" expanded={this.state.ElementExpanded === 'panel3' && this.state.expanded===true} onChange={()=>this.handleChange('panel3')}>
-                            <AccordionSummary aria-controls="panel1d-content" id="panel3d-header" expandIcon={<ExpandMoreRounded/>}>
-                                <Typography>Vista Previas de Noticias</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Button onClick={()=>this.handleShowPhoto()} className='buttonNews'>
-                                    <img src={this.state.url} alt='' title=''/>
-                                </Button>
-                            </AccordionDetails>
-                        </Accordion>
                     </Box>
                 <Modal
                     open={this.state.openPhoto}
@@ -99,8 +103,8 @@ export default class ModalAteniense extends React.Component {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <Box onClick={this.handleShowPhoto} sx={style} style={{width:'55%', flexDirection:'row-reverse', alignItems:'flex-start'}}>
-                        <IconButton>
+                    <Box onClick={this.handleShowPhoto} sx={style} style={{width:'55%',height:'95%', flexDirection:'row-reverse', alignItems:'center'}}>
+                        <IconButton sx={{position:'absolute', top:'5%', left:'90%'}}>
                             <CloseRounded/>
                         </IconButton>
                         <img src={this.state.url} alt='' title=''/>

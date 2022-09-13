@@ -25,6 +25,7 @@ function HeaderComponent(){
         {name:'Mi Perfil', key:1, Icon:<AccountCircleRounded/> ,url:'/home/profile'},
         {name:'Inicio', key:2, Icon:<DashboardRounded/>,url:'/home'},
         {name:'Descargables', key:3, Icon:<FileDownloadDoneRounded/>,url:'/home/resources'},
+        {name:'Panel Administrativo', key:3, Icon:<FileDownloadDoneRounded/>,url:'/home/management'},
         {name:'Salir', key:4, Icon:<Logout/>,url:'/'}
     ]
         return(
