@@ -244,7 +244,6 @@ class CreateUser extends React.Component{
                         </StepContent>
                     </Step>
                     <Step>
-                        
                         <StepLabel>Datos Atenas</StepLabel>
                         <StepContent>
                             <Box className="boxStep">
