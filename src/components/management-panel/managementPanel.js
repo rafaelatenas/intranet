@@ -1,10 +1,9 @@
 import { ExpandMoreRounded, PersonAddAlt1Rounded, PersonAddRounded, RecentActorsRounded } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Container, Paper, Step, StepContent, StepLabel, Stepper, TextField, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import React, { useState } from "react";
+import React from "react";
 import HeaderComponent from "../components/headerComponent";
 import CreateUser from "./managementComponents/createUser";
-import GridUsers from "./managementComponents/editUser";
+import EditUser from "./managementComponents/editUser";
 import './managementPanel.css'
 
 
@@ -41,7 +40,7 @@ class ManagementPanel extends React.Component{
                             <Typography>Listar Usuarios</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <GridUsers/>
+                            <EditUser/>
                         </AccordionDetails>
                     </Accordion>
                 </Box>

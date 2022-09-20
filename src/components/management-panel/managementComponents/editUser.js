@@ -52,7 +52,7 @@ const columns = [
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
   ];
 
-export default function GridUsers() {
+export default function EditUser() {
   return (
     <Box sx={{ height: 400, width: '100%' }}>
       <DataGrid

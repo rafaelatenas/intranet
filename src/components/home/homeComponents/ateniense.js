@@ -1,6 +1,6 @@
-import { Box, Container, IconButton, Modal, Skeleton } from "@mui/material";
+import { Box, Button, Container, IconButton, Modal, Skeleton } from "@mui/material";
 import React, { useState } from "react";
-import logoAteniense from '../../../landing/images/normal/Ateniense.png'
+import logoAteniense from '../../../landing/images/comprimido/logo_ateniense.png'
 import xxs from '../../../landing/images/noticias/1.0-xxs.jpg'
 import xs from '../../../landing/images/noticias/1.1-xs.jpg'
 import s from '../../../landing/images/noticias/1.2s.jpg'
@@ -44,7 +44,6 @@ export default function Ateniense() {
                     <h3 style={{margin:0, opacity:.6}}>{obtenerNombreMes(mesActual)+' '+annoActual}</h3>
                 </div>
                 <Box className="containerBody1">
-                    
                     <img style={{width:'100%', height:'auto'}} src={xxl} alt="Logo Ateniense" title=""/>
                     <img style={{width:'100%', height:'auto'}} src={xl} alt="Logo Ateniense" title=""/>
                     <img style={{width:'100%', height:'auto'}} src={l} alt="Logo Ateniense" title=""/>
@@ -54,17 +53,6 @@ export default function Ateniense() {
                     <img style={{width:'100%', height:'auto'}} src={xxs} alt="Logo Ateniense" title=""/>
                 </Box>
             </Box>
-
-            <Modal
-            open={open}
-            onClose={handleAdmin}
-            aria-labelledby="Modal Administrativo Ateniense"
-            aria-describedby="Modal Administrativo para gestión del Ateniense"
-            >
-                <Box className="boxModalAteniense">
-                    <h3 style={{textAlign:'center'}}>Panel Administrativo de <strong style={{color:"#0c508f"}}>El Ateniense</strong></h3>
-                </Box>
-            </Modal>
         </Box>
     )
 }

@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Accordion, AccordionDetails, AccordionSummary, IconButton, TextField } from '@mui/material';
-import { CloseRounded, ExpandMoreRounded, PreviewRounded } from '@mui/icons-material';
+import { Accordion, AccordionDetails, AccordionSummary, IconButton, TextField, Tooltip } from '@mui/material';
+import { CheckRounded, CloseRounded, ExpandMoreRounded, PreviewRounded } from '@mui/icons-material';
 import './ateniense.css'
 
 const style = {
@@ -41,14 +41,14 @@ export default class ModalAteniense extends React.Component {
     }
     
     handleChange = (panel) => {
+        console.log(this.state.photo)
         this.setState({ElementExpanded:panel,expanded:!this.state.expanded });
     };
     handleInputs=(e)=>{
         const {name, value, files}= e.target
-        if (name != 'photo') {
+        if (name !== 'photo') {
             this.setState({[name]:value})
         }
-        console.log(files[0])
         this.setState({[name]:files[0]})
         this.setState({url:window.URL.createObjectURL(files[0])})
     }
@@ -66,7 +66,7 @@ export default class ModalAteniense extends React.Component {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Panel Administrativo del Ateniense
+                        Panel Administrativo <strong style={{color:"#0c508f"}}>El Ateniense</strong>
                     </Typography>
                     <Box sx={{width:'100%', height:'80%'}}>
                         <Accordion className="" expanded={this.state.ElementExpanded === 'panel1' && this.state.expanded===true} onChange={()=>this.handleChange('panel1')}>
@@ -82,9 +82,20 @@ export default class ModalAteniense extends React.Component {
                                     <TextField className='textField' id="outlined-multiline-flexible" label="Nombre"
                                         value={this.state.namephoto} name={'namephoto'} onChange={(e)=>this.handleInputs(e)}
                                     />
-                                    <Button onClick={()=>this.handleShowPhoto()}>
-                                        <PreviewRounded/>
-                                    </Button>
+                                    <section className='areaButtons'>
+                                        <Button onClick={()=>this.handleShowPhoto()} disabled={this.state.photo.length===0?true:false}>
+                                            <Tooltip title='Previsualizar Noticia'>
+                                                <PreviewRounded/>
+                                            </Tooltip>    
+                                        </Button>
+                                        <Button onClick={()=>this.sendNews()} disabled={this.state.photo.length===0?true:false}>
+                                            <Tooltip title='Enviar Noticia'>
+                                                <CheckRounded/>
+                                            </Tooltip>
+                                            
+                                        </Button>
+                                    </section>
+                                    
                                 </Box>
                             </AccordionDetails>
                         </Accordion>

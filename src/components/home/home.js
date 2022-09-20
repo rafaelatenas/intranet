@@ -36,7 +36,7 @@ class Home extends React.Component{
 
                 <Box className="boxContainer">
                     <Container className="atenienseContainer" sx={{display:'flex',flexDirection:'column',alignItems: 'flex-end'}}>
-                        <Button onClick={this.handleNew}>
+                        <Button onClick={this.handleNew} style={{position:'absolute'}}>
                             <AddPhotoAlternateRounded/>
                         </Button>
                         <ModalAteniense
