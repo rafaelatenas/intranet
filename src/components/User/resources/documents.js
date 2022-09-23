@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, ButtonGroup, Card, CardContent, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Icon, IconButton, Link, Modal, Radio, RadioGroup, TextField, Tooltip, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, ButtonGroup, Card, CardContent, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Icon, IconButton, Link, Menu, MenuItem, Modal, Radio, RadioGroup, TextField, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
 import HeaderComponent from '../../components/headerComponent'
 import './documents.css'
@@ -26,6 +26,7 @@ function Documents(){
     const [redirect, setRedirect] = useState(false)
     const [distribution, setDistribution]=useState(false)
     const [delette, setDelette]=useState(false)
+    const [options, setOptions]=useState(false)
     const widthScreen = window.innerWidth
 
     const handleElements = (e)=>{
@@ -91,6 +92,9 @@ function Documents(){
     const hanDelete =()=>{
         setDelette(!delette)
     }
+    const handleOptions=()=>{
+        setOptions(!options)
+    }
 
     const BoxElements = 
     <Container className="ContainerElements">
@@ -135,17 +139,29 @@ function Documents(){
         <div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
                 </Box>
             </Box>
+            <Menu
+                id="demo-positioned-menu"
+                aria-labelledby="demo-positioned-button"
+                anchorEl={Boolean(options)}
+                open={options}
+                onClose={handleOptions}
+                
+            >
+                <MenuItem onClick={handleOptions}>Profile</MenuItem>
+                <MenuItem onClick={handleOptions}>My account</MenuItem>
+                <MenuItem onClick={handleOptions}>Logout</MenuItem>
+            </Menu>
         </div>
         <div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
@@ -154,7 +170,7 @@ function Documents(){
         </div><div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
@@ -163,7 +179,7 @@ function Documents(){
         </div><div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
@@ -172,7 +188,7 @@ function Documents(){
         </div><div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
@@ -181,7 +197,7 @@ function Documents(){
         </div><div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
@@ -190,7 +206,7 @@ function Documents(){
         </div><div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
@@ -199,7 +215,7 @@ function Documents(){
         </div><div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
@@ -208,7 +224,7 @@ function Documents(){
         </div><div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
@@ -217,7 +233,7 @@ function Documents(){
         </div><div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
@@ -226,7 +242,7 @@ function Documents(){
         </div><div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
@@ -235,7 +251,7 @@ function Documents(){
         </div><div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
@@ -244,7 +260,7 @@ function Documents(){
         </div><div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
@@ -253,7 +269,7 @@ function Documents(){
         </div><div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
@@ -262,7 +278,7 @@ function Documents(){
         </div><div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
@@ -271,7 +287,7 @@ function Documents(){
         </div><div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
@@ -280,7 +296,7 @@ function Documents(){
         </div><div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
-                    <IconButton><MoreVertRounded/></IconButton>
+                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
                 <Box className="documentEmbed">
 
