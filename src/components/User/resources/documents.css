@@ -21,6 +21,91 @@
     align-items: center;
     flex-direction: column;
 }
+.containerDocuments{
+    width: 100%;
+    height: 100%;
+    grid-column: 1/4;
+    grid-row: 2/4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.boxDocuments{
+    width: 95%;
+    height: 95%;
+}
+.boxInLine{
+    display: flex;
+    align-items: stretch;
+}
+.GridDocuments{
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(95px, 24%));
+    gap: 4px;
+    justify-content: center;
+    align-items: stretch;
+}
+.itemGrid{
+    width: 100%;
+    height: 100%;
+    min-width: 250px;
+    min-height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.item{
+    width: 80%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.documentEmbed{
+    width: 100%;
+    height: 100%;
+}
+.InLineDocuments{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    gap: 4px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+.PreviewDocuments{
+    width: 60%;
+    height: 100%;
+}
+.itemDocument{
+    width: 100%;
+    height: auto;
+    min-height: 35px;
+    max-height: 50px;
+    min-width: 100px;
+    display: flex;
+    justify-content: space-around;
+}
+.buttonFile{
+    width: 60%;
+    max-width: 456px;
+    justify-content: space-between !important;
+}
+.buttonFile img{
+    width: auto;
+    height: 60%;
+}
+.buttonsItems{
+    display: flex;
+    align-items: center;
+    width: 25%;
+    max-width: 200px;
+    justify-content: space-around;
+}
 /*Mobile*/
 @media screen and (orientation:portrait){
     .TitleofContainer{
@@ -136,6 +221,7 @@
         height: 100%;
         justify-content: center;
     }
+    
 }
 /*Tablet*/
 
@@ -214,8 +300,9 @@
     .ContainerElements{
         z-index: 1300;
         position: absolute;
-        width: 80% !important;
-        height: 90% !important;
+        max-width: 600px !important;
+        height: 65% !important;
+        max-height: 400px;
         background: #fff;
         padding: 0 !important;
         display: flex !important;
@@ -232,13 +319,25 @@
         justify-content: space-between;
     }
     .BoxElements{
-        width: 70%;
+        width: 100%;
         height: 100%;
         display: flex;
-        border-right: 1px solid #0000006e;
         flex-direction: column;
         align-items: center;
-        justify-content: center
+        justify-content: center;
+        justify-content: space-evenly;
+    }
+    .boxButtons{
+        width: 60%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        max-width: 400px;
+    }
+    .PreviewElements{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     .create, .edit{
         width: 95%;
@@ -252,7 +351,10 @@
     .FormControlCreate{
         display: grid !important;
         grid-template-columns: 50% 50%;
-        grid-template-rows: 1fr 80%;
+        grid-template-rows: 1fr 40% 40%;
         width: 90%;
+        height: 75%;
+        justify-items: center;
+        align-items: center;
     }
 }

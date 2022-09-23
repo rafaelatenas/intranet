@@ -30,15 +30,13 @@ function HeaderComponent(){
     ]
         return(
             <Box className="boxHeaderComponent">
-                   <IconButton style={{width:'auto', height:'100%', marginLeft:'1%'}}>
+                <IconButton style={{width:'auto', height:'100%', marginLeft:'1%'}}>
                     <NavLink to={'/home'} style={{width:'auto', height:'100%', display:'flex', alignItems:'center'}}>
                         <img className="logoHeaderComponent" src={logoAtenas} alt="Logo Atenas Grupo Consultor. Elise Blanca" title=""></img>   
                     </NavLink>
                 </IconButton>
-                <IconButton className="buttonMenu"
-                    id="basic-button"
-                    aria-controls={Boolean(anchorEl) ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
+                <IconButton className="buttonMenu" id="basic-button"
+                    aria-controls={Boolean(anchorEl) ? 'basic-menu' : undefined} aria-haspopup="true"
                     aria-expanded={Boolean(anchorEl) ? 'true' : undefined}
                     onClick={handleOpenMenu}
                 >

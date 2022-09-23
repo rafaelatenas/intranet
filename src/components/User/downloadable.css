@@ -21,6 +21,7 @@
     align-items: center;
     flex-direction: column;
 }
+
 /*Mobile*/
 @media screen and (orientation:portrait){
     .TitleofContainer{
@@ -143,9 +144,9 @@
     .containerSources{
         padding: 0 !important;
         display: grid !important;
-        grid-template-columns: 25% 40% 35%;
+        grid-template-columns: 15% 50% 35%;
         grid-template-rows: 10% 70% 20%;
-        align-items: end;
+        align-items: center;
         justify-items: center;
     }
     .boxSources{
@@ -167,6 +168,7 @@
         grid-column: 1/2;
         grid-row: 1/2;
         margin: 0 !important;
+        text-align: center;
     }
     .cardSource1 {
         width: 15%;

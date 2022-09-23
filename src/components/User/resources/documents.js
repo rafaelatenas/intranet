@@ -1,28 +1,33 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardContent, Container, FormControl, FormControlLabel, FormLabel, IconButton, Modal, Radio, RadioGroup, TextField, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, ButtonGroup, Card, CardContent, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Icon, IconButton, Link, Modal, Radio, RadioGroup, TextField, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
 import HeaderComponent from '../../components/headerComponent'
-import footerAtenas from '../../../landing/images/footerAtenas.png'
-// import './documents.css'
-import videos from '../../../landing/images/video.png'
-import documentos from '../../../landing/images/book.png'
-import cursos from '../../../landing/images/cursos.png'
-import SwipeableViews from "react-swipeable-views";
-import { useTheme } from "styled-components";
-import { autoPlay } from 'react-swipeable-views-utils';
-import { ConstructionOutlined, EditRounded, ExpandMoreRounded, FolderRounded, PostAddRounded, UploadFileRounded } from "@mui/icons-material";
+import './documents.css'
+import { CheckRounded, CloseRounded, ConstructionOutlined, DeleteRounded, DriveFolderUploadRounded, EditRounded, ExpandMoreRounded, FileDownloadDoneRounded, FileDownloadRounded, FolderRounded, InsertDriveFileRounded, MoreVertRounded, OpenInNewRounded, PostAddRounded, PreviewRounded, UploadFileRounded, VerticalSplitRounded, ViewHeadlineOutlined, ViewModuleRounded } from "@mui/icons-material";
+import { makeStyles } from "@mui/styles";
+/* SVG Documents */
+import file from '../../../landing/icon/file.svg'
+import filePDF from '../../../landing/icon/file-pdf.svg'
+import fileExcel from '../../../landing/icon/file-excel.svg'
+import filePowerPoint from '../../../landing/icon/file-powerpoint.svg'
+
 
 function Documents(){
 
     const [openModalContent, setOpenModalContent] = useState(false);
     const [documents, setDocuments] = useState([{name:'', url:''}]);
-    const [documentsT, setDocumentsT] = useState()
-    const [election, setElection] =useState(false);
+    const [documentsT, setDocumentsT] = useState([])
+    const [election, setElection] =useState('');
     const [disabled, setDisabled]=useState(true)
     const [url, setUrl] = useState([]);
     const [expanded, setExpanded] = useState(false);
     const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
     const [error, setError] = useState(false);
     const [redirect, setRedirect] = useState(false)
+    const [distribution, setDistribution]=useState(false)
+    const [delette, setDelette]=useState(false)
+    const widthScreen = window.innerWidth
+
     const handleElements = (e)=>{
         console.log(e)
     }
@@ -35,186 +40,749 @@ function Documents(){
     }
     
     const handleElection = (event) => {
+        console.log(event.target.value)
         setElection(event.target.value);
         setDisabled(!disabled)
     }
     const handleDocuments = (e) =>{
+        console.log(e)
         if (name==='') {
             setError(true)
         }
-        switch (e.length === 1) {
+        switch (e.length > 1) {
             case true:
-                setDocuments({name:e[0].name ,url:window.URL.createObjectURL(e[0])})
-                setUrl(window.URL.createObjectURL(e[0]))
+                setDocumentsT(Object.values(e))
                 break;
             case false:
-                setDocumentsT(Object.values(e))
+                setDocumentsT(e)
+                setUrl(window.URL.createObjectURL(e[0]))
                 break;
             default:
                 break;
         }
     }
-
     const handleChange = (panel) => (event, isExpanded) => {
       setExpanded(isExpanded ? panel : false);
-      console.log(isExpanded)
     };
+    const handlDirectDocument =(e)=>{
+        console.log(e)
+        setUrl(window.URL.createObjectURL(e))
+    }
     const handleName = (e) => {
-        setName(e.target.value);
+        const {name, value} = e.target
+        switch (name) {
+            case 'name':
+                setName(value);
+                break;
+            case 'description':
+                setDescription(value);
+                break;
+            default:
+                break;
+        }
     };
+    const handleDistribution=()=>{
+        setDistribution(!distribution)
+    }
     const handleRedirect = (panel) => (event, isExpanded) =>  {
         console.log(panel)
         setUrl(window.URL.createObjectURL(panel))
     };
+    const hanDelete =()=>{
+        setDelette(!delette)
+    }
 
     const BoxElements = 
     <Container className="ContainerElements">
         <h2>Panel de Gestión de Documentos</h2>
         <Box className="Elements">
             <Box className="BoxElements">
-                <Accordion className="create" expanded={expanded === 'create'} onChange={handleChange('create')}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreRounded />}
-                        aria-controls="panel1bh-content"
-                        id="panel1bh-header"
+                <FormControl className="FormControlCreate">
+                    <FormLabel style={{gridColumn:'1/3'}}>¿Desea subir un Documento o carpeta de Documentos?</FormLabel>
+                    <RadioGroup
+                        aria-labelledby="demo-controlled-radio-buttons-group"
+                        name="controlled-radio-buttons-group"
+                        value={election} onChange={handleElection} style={{gridColumn:'1/2'}}
                     >
-                        <Typography sx={{ width: 'auto', flexShrink: 0 }}>
-                            <UploadFileRounded/>Crear Archivo o Carpeta de Archivos
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails className="AccordionDetailsCreate">
-                        <FormControl className="FormControlCreate">
-                            <FormLabel>¿Desea crear una carpeta de Archivos?</FormLabel>
-                            <RadioGroup
-                                aria-labelledby="demo-controlled-radio-buttons-group"
-                                name="controlled-radio-buttons-group"
-                                value={election}
-                                onChange={handleElection}
-                                style={{gridColumn:'1/2'}}
-                            >
-                                <FormControlLabel value="SI" control={<Radio/>} label="SI" />
-                                <FormControlLabel value="NO" control={<Radio/>} label="NO" />
-                            </RadioGroup>
-                            <TextField style={{overflow:'visible'}} disabled={election==='NO'||election===''?true:false} label="Nombre" name="name" value={name} onChange={handleName} variant="outlined"/>
-                        </FormControl>
-                        <Button variant="contained" component="label" disabled={election!=='' && name!==''?false:true}>
-                            {election!=='NO'?'Subir Archivos':'Subir Archivo'}
-                            {election!=='NO'?
-                                <input type="file" hidden multiple onChange={(e)=>handleDocuments(e.target.files)}/>:
-                                <input type="file" hidden onChange={(e)=>handleDocuments(e.target.files)}/>
+                        <FormControlLabel value="Carpeta de Documentos" control={<Radio/>} label="Carpeta de Documentos" />
+                        <FormControlLabel value="Documento" control={<Radio/>} label="Documento" />
+                    </RadioGroup>
+                    <TextField style={{overflow:'visible'}} disabled={election==='Documento'?true:false} inputProps={{ maxLength: 24 }}label="Nombre de la Carpeta" name="name" value={name} onChange={handleName} variant="outlined"/>
+                    <TextField style={{overflow:'visible'}} multiline disabled={election!==''?false:true} inputProps={{ maxLength: 250 }}label="Descripción  del Contenido" name="description" value={description} onChange={handleName} variant="outlined"/>
+                </FormControl>
+
+                <section className="boxButtons">
+                    <Tooltip title={election!=='Documento'?'Cargar Archivos':'Cargar Archivo'}>
+                        <Button variant="contained" component="label" disabled={election===''?true:false}>
+                            {election!=='Documento'?<DriveFolderUploadRounded/>:<UploadFileRounded/>}
+                            {election!=='Documento'?
+                                <input type="file" hidden accept=".doc, .pdf, .ptt, .xml .docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple onChange={(e)=>handleDocuments(e.target.files)}/>:
+                                <input type="file" hidden accept=".doc, .pdf, .ptt, .xml .docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" onChange={(e)=>handleDocuments(e.target.files)}/>
                             }
                         </Button>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion className="edit" expanded={expanded === 'edit'} onChange={handleChange('edit')}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreRounded />}
-                        aria-controls="panel1bh-content"
-                        id="panel1bh-header"
-                    >
-                        <Typography sx={{ width: 'auto', flexShrink: 0 }}>
-                            <EditRounded/>Editar Archivos
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <FormControl>
-                            <FormLabel>¿Desea crear una carpeta de Archivos?</FormLabel>
-                            <RadioGroup
-                                aria-labelledby="demo-controlled-radio-buttons-group"
-                                name="controlled-radio-buttons-group"
-                                value={election}
-                                onChange={handleElection}
-                            >
-                                <FormControlLabel value="SI" control={<Radio/>} label="SI" />
-                                <FormControlLabel value="NO" control={<Radio/>} label="NO" />
-                            </RadioGroup>
-                            <Button
-                                variant="contained"
-                                component="label"
-                                disabled={election!==''?false:true}
-                                >
-                                {election!=='NO'?'Subir Archivos':'Subir Archivo'}
-                                {election!=='NO'?
-                                    <input type="file" hidden multiple onChange={(e)=>handleDocuments(e.target)}/>:
-                                    <input type="file" hidden onChange={(e)=>handleDocuments(e.target.files)}/>
-                                }
-                            </Button>
-                        </FormControl>
-                    </AccordionDetails>
-                </Accordion>
-            </Box>
-            <Box className="PreviewElements">
-                <h3>Visualizador de Elements</h3>
-                {election==='SI'?
-                <Accordion className="edit" expanded={expanded === 'preview'} onChange={handleChange('preview')}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreRounded />}
-                        aria-controls="panel1bh-content"
-                        id="panel1bh-header"
-                    >
-                            <Typography  sx={{ width: 'auto', flexShrink: 0 }}>
-                                <FolderRounded/>{name}
-                            </Typography>
-                        
-                    </AccordionSummary>
-                    <AccordionDetails>
-                    {Object.values(documentsT).map((doc)=>( console.log(doc),
-                            <Typography onClick={()=>handleRedirect(doc)} sx={{ width: 'auto', flexShrink: 0 }}>
-                                <FolderRounded/>{doc.name}
-                            </Typography>
-                        ))}
-                        
-                        
-                    </AccordionDetails>
-                {election==='SI'?<embed src={url} width="640" height="480" title="Title of my video"/>:<embed src={url} width="640" height="480" title="Title of my video"/>}
-                </Accordion>:''}
+                    </Tooltip>
+                    <Tooltip title={election!=='Documento'?'Subir Archivos':'Subir Archivo'}>
+                        <Button variant="contained" component="label" disabled={election!=='NO'? documentsT.length>=1 && name!==''?false:true :documentsT.length>=1?false:true}>
+                            <CheckRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
             </Box>
         </Box>
     </Container>;
+    /* Contenedor y Vista de Documentos */
+    const GridDocuments = <Box className="boxDocuments GridDocuments">
+        <div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
 
+                </Box>
+            </Box>
+        </div>
+        <div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
 
-    // const [activeStep, setActiveStep] = React.useState(0);
-    // const handleStepChange = (step) => {
-    // setActiveStep(step);
-    // };
-    // const SwipeableViewsMobile = 
-    //     <SwipeableViews
-    //         index={activeStep+1} onChangeIndex={handleStepChange}
-    //         enableMouseEvents className="carousel"
-    //     >
-    //         {recursos.map((recurso)=>(
-    //             <Card key={recurso.key} className='cardSource1'>
-    //                 <CardContent className="contentSource1">
-    //                     <IconButton className="buttonContent" onClick={()=>handleOpenElement(recurso.key)}>
-    //                         <p>{recurso.name}</p>
-    //                         <img src={recurso.imagen} alt={`Logo Atenas de ${recurso.name}`} title=""/>
-    //                     </IconButton>
-    //                 </CardContent>
-    //             </Card>
-    //         ))}
-    //     </SwipeableViews>
-    // const CardsViewsDesktop = 
-    //     <Box className="boxSources">
-    //         {recursos.map((recurso)=>(
-    //             <Card key={recurso.key} className='cardSource1'>
-    //                 <CardContent className="contentSource1">
-    //                     <IconButton className="buttonContent" href={`/home/resources/${recurso.url}`}>
-    //                         <p>{recurso.name}</p>
-    //                         <img src={recurso.imagen} alt={`Logo Atenas de ${recurso.name}`} title=""/>
-    //                     </IconButton>
-    //                 </CardContent>
-    //             </Card>
-    //         ))}
-    //     </Box>
+                </Box>
+            </Box>
+        </div><div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
+
+                </Box>
+            </Box>
+        </div><div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
+
+                </Box>
+            </Box>
+        </div><div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
+
+                </Box>
+            </Box>
+        </div><div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
+
+                </Box>
+            </Box>
+        </div><div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
+
+                </Box>
+            </Box>
+        </div><div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
+
+                </Box>
+            </Box>
+        </div><div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
+
+                </Box>
+            </Box>
+        </div><div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
+
+                </Box>
+            </Box>
+        </div><div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
+
+                </Box>
+            </Box>
+        </div><div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
+
+                </Box>
+            </Box>
+        </div><div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
+
+                </Box>
+            </Box>
+        </div><div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
+
+                </Box>
+            </Box>
+        </div><div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
+
+                </Box>
+            </Box>
+        </div><div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
+
+                </Box>
+            </Box>
+        </div><div className="itemGrid">
+            <Box className="item">
+                <Tooltip title="Opciones">
+                    <IconButton><MoreVertRounded/></IconButton>
+                </Tooltip>
+                <Box className="documentEmbed">
+
+                </Box>
+            </Box>
+        </div>
+    </Box>
+    const InLineDocuments = <Box className="boxDocuments boxInLine">
+        <Box className="InLineDocuments">
+            <div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div>
+            <div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div><div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div><div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div><div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div><div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div><div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div><div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div><div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div><div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div><div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div><div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div><div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div><div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div><div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div><div className="itemDocument">
+                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
+                <section className="buttonsItems">
+                    <Tooltip title='Descargar'>
+                        <Button component={Link}
+                            href="./abcf32x.pdf"
+                            download="How-to-download-file.pdf"
+                        >
+                            <FileDownloadRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Abrir en Otra Pestaña'>
+                        <Button
+                            component={Link}
+                            href="//abcf32x.pdf"
+                            target={'_blank'}
+                        >
+                            <OpenInNewRounded/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title='Eliminar'>
+                        <Button
+                            onClick={()=>hanDelete()}
+                        >
+                            <DeleteRounded/>
+                        </Button>
+                    </Tooltip>
+                </section>
+            </div>
+        </Box>
+        {widthScreen<500?'':<Box className="PreviewDocuments"></Box>}
+    </Box>
+
     return(
         <Container className="ContainerContentUser">
             <HeaderComponent/>
             <Container className="containerSources">
                 <p className="TitleofContainer">Documentos</p>
-                <IconButton onClick={handleOpenElement}>
-                    <PostAddRounded/>
-                </IconButton>
-                <img className="imageFooter" src={footerAtenas} alt="Pie de Pagina Atenas" title=""/>
+                {widthScreen<500?'':<IconButton onClick={handleDistribution} sx={{position:'fixed', top:'15%', left:'95%'}}>
+                    {distribution?<ViewModuleRounded fontSize="large"/>:<VerticalSplitRounded fontSize="large"/>}
+                </IconButton>}
+                {widthScreen<500?'':
+                    <IconButton onClick={handleOpenElement} sx={{position:'fixed', top:'15%', left:'90%'}}>
+                        <PostAddRounded fontSize="large"/>
+                    </IconButton>
+                }
+                <Dialog
+                open={delette}
+                onClose={hanDelete}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                    ¿Está seguro de realizar esta acción?
+                    <IconButton onClick={()=>hanDelete()}>
+                        <CloseRounded/>
+                    </IconButton>
+                    </DialogTitle>
+                    <DialogContent dividers>
+                        <Typography gutterBottom id="alert-dialog-description">
+                            Let Google help apps determine location. This means sending anonymous
+                            location data to Google, even when no apps are running.
+                        </Typography>
+                        <Typography gutterBottom id="alert-dialog-description">
+                            Let Google help apps determine location. This means sending anonymous
+                            location data to Google, even when no apps are running.
+                        </Typography>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={hanDelete}>Eliminar</Button>
+                    </DialogActions>
+                </Dialog>
                 <Modal
                     open={openModalContent}
                     onClose={handleCloseElement}
@@ -224,9 +792,35 @@ function Documents(){
                 >
                     {BoxElements}
                 </Modal>
-                
+                <Box className="containerDocuments">
+                    {distribution?GridDocuments:InLineDocuments}
+                    {/* <Box className="boxDocuments">
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
+                    </Box> */}
+                </Box>
             </Container>
         </Container>
     )
 }
 export default Documents;
+
+const styles = makeStyles(() => ({
+    boxDocuments:{
+
+    }
+}))

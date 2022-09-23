@@ -92,7 +92,6 @@ export default class ModalAteniense extends React.Component {
                                             <Tooltip title='Enviar Noticia'>
                                                 <CheckRounded/>
                                             </Tooltip>
-                                            
                                         </Button>
                                     </section>
                                     
