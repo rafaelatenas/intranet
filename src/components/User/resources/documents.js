@@ -126,7 +126,7 @@ function Documents(){
                         </Button>
                     </Tooltip>
                     <Tooltip title={election!=='Documento'?'Subir Archivos':'Subir Archivo'}>
-                        <Button variant="contained" component="label" disabled={election!=='NO'? documentsT.length>=1 && name!==''?false:true :documentsT.length>=1?false:true}>
+                        <Button variant="contained" component="label" disabled={election!=='Documento'? documentsT.length>=1 && name!==''?false:true :documentsT.length>=1?false:true}>
                             <CheckRounded/>
                         </Button>
                     </Tooltip>
@@ -137,7 +137,31 @@ function Documents(){
     /* Contenedor y Vista de Documentos */
     const GridDocuments = <Box className="boxDocuments GridDocuments">
         <div className="itemGrid">
-            <Box className="item">
+            <Box className="item"><Menu
+                id="demo-positioned-menu"
+                aria-labelledby="demo-positioned-button"
+                anchorEl={Boolean(options)}
+                open={options}
+                onClose={handleOptions}
+                PaperProps={{
+                    style: {
+                      maxHeight: 48 * 4.5,
+                      width: '20ch',
+                    },
+                  }}
+                  anchorOrigin={{
+                    vertical: 55*4,
+                    horizontal: 45*3,
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
+            >
+                <MenuItem onClick={handleOptions}>Profile</MenuItem>
+                <MenuItem onClick={handleOptions}>My account</MenuItem>
+                <MenuItem onClick={handleOptions}>Logout</MenuItem>
+            </Menu>
                 <Tooltip title="Opciones">
                     <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
                 </Tooltip>
@@ -145,18 +169,7 @@ function Documents(){
 
                 </Box>
             </Box>
-            <Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
-                anchorEl={Boolean(options)}
-                open={options}
-                onClose={handleOptions}
-                
-            >
-                <MenuItem onClick={handleOptions}>Profile</MenuItem>
-                <MenuItem onClick={handleOptions}>My account</MenuItem>
-                <MenuItem onClick={handleOptions}>Logout</MenuItem>
-            </Menu>
+            
         </div>
         <div className="itemGrid">
             <Box className="item">

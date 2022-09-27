@@ -285,13 +285,13 @@
     }
     @media screen and (min-width:1500px) {
         .descriptionButton p{
-            font-size: 20px;
+            font-size: 15px;
         }
         .spaceAtenas{
             max-width: 330px;
         }
         .link p{
-            font-size: 20px;
+            font-size: 15px;
         }
         .cardContentButtons3 p{
             font-size: 22px;
