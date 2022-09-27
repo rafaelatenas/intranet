@@ -1,0 +1,38 @@
+.ContainerAdmin{
+    width: 100%;
+    height: 100%;
+    max-width: none !important;
+    padding: 0% !important;
+    margin: 0% !important;
+    display: grid !important;
+    grid-template-columns: 100%;
+    grid-template-rows: 15% 85%;
+    align-items: center;
+    justify-items: center;
+}
+
+.ContainerAdmin{
+    display: none;
+}
+
+@media screen and (orientation:landscape) and (min-width:1360px){
+    .ContainerAdmin{
+        background:#fff;
+    }
+    .boxAdmin{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .containerCreate, .containerEdit{
+        padding: 0% !important;
+        width: 100%;
+        height: 100%;
+    }
+    .Accordion{
+        width: 90%;
+    }
+}

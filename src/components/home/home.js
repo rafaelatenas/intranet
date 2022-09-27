@@ -1,9 +1,13 @@
-import { Box, Container, IconButton } from "@mui/material"
+import { Box, Button, Container, IconButton } from "@mui/material"
 import React from "react"
 import './home.css'
 import Ateniense from "./homeComponents/ateniense"
 import ButtonsInteracction from "./homeComponents/interactionsHome"
 import HeaderComponent from "../components/headerComponent"
+import axios from "axios"
+import { AddAPhoto, AddPhotoAlternateRounded, ThirtyFpsSelectOutlined } from "@mui/icons-material"
+import ModalElements from "../management-panel/managementComponents/elementsToform"
+import ModalAteniense from "./homeComponents/modalAteniense"
 
 class Home extends React.Component{
 
@@ -12,39 +16,39 @@ class Home extends React.Component{
         this.handleActiveClick = this.handleActiveClick.bind(this);
         this.state={
             activo:'',
-            
+            openModal:false,
+            dates:[]
         }
     }
     handleActiveClick(data) {
         this.setState({activo:data})
     }
-
-    render(){console.log(this.state.activo)
+    handleNew=(e)=>{
+        console.log(e)
+        this.setState({openModal:!this.state.openModal})
+    }
+    render(){
         return(
             <Container className="containerHome">
                 <HeaderComponent
                     data={this.state.activo}
                 />
-                {/* <Box className="boxHeader">
-                    <IconButton style={{width:'auto', height:'100%', marginLeft:'1%'}}>
-                        <NavLink to={'/home'} style={{width:'auto', height:'100%', display:'flex', alignItems:'center'}}>
-                            <img className="logoHeader" src={logoAtenas} alt="Logo Atenas Grupo Consultor. Elise Blanca" title=""></img>   
-                        </NavLink>
-                    </IconButton>
-                    <IconButton style={{width:'auto', height: 'auto', marginRight:'1%'}}>
-                        <NavLink to={'/'} className='logOut'>
-                            <Logout/>
-                        </NavLink>
-                    </IconButton>
-                </Box> */}
+
                 <Box className="boxContainer">
-                    <Container className="atenienseContainer">
+                    <Container className="atenienseContainer" sx={{display:'flex',flexDirection:'column',alignItems: 'flex-end'}}>
+                        <Button onClick={this.handleNew} style={{position:'absolute'}}>
+                            <AddPhotoAlternateRounded/>
+                        </Button>
+                        <ModalAteniense
+                            openModal={this.state.openModal}
+                            closemodal={()=>this.handleNew()}
+                        />
                         <Ateniense/>
                     </Container>
                     <Container className="buttonsContainer">
-                        <ButtonsInteracction
-                            evento={this.handleActiveClick}
-                        />
+                            <ButtonsInteracction
+                                evento={this.handleActiveClick}
+                            />
                     </Container>
                 </Box>
             </Container>
