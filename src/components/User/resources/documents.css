@@ -51,6 +51,7 @@
     height: 100%;
     min-width: 250px;
     min-height: 250px;
+    max-height: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,16 +68,15 @@
 .documentEmbed{
     width: 100%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .InLineDocuments{
     width: 100%;
     height: 100%;
     overflow-y: auto;
-    display: flex;
-    gap: 4px;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    align-items: stretch;
 }
 .PreviewDocuments{
     width: 60%;
@@ -103,8 +103,8 @@
 .buttonsItems{
     display: flex;
     align-items: center;
-    width: 25%;
-    max-width: 200px;
+    width: 100%;
+    max-width: 260px;
     justify-content: space-around;
 }
 /*Mobile*/
@@ -244,21 +244,12 @@
         grid-column: 1/4;
         grid-row: 2/3;
     }
-    .TitleofContainer {
-        border: 1px solid #61616161;
-        padding: 2.5%;
-        border-radius: 0.5em;
-        color: #616161;
-        width: auto;
-        min-width: 150px;
-        grid-column: 1/2;
-        grid-row: 1/2;
-        margin: 0 !important;
-    }
+
     .cardSource1 {
         width: 20%;
         min-width: 150px;
-        height: 80%;
+        max-width: 250px;
+        height: 65%;
         border: 1px solid #61616157;
         border-radius: 1.2em !important;
         

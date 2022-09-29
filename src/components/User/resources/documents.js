@@ -1,15 +1,14 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, ButtonGroup, Card, CardContent, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Icon, IconButton, Link, Menu, MenuItem, Modal, Radio, RadioGroup, TextField, Tooltip, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, ButtonGroup, Card, CardContent, Collapse, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Icon, IconButton, Link, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Menu, MenuItem, Modal, Radio, RadioGroup, TextField, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
 import HeaderComponent from '../../components/headerComponent'
 import './documents.css'
-import { CheckRounded, CloseRounded, ConstructionOutlined, DeleteRounded, DriveFolderUploadRounded, EditRounded, ExpandMoreRounded, FileDownloadDoneRounded, FileDownloadRounded, FolderRounded, InsertDriveFileRounded, MoreVertRounded, OpenInNewRounded, PostAddRounded, PreviewRounded, UploadFileRounded, VerticalSplitRounded, ViewHeadlineOutlined, ViewModuleRounded } from "@mui/icons-material";
+import { CheckRounded, CloseRounded, ConstructionOutlined, DeleteRounded, DriveFolderUploadRounded, EditRounded, ExpandMoreRounded, FileDownloadDoneRounded, FileDownloadRounded, FolderRounded, InsertDriveFileRounded, MoreVertRounded, OpenInNewRounded, PostAddRounded, PreviewRounded, StarBorder, UploadFileRounded, VerticalSplitRounded, ViewHeadlineOutlined, ViewModuleRounded } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 /* SVG Documents */
 import file from '../../../landing/icon/file.svg'
 import filePDF from '../../../landing/icon/file-pdf.svg'
 import fileExcel from '../../../landing/icon/file-excel.svg'
 import filePowerPoint from '../../../landing/icon/file-powerpoint.svg'
-
 
 function Documents(){
 
@@ -26,8 +25,17 @@ function Documents(){
     const [redirect, setRedirect] = useState(false)
     const [distribution, setDistribution]=useState(false)
     const [delette, setDelette]=useState(false)
-    const [options, setOptions]=useState(false)
+    const [anchorEl, setAnchorEl]=useState(null)
     const widthScreen = window.innerWidth
+
+    const prueba = [
+        {id:0, name:'Nombre de Archivo de Prueba Bastante Largo.pdf', child: null, secundaryText:'Ejemplo de texto descriptivo', url:'./abcf32x.pdf'},
+        {id:1, name:'Nombre de Carpeta de Prueba Bastante Largo', child: [
+                {id:0,name:'Nombre de Archivo de Prueba Bastante Largo.pdf', url:'./abcf32x.pdf'},
+                {id:1,name:'Nombre de Archivo de Prueba Bastante Largo.pdf', url:'./abcf32x.pdf'},
+            ], secundaryText:'Ejemplo de texto descriptivo', url:null},
+        {id:2, name:'Nombre de Archivo de Prueba Bastante Largo.pdf', child: null, secundaryText:'Ejemplo de texto descriptivo' ,url:'./abcf32x.pdf'}
+    ]
 
     const handleElements = (e)=>{
         console.log(e)
@@ -89,12 +97,16 @@ function Documents(){
         console.log(panel)
         setUrl(window.URL.createObjectURL(panel))
     };
-    const hanDelete =()=>{
+    const hanDelete =(e)=>{
         setDelette(!delette)
     }
-    const handleOptions=()=>{
-        setOptions(!options)
-    }
+    const handleClick = (event,id) => {
+        console.log(id)
+        setAnchorEl(event.currentTarget);
+      };
+      const handleClose = () => {
+        setAnchorEl(null);
+      };
 
     const BoxElements = 
     <Container className="ContainerElements">
@@ -136,42 +148,65 @@ function Documents(){
     </Container>;
     /* Contenedor y Vista de Documentos */
     const GridDocuments = <Box className="boxDocuments GridDocuments">
-        <div className="itemGrid">
-            <Box className="item"><Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
-                anchorEl={Boolean(options)}
-                open={options}
-                onClose={handleOptions}
-                PaperProps={{
-                    style: {
-                      maxHeight: 48 * 4.5,
-                      width: '20ch',
-                    },
-                  }}
-                  anchorOrigin={{
-                    vertical: 55*4,
-                    horizontal: 45*3,
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                  }}
-            >
-                <MenuItem onClick={handleOptions}>Profile</MenuItem>
-                <MenuItem onClick={handleOptions}>My account</MenuItem>
-                <MenuItem onClick={handleOptions}>Logout</MenuItem>
-            </Menu>
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
+        {prueba.map((value)=>(
+            <div className="itemGrid">
+                <Box className="item">
+                    
+                    <Tooltip title="Opciones">
+                        <IconButton onClick={(e)=>handleClick(e, value.id)}><MoreVertRounded/></IconButton>
+                    </Tooltip>
+                    <Box className="documentEmbed">
+                        <IconButton>
+                            {value.child!=null?<FolderRounded style={{fontSize:'5em', color:'#000'}}/>:<InsertDriveFileRounded style={{fontSize:'5em', color:'#000'}}/>}
+                        </IconButton>
+                        <p>{value.secundaryText}</p>
+                    </Box>
                 </Box>
-            </Box>
-            
-        </div>
-        <div className="itemGrid">
+            </div>
+        ))}
+        <Menu
+                        id="demo-positioned-menu"
+                        aria-labelledby="demo-positioned-button"
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                        PaperProps={{
+                            elevation: 0,
+                            sx: {
+                              overflow: 'visible',
+                              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                              mt: 1.5,
+                              '& .MuiAvatar-root': {
+                                width: 32,
+                                height: 32,
+                                ml: -0.5,
+                                mr: 1,
+                                // top:pp,
+                                // left:pp,
+                              },
+                              '&:before': {
+                                content: '""',
+                                display: 'block',
+                                position: 'absolute',
+                                top: 0,
+                                right: 10,
+                                width: 10,
+                                height: 10,
+                                bgcolor: 'background.paper',
+                                transform: 'translateY(-50%) rotate(45deg)',
+                                zIndex: 0,
+                              },
+                            },
+                          }}
+                            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    >
+                        {/* {value.child!=null?'Descargar Archivo':'Descargar Todo'} */}
+                        <MenuItem>Descargar</MenuItem>
+                        <MenuItem>Abrir</MenuItem>
+                        <MenuItem onClick={()=>hanDelete()}>Eliminar</MenuItem>
+                    </Menu>
+        {/* <div className="itemGrid">
             <Box className="item">
                 <Tooltip title="Opciones">
                     <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
@@ -315,10 +350,88 @@ function Documents(){
 
                 </Box>
             </Box>
-        </div>
+        </div> */}
     </Box>
+    const [openItem, setOpenItem]=useState(false)
+    const handleItem=(e)=>{
+        setOpenItem(!openItem)
+    }
     const InLineDocuments = <Box className="boxDocuments boxInLine">
-        <Box className="InLineDocuments">
+        <List dense={true} className="InLineDocuments">
+            {prueba.map((value)=>(
+                <ListItem key={value.id}
+                    secondaryAction={
+                        value.child!=null?
+                        <section className="buttonsItems">
+                            <Tooltip title='Eliminar'>
+                                <Button
+                                    onClick={()=>hanDelete()}
+                                >
+                                    <DeleteRounded/>
+                                </Button>
+                            </Tooltip>
+                            <Tooltip title='Expandir Carpeta'>
+                                <Button
+                                    onClick={()=>handleItem()}
+                                >
+                                    <ExpandMoreRounded/>
+                                </Button>
+                            </Tooltip>
+                        </section>:
+                        <section className="buttonsItems">
+                            <Tooltip title='Descargar'>
+                                <Button component={Link}
+                                    href={value.url}
+                                    download={value.name}
+                                >
+                                    <FileDownloadRounded/>
+                                </Button>
+                            </Tooltip>
+                            <Tooltip title='Abrir en Otra Pestaña'>
+                                <Button
+                                    component={Link}
+                                    href="//abcf32x.pdf"
+                                    target={'_blank'}
+                                >
+                                    <OpenInNewRounded/>
+                                </Button>
+                            </Tooltip>
+                            <Tooltip title='Eliminar'>
+                                <Button
+                                    onClick={()=>hanDelete()}
+                                >
+                                    <DeleteRounded/>
+                                </Button>
+                            </Tooltip>
+                        </section>
+                    }
+                >
+                <ListItemAvatar>
+                    <Avatar>
+                        {value.child!=null?<FolderRounded/>:<InsertDriveFileRounded/>}
+                    </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                    primary={value.name}
+                    secondary={value.secundaryText}
+                />
+                {value.child!=null?
+                    <Collapse in={openItem} timeout="auto" >
+                        <List component="div" disablePadding>
+                            <ListItemButton sx={{ pl: 4 }}>
+                                <ListItem>
+                                    <StarBorder/>
+                                </ListItem>
+                                <ListItemText primary="Starred" />
+                            </ListItemButton>
+                        </List>
+                    </Collapse>:''
+                }
+                </ListItem>
+              ))}
+        </List>
+        {/* <Box className="InLineDocuments">
+             
             <div className="itemDocument">
                 <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
                 <section className="buttonsItems">
@@ -769,7 +882,7 @@ function Documents(){
                     </Tooltip>
                 </section>
             </div>
-        </Box>
+        </Box> */}
         {widthScreen<500?'':<Box className="PreviewDocuments"></Box>}
     </Box>
 
