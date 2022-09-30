@@ -1,15 +1,13 @@
-import { Box, IconButton, ListItemIcon, Menu, MenuItem, MenuList, Popover, Typography } from "@mui/material";
+import { Box, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 import logoAtenas from '../../landing/images/Logo_Atenas_EliseBlanca.png'
 import { NavLink } from "react-router-dom";
 import './headerComponents.css'
 import {MenuRounded, AccountCircleRounded, DashboardRounded, FileDownloadDoneRounded, Logout} from '@mui/icons-material';
-import { height } from "@mui/system";
 
 function HeaderComponent(){
 
     const widthScreen = window.innerWidth
-    const HeightScreen = window.innerHeight
     const [anchorEl, setAnchorEl]=useState(null)
     const [select, setSelect]=useState(2)
 
@@ -41,7 +39,6 @@ function HeaderComponent(){
                     onClick={handleOpenMenu}
                 >
                     <MenuRounded style={{fill:'#616161'}}/>
-                    
                 </IconButton>
                 
                 <Menu

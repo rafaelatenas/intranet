@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, ButtonGroup, Card, CardContent, Collapse, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Icon, IconButton, Link, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Menu, MenuItem, Modal, Radio, RadioGroup, TextField, Tooltip, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Icon, IconButton, Link, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Menu, MenuItem, Modal, Radio, RadioGroup, TextField, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
 import HeaderComponent from '../../components/headerComponent'
 import './documents.css'
@@ -9,6 +9,7 @@ import file from '../../../landing/icon/file.svg'
 import filePDF from '../../../landing/icon/file-pdf.svg'
 import fileExcel from '../../../landing/icon/file-excel.svg'
 import filePowerPoint from '../../../landing/icon/file-powerpoint.svg'
+import { TransitionGroup } from "react-transition-group";
 
 function Documents(){
 
@@ -47,7 +48,6 @@ function Documents(){
     const handleCloseElement = (e)=>{
         setOpenModalContent(false)
     }
-    
     const handleElection = (event) => {
         console.log(event.target.value)
         setElection(event.target.value);
@@ -70,13 +70,6 @@ function Documents(){
                 break;
         }
     }
-    const handleChange = (panel) => (event, isExpanded) => {
-      setExpanded(isExpanded ? panel : false);
-    };
-    const handlDirectDocument =(e)=>{
-        console.log(e)
-        setUrl(window.URL.createObjectURL(e))
-    }
     const handleName = (e) => {
         const {name, value} = e.target
         switch (name) {
@@ -93,10 +86,6 @@ function Documents(){
     const handleDistribution=()=>{
         setDistribution(!distribution)
     }
-    const handleRedirect = (panel) => (event, isExpanded) =>  {
-        console.log(panel)
-        setUrl(window.URL.createObjectURL(panel))
-    };
     const hanDelete =(e)=>{
         setDelette(!delette)
     }
@@ -107,7 +96,12 @@ function Documents(){
       const handleClose = () => {
         setAnchorEl(null);
       };
-
+    const [expand, setExpand]=useState(false)
+    const [id, setId]=useState()
+    const handleExpand =(item)=>{
+        setId(item)
+        setExpand(!expand)
+    }
     const BoxElements = 
     <Container className="ContainerElements">
         <h2>Panel de Gestión de Documentos</h2>
@@ -148,219 +142,120 @@ function Documents(){
     </Container>;
     /* Contenedor y Vista de Documentos */
     const GridDocuments = <Box className="boxDocuments GridDocuments">
-        {prueba.map((value)=>(
-            <div className="itemGrid">
-                <Box className="item">
-                    
-                    <Tooltip title="Opciones">
-                        <IconButton onClick={(e)=>handleClick(e, value.id)}><MoreVertRounded/></IconButton>
-                    </Tooltip>
-                    <Box className="documentEmbed">
-                        <IconButton>
+        {(prueba.concat(prueba)).map((value)=>(
+            <Card className="item" sx={{overflow:'visible'}} key={value.id}>
+                <CardHeader
+                    sx={{p:0}}
+                    action={
+                        <Tooltip title="Opciones">
+                            <IconButton onClick={(e)=>handleClick(e, value.id)}><MoreVertRounded/></IconButton>
+                        </Tooltip>
+                    }
+                />
+                <CardContent sx={{p:0,display:'flex',flexDirection: 'column',alignItems: 'center',width: '100%',height: 'auto'}}>
+                    <IconButton sx={{p:0}} >
                             {value.child!=null?<FolderRounded style={{fontSize:'5em', color:'#000'}}/>:<InsertDriveFileRounded style={{fontSize:'5em', color:'#000'}}/>}
-                        </IconButton>
-                        <p>{value.secundaryText}</p>
-                    </Box>
-                </Box>
-            </div>
+                    </IconButton>
+                    <p>{value.secundaryText}</p>
+                </CardContent>
+                <CardActions sx={{p:0}}>
+                    <IconButton onClick={(()=>handleExpand(value.id))}>
+                        <ExpandMoreRounded/>
+                    </IconButton>
+                </CardActions>
+                <Collapse in={expand && value.id=== id} timeout="auto" unmountOnExit>
+                    <CardContent>
+                        <Typography paragraph>Method:</Typography>
+                        <Typography paragraph>
+                            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
+                            aside for 10 minutes.
+                        </Typography>
+                        
+                    </CardContent>
+                </Collapse>
+            </Card>
         ))}
         <Menu
-                        id="demo-positioned-menu"
-                        aria-labelledby="demo-positioned-button"
-                        anchorEl={anchorEl}
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                        PaperProps={{
-                            elevation: 0,
-                            sx: {
-                              overflow: 'visible',
-                              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                              mt: 1.5,
-                              '& .MuiAvatar-root': {
-                                width: 32,
-                                height: 32,
-                                ml: -0.5,
-                                mr: 1,
-                                // top:pp,
-                                // left:pp,
-                              },
-                              '&:before': {
-                                content: '""',
-                                display: 'block',
-                                position: 'absolute',
-                                top: 0,
-                                right: 10,
-                                width: 10,
-                                height: 10,
-                                bgcolor: 'background.paper',
-                                transform: 'translateY(-50%) rotate(45deg)',
-                                zIndex: 0,
-                              },
-                            },
-                          }}
-                            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                    >
-                        {/* {value.child!=null?'Descargar Archivo':'Descargar Todo'} */}
-                        <MenuItem>Descargar</MenuItem>
-                        <MenuItem>Abrir</MenuItem>
-                        <MenuItem onClick={()=>hanDelete()}>Eliminar</MenuItem>
-                    </Menu>
-        {/* <div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div><div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div><div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div><div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div><div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div><div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div><div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div><div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div><div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div><div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div><div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div><div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div><div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div><div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div><div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div><div className="itemGrid">
-            <Box className="item">
-                <Tooltip title="Opciones">
-                    <IconButton onClick={()=>handleOptions()}><MoreVertRounded/></IconButton>
-                </Tooltip>
-                <Box className="documentEmbed">
-
-                </Box>
-            </Box>
-        </div> */}
+            id="demo-positioned-menu"
+            aria-labelledby="demo-positioned-button"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: 'visible',
+                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                  mt: 1.5,
+                  '& .MuiAvatar-root': {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                    // top:pp,
+                    // left:pp,
+                  },
+                  '&:before': {
+                    content: '""',
+                    display: 'block',
+                    position: 'absolute',
+                    top: 0,
+                    right: 10,
+                    width: 10,
+                    height: 10,
+                    bgcolor: 'background.paper',
+                    transform: 'translateY(-50%) rotate(45deg)',
+                    zIndex: 0,
+                  },
+                },
+              }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        >
+            <MenuItem>Descargar</MenuItem>
+            <MenuItem>Abrir</MenuItem>
+            <MenuItem onClick={()=>hanDelete()}>Eliminar</MenuItem>
+        </Menu>
     </Box>
     const [openItem, setOpenItem]=useState(false)
-    const handleItem=(e)=>{
+    const handleItem=()=>{
         setOpenItem(!openItem)
     }
+    const [Data, setDATA]=useState()
     const InLineDocuments = <Box className="boxDocuments boxInLine">
         <List dense={true} className="InLineDocuments">
             {prueba.map((value)=>(
                 <ListItem key={value.id}
-                    secondaryAction={
+                    style={{display:'flex', flexDirection:'column'}}
+                >
+                    <Box style={{width:'100%', display:'inline-flex'}}>
+                    {
+                        value.child!=null?
+                        <ListItemButton onClick={()=>handleItem()}>
+                            <ListItemAvatar>
+                                <Avatar>
+                                    {value.child!=null?<FolderRounded/>:<InsertDriveFileRounded/>}
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText
+                                primary={value.name}
+                                secondary={value.secundaryText}
+                            />
+                        </ListItemButton>
+                    :
+                        <ListItemButton  onClick={()=>setDATA("https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210101201653/PDF.pdf")}>
+                            <ListItemAvatar>
+                                <Avatar>
+                                    {value.child!=null?<FolderRounded/>:<InsertDriveFileRounded/>}
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText
+                                primary={value.name}
+                                secondary={value.secundaryText}
+                            />
+                        </ListItemButton>
+                    }
+                        {
                         value.child!=null?
                         <section className="buttonsItems">
                             <Tooltip title='Eliminar'>
@@ -374,7 +269,7 @@ function Documents(){
                                 <Button
                                     onClick={()=>handleItem()}
                                 >
-                                    <ExpandMoreRounded/>
+                                    <ExpandMoreRounded style={openItem?{transform:'rotate(180deg)'}:{transform:'rotate(0deg)'}}/>
                                 </Button>
                             </Tooltip>
                         </section>:
@@ -405,485 +300,146 @@ function Documents(){
                             </Tooltip>
                         </section>
                     }
-                >
-                <ListItemAvatar>
-                    <Avatar>
-                        {value.child!=null?<FolderRounded/>:<InsertDriveFileRounded/>}
-                    </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                    primary={value.name}
-                    secondary={value.secundaryText}
-                />
-                {value.child!=null?
-                    <Collapse in={openItem} timeout="auto" >
-                        <List component="div" disablePadding>
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItem>
-                                    <StarBorder/>
-                                </ListItem>
-                                <ListItemText primary="Starred" />
-                            </ListItemButton>
-                        </List>
-                    </Collapse>:''
-                }
+                    </Box>
+                    <Box className="algo">
+                        {value.child!=null?
+                            <Collapse in={openItem} timeout="auto" >
+                                <List dense={true} component="div" disablePadding>
+                                    <ListItemButton sx={{ pl: 4 }}>
+                                        <ListItem
+                                            secondaryAction={
+                                                <section className="buttonsItems">
+                                                    <Tooltip title='Descargar'>
+                                                        <Button component={Link}
+                                                            href={value.url}
+                                                            download={value.name}
+                                                        >
+                                                            <FileDownloadRounded/>
+                                                        </Button>
+                                                    </Tooltip>
+                                                    <Tooltip title='Abrir en Otra Pestaña'>
+                                                        <Button
+                                                            component={Link}
+                                                            href="//abcf32x.pdf"
+                                                            target={'_blank'}
+                                                        >
+                                                            <OpenInNewRounded/>
+                                                        </Button>
+                                                    </Tooltip>
+                                                    <Tooltip title='Eliminar'>
+                                                        <Button
+                                                            onClick={()=>hanDelete()}
+                                                        >
+                                                            <DeleteRounded/>
+                                                        </Button>
+                                                    </Tooltip>
+                                                </section>
+                                            }
+                                        >
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <InsertDriveFileRounded/>
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary="Elemento" />
+                                        </ListItem>
+                                        
+                                    </ListItemButton>
+
+                                    <ListItemButton sx={{ pl: 4 }}>
+                                        <ListItem
+                                            secondaryAction={
+                                                <section className="buttonsItems">
+                                                    <Tooltip title='Descargar'>
+                                                        <Button component={Link}
+                                                            href={value.url}
+                                                            download={value.name}
+                                                        >
+                                                            <FileDownloadRounded/>
+                                                        </Button>
+                                                    </Tooltip>
+                                                    <Tooltip title='Abrir en Otra Pestaña'>
+                                                        <Button
+                                                            component={Link}
+                                                            href="//abcf32x.pdf"
+                                                            target={'_blank'}
+                                                        >
+                                                            <OpenInNewRounded/>
+                                                        </Button>
+                                                    </Tooltip>
+                                                    <Tooltip title='Eliminar'>
+                                                        <Button
+                                                            onClick={()=>hanDelete()}
+                                                        >
+                                                            <DeleteRounded/>
+                                                        </Button>
+                                                    </Tooltip>
+                                                </section>
+                                            }
+                                        >
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <InsertDriveFileRounded/>
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary="Elemento" />
+                                        </ListItem>
+                                    </ListItemButton>
+
+                                    <ListItemButton sx={{ pl: 4 }}>
+                                        <ListItem
+                                            secondaryAction={
+                                                <section className="buttonsItems">
+                                                    <Tooltip title='Descargar'>
+                                                        <Button component={Link}
+                                                            href={value.url}
+                                                            download={value.name}
+                                                        >
+                                                            <FileDownloadRounded/>
+                                                        </Button>
+                                                    </Tooltip>
+                                                    <Tooltip title='Abrir en Otra Pestaña'>
+                                                        <Button
+                                                            component={Link}
+                                                            href="//abcf32x.pdf"
+                                                            target={'_blank'}
+                                                        >
+                                                            <OpenInNewRounded/>
+                                                        </Button>
+                                                    </Tooltip>
+                                                    <Tooltip title='Eliminar'>
+                                                        <Button
+                                                            onClick={()=>hanDelete()}
+                                                        >
+                                                            <DeleteRounded/>
+                                                        </Button>
+                                                    </Tooltip>
+                                                </section>
+                                            }
+                                        >
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <InsertDriveFileRounded/>
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary="Elemento" />
+                                        </ListItem>
+                                        
+                                    </ListItemButton>
+                                </List>
+                            </Collapse>:''
+                        }
+                    </Box>
                 </ListItem>
               ))}
         </List>
-        {/* <Box className="InLineDocuments">
-             
-            <div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div>
-            <div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div><div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div><div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div><div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div><div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div><div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div><div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div><div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div><div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div><div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div><div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div><div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div><div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div><div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div><div className="itemDocument">
-                <Button className="buttonFile"><img src={filePDF} alt='pdf' title=""/><p>Nombre de Archivo de Prueba Bastante Largo.pdf</p></Button>
-                <section className="buttonsItems">
-                    <Tooltip title='Descargar'>
-                        <Button component={Link}
-                            href="./abcf32x.pdf"
-                            download="How-to-download-file.pdf"
-                        >
-                            <FileDownloadRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Abrir en Otra Pestaña'>
-                        <Button
-                            component={Link}
-                            href="//abcf32x.pdf"
-                            target={'_blank'}
-                        >
-                            <OpenInNewRounded/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title='Eliminar'>
-                        <Button
-                            onClick={()=>hanDelete()}
-                        >
-                            <DeleteRounded/>
-                        </Button>
-                    </Tooltip>
-                </section>
-            </div>
-        </Box> */}
-        {widthScreen<500?'':<Box className="PreviewDocuments"></Box>}
+        
+        {widthScreen<500?'':<Box className="PreviewDocuments">
+        <object data={Data}
+            width="100%" 
+            height="100%"> 
+        </object>
+            </Box>}
     </Box>
 
     return(
@@ -906,10 +462,7 @@ function Documents(){
                 aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">
-                    ¿Está seguro de realizar esta acción?
-                    <IconButton onClick={()=>hanDelete()}>
-                        <CloseRounded/>
-                    </IconButton>
+                        ¿Está seguro de realizar esta acción?
                     </DialogTitle>
                     <DialogContent dividers>
                         <Typography gutterBottom id="alert-dialog-description">
@@ -922,7 +475,8 @@ function Documents(){
                         </Typography>
                     </DialogContent>
                     <DialogActions>
-                    <Button onClick={hanDelete}>Eliminar</Button>
+                        <Button onClick={hanDelete}>Cancelar</Button>
+                        <Button onClick={hanDelete}>Eliminar</Button>
                     </DialogActions>
                 </Dialog>
                 <Modal
@@ -936,33 +490,9 @@ function Documents(){
                 </Modal>
                 <Box className="containerDocuments">
                     {distribution?GridDocuments:InLineDocuments}
-                    {/* <Box className="boxDocuments">
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                        <div style={{width:'100%',height:'100%', background:'yellow', minHeight:250, minWidth:100}}></div>
-                    </Box> */}
                 </Box>
             </Container>
         </Container>
     )
 }
 export default Documents;
-
-const styles = makeStyles(() => ({
-    boxDocuments:{
-
-    }
-}))

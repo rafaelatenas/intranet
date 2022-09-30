@@ -116,6 +116,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: space-evenly;
+        font-size: 14px;
     }
     .containerContentProfile{
         width: 100%;
@@ -131,6 +132,30 @@
         align-items: center;
         justify-items: center;
         overflow: visible;
+    }
+    .containerInformation{
+        grid-column: 1/2;
+        grid-row: 1/3;
+        width: 90%;
+        height: 100%;
+        overflow-y: auto;
+    }
+    .information, .transition{
+        width: 100%;
+        height: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .cardInformation{
+        width: 90%;
+        box-shadow: none !important;
+    }
+    
+
+    .collapse, .collapse .MuiCollapse-vertical{
+        width: 100%;
+        height: 100% !important;
     }
     .photoProfile{
         grid-column: 2/3;
