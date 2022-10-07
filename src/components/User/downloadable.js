@@ -7,8 +7,10 @@ import videos from '../../landing/images/video.png'
 import documentos from '../../landing/images/book.png'
 import cursos from '../../landing/images/cursos.png'
 import SwipeableViews from "react-swipeable-views";
+import { makeStyles } from "@mui/styles";
 
 function Downloadable(){
+    const styles = StyleComponent()
     const [openModalContent, setOpenModalContent] = useState(false);
     const screenWidht = window.innerWidth;
     const recursos = [
@@ -66,12 +68,12 @@ function Downloadable(){
     const SwipeableViewsMobile = 
         <SwipeableViews
             index={activeStep+1} onChangeIndex={handleStepChange}
-            className="carousel"
+            className={styles.carousel}
         >
             {recursos.map((recurso)=>(
-                <Card key={recurso.key} className='cardSource1'>
-                    <CardContent className="contentSource1">
-                        <IconButton className="buttonContent" onClick={()=>handleOpenElement(recurso.key)}>
+                <Card key={recurso.key} className={styles.cardSource1}>
+                    <CardContent className={styles.contentSource1}>
+                        <IconButton className={styles.buttonContent} onClick={()=>handleOpenElement(recurso.key)}>
                             <p>{recurso.name}</p>
                             <img src={recurso.imagen} alt={`Logo Atenas de ${recurso.name}`} title=""/>
                         </IconButton>
@@ -80,11 +82,11 @@ function Downloadable(){
             ))}
         </SwipeableViews>
     const CardsViewsDesktop = 
-        <Box className="boxSources">
+        <Box className={styles.boxSources}>
             {recursos.map((recurso)=>(
-                <Card key={recurso.key} className='cardSource1'>
-                    <CardContent className="contentSource1">
-                        <IconButton className="buttonContent" href={`/home/resources/${recurso.url}`}>
+                <Card key={recurso.key} className={`${styles.cardSource}`}>
+                    <CardContent className={`${styles.contentSource}`}>
+                        <IconButton className={`${styles.buttonContent}`} href={`/home/resources/${recurso.url}`}>
                             <p>{recurso.name}</p>
                             <img src={recurso.imagen} alt={`Logo Atenas de ${recurso.name}`} title=""/>
                         </IconButton>
@@ -93,15 +95,231 @@ function Downloadable(){
             ))}
         </Box>
     return(
-        <Container className="ContainerContentUser">
+        <Container className={styles.ContainerContentUser}>
             <HeaderComponent/>
-            <Container className="containerSources">
-                <p className="TitleofContainer">Descargables</p>
+            <Container className={styles.containerSources}>
+                <div className={styles.containerOfTitle}>
+                    <p className={styles.TitleofContainer}>Descargables</p>
+                </div>
                 {screenWidht>700?CardsViewsDesktop:SwipeableViewsMobile}
-                <img className="imageFooter" src={footerAtenas} alt="Pie de Pagina Atenas" title=""/>
+                <img className={styles.imageFooter} src={footerAtenas} alt="Pie de Pagina Atenas" title=""/>
                 {openModalContent?BoxElements:''}
             </Container>
         </Container>
     )
 }
 export default Downloadable;
+
+const StyleComponent = makeStyles(()=>({
+    ContainerContentUser:{
+        width: '100%',
+        height: '100%',
+        display: 'grid !important',
+        gridTemplateColumns: '100%',
+        gridTemplateRows: '15% 85%',
+        maxWidth: 'none !important',
+        padding: '0 !important',
+        margin: '0 !important',
+    },
+    containerSources:{
+        width: '100%',
+        height: '100%',
+        gridColumn: '1/2',
+        gridRow: '2/3',
+        maxWidth: 'none !important',
+        padding: '5% 0 0 !important',
+        margin: '0 !important',
+        display: 'flex !important',
+        alignItems: 'center',
+        flexDirection: 'column',
+    },
+    '@media screen and (orientation:portrait)':{
+        cardSource:{
+            width: 'auto',
+            height: '40%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: 0,
+            borderRadius: '0!important',
+            boxShadow: 'none !important',
+            minHeight: 230,
+        },
+        contentSource:{
+            width: '50%',
+            height: '60% !important',
+            padding: '0 !important',
+            margin: '0 !important',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '1px solid #61616157',
+            borderRadius: '1.2em',
+            minHeight: 250,
+        },
+        buttonContent:{
+            width: '80%',
+            height: '100%',
+            flexDirection: 'column',
+            justifyContent:' space-around !important',
+            borderRadius: '0 !important',
+            transition: 'none !important',
+            background: 'transparent !important',
+        },
+        buttonContent:{
+            ' & span' :{
+                overflow: 'visible',
+                borderRadius: '1.2em !important',
+            }
+        },
+        buttonContent: {
+            "& p":{
+                margin: 0,
+                width: '100%',
+                height: 'auto',
+                fontWeight: 'bold',
+            }
+        },
+        buttonContent:{
+            "& img":{
+                width: '80%',
+                height: '50%',
+                minWidth: 135,
+                minHeight: 120,
+                maxWidth: 170,
+                maxHeight: 190,
+            }
+        },
+        ContainerElements:{
+            top: '15%',
+            width: '100%',
+            height: '85%',
+            maxWidth: 'none !important',
+            justifyItems: 'center',
+        },
+        BoxElements:{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyItems: 'center',
+            flexWrap: 'wrap',
+            justifyContent: 'space-around',
+            overflowY: 'scroll',
+        },
+        CardContent:{
+            width: '30%',
+            height: '40%',
+        },
+        CardItem:{
+            width: '100%',
+            height: '100%',
+            padding: '0 !important',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+        },
+        carousel:{
+            height: '70%'
+        },
+        carousel:{
+            '& .react-swipeable-view-container':{
+                overflow: 'visible',
+                height: '100%',
+                alignItems: 'center',
+            }
+        },
+        carousel:{
+            '& .react-swipeable-view-container div':{
+                alignItems: 'center',
+                height: '100%',
+                justifyContent: 'center',
+            }
+        }
+    },
+    '@media screen and (orientation:landscape)':{
+        containerSources:{
+            padding: '0 !important',
+            display: 'grid !important',
+            gridTemplateColumns: '25% 45% 30%',
+            gridTemplateRows: '10% 70% 20%',
+            alignItems: 'end',
+            justifyItems: 'center',
+        },
+        containerOfTitle:{
+            width: '100%',
+            height: '100%',
+            gridColumn: '1/2',
+            gridRow: '1/2',
+            display: 'flex',
+            alignItems: 'center',
+            overflow:'visible',
+        },
+        TitleofContainer:{
+            border: '1px solid #61616161',
+            padding: '2.5%',
+            borderRadius: '0.5em',
+            color: '#616161',
+            width: '45%',
+            minWidth: 130,
+            margin: '0 !important',
+            textAlign: 'center',
+            position:'relative',
+            left:'7.5%'
+        },
+        boxSources:{
+            display: 'inline-flex',
+            width: '100%',
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+            gridColumn: '1/4',
+            gridRow: '2/3',
+        },
+        cardSource:{
+            width: '20%',
+            minWidth: 150,
+            maxWidth: 250,
+            height: '65%',
+            border: '1px solid #61616157',
+            borderRadius: '1.2em !important',
+            
+        },
+        contentSource:{
+            width: '100%',
+            height: '100%',
+            padding: '0 !important',
+            borderRadius: '1.2em !important',
+            '& button:hover':{
+                borderRadius: '1.2em !important',
+            }
+        },
+
+        buttonContent :{
+            width: '100%',
+            height: '100%',
+            flexDirection: 'column',
+            '&:hover':{
+                borderRadius: '1.2em !important',
+                transform:'scale(1.1)'
+            },
+            '& p' :{
+                fontSize: '0.9em',
+                margin: '0% !important',
+            },
+            '& img':{
+                width: '70%',
+                height: 'auto',
+                minWidth: 125,
+                minHeight: 125,
+            },
+            
+        },
+        imageFooter:{
+            gridColumn: '3/4',
+            gridRow: '3/4',
+            width: '100%',
+            height: 'auto',  
+        },
+        
+    }
+}))
