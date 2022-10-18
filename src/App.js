@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from './components/login/login';
 import Home from './components/home/home';
@@ -12,6 +10,7 @@ import Profile from './components/User/userProfile';
 import NotFound from './components/notFound';
 import Documents from './components/User/resources/documents';
 import Videos from './components/User/resources/videos';
+import Courses from './components/User/resources/courses';
 function App() {
   return (
     <AuthContextProvider>
@@ -31,6 +30,7 @@ function App() {
               <Route exact path="/home/resources" element={<Downloadable/>}/>
               <Route exact path="/home/resources/documents" element={<Documents/>}/>
               <Route exact path="/home/resources/videos" element={<Videos/>}/>
+              <Route exact path="/home/resources/courses" element={<Courses/>}/>
               <Route exact path="/home/management/" element={<ManagementPanel/>}/>
           </Route>
         </Routes>

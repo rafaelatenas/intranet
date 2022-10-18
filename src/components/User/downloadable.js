@@ -1,18 +1,20 @@
 import { Box, Card, CardContent, Container, IconButton, Modal, Typography } from "@mui/material";
 import React, { useState } from "react";
 import HeaderComponent from '../components/headerComponent'
-import footerAtenas from '../../landing/images/footerAtenas.png'
 import './downloadable.css'
-import videos from '../../landing/images/video.png'
-import documentos from '../../landing/images/book.png'
-import cursos from '../../landing/images/cursos.png'
+import videos from '../../landing/images/comprimido/video.png'
+import documentos from '../../landing/images/comprimido/book.png'
+import cursos from '../../landing/images/comprimido/cursos.png'
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles } from "@mui/styles";
+import axios from "axios";
 
 function Downloadable(){
     const styles = StyleComponent()
     const [openModalContent, setOpenModalContent] = useState(false);
     const screenWidht = window.innerWidth;
+    const [dataVideos, setDataVideos]=useState([]);
+
     const recursos = [
         {name:'Documentos', key:1, url:'documents', imagen:documentos},
         {name:'Videos', key:2, url:'videos', imagen:videos},
@@ -39,7 +41,20 @@ function Downloadable(){
     const handleCloseElement = (e)=>{
         setOpenModalContent(false)
     }
-
+    
+    const PeticionVideos=()=>{
+        axios.get(process.env.REACT_APP_API_URL).then(result => {
+            console.log(result.data)
+            setDataVideos(result.data.items)
+          }).catch(err => {
+              if(err.response) {
+                console.log(err.response)
+                console.log(err.response.data.message);
+                console.log(err.response.status);
+                console.log(err.response.headers);        
+              }       
+          })
+    }
 
 
     const BoxElements = 
@@ -66,6 +81,7 @@ function Downloadable(){
     setActiveStep(step);
     };
     const SwipeableViewsMobile = 
+    <Box>
         <SwipeableViews
             index={activeStep+1} onChangeIndex={handleStepChange}
             className={styles.carousel}
@@ -80,7 +96,7 @@ function Downloadable(){
                     </CardContent>
                 </Card>
             ))}
-        </SwipeableViews>
+        </SwipeableViews></Box>
     const CardsViewsDesktop = 
         <Box className={styles.boxSources}>
             {recursos.map((recurso)=>(
@@ -102,7 +118,6 @@ function Downloadable(){
                     <p className={styles.TitleofContainer}>Descargables</p>
                 </div>
                 {screenWidht>700?CardsViewsDesktop:SwipeableViewsMobile}
-                <img className={styles.imageFooter} src={footerAtenas} alt="Pie de Pagina Atenas" title=""/>
                 {openModalContent?BoxElements:''}
             </Container>
         </Container>
@@ -165,22 +180,16 @@ const StyleComponent = makeStyles(()=>({
             borderRadius: '0 !important',
             transition: 'none !important',
             background: 'transparent !important',
-        },
-        buttonContent:{
             ' & span' :{
                 overflow: 'visible',
                 borderRadius: '1.2em !important',
-            }
-        },
-        buttonContent: {
+            },
             "& p":{
                 margin: 0,
                 width: '100%',
                 height: 'auto',
                 fontWeight: 'bold',
-            }
-        },
-        buttonContent:{
+            },
             "& img":{
                 width: '80%',
                 height: '50%',
@@ -219,16 +228,12 @@ const StyleComponent = makeStyles(()=>({
             alignItems: 'center'
         },
         carousel:{
-            height: '70%'
-        },
-        carousel:{
+            height: '70%',
             '& .react-swipeable-view-container':{
                 overflow: 'visible',
                 height: '100%',
                 alignItems: 'center',
-            }
-        },
-        carousel:{
+            },
             '& .react-swipeable-view-container div':{
                 alignItems: 'center',
                 height: '100%',

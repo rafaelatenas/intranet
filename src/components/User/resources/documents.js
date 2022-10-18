@@ -3,12 +3,6 @@ import React, { useState } from "react";
 import HeaderComponent from '../../components/headerComponent'
 import { CheckRounded, CloseRounded, ConstructionOutlined, DeleteRounded, DriveFolderUploadRounded, EditRounded, ExpandMoreRounded, FileDownloadDoneRounded, FileDownloadRounded, FolderRounded, InsertDriveFileRounded, MoreVertRounded, OpenInNewRounded, PostAddRounded, PreviewRounded, StarBorder, UploadFileRounded, VerticalSplitRounded, ViewHeadlineOutlined, ViewModuleRounded } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
-/* SVG Documents */
-import file from '../../../landing/icon/file.svg'
-import filePDF from '../../../landing/icon/file-pdf.svg'
-import fileExcel from '../../../landing/icon/file-excel.svg'
-import filePowerPoint from '../../../landing/icon/file-powerpoint.svg'
-import { TransitionGroup } from "react-transition-group";
 
 function Documents(){
 
@@ -477,14 +471,9 @@ function Documents(){
               ))}
         </List>
         
-        {widthScreen<500?'':<Box className={styles.PreviewDocuments}>
-        <embed src={Data} type="application/pdf" width="100%" height="100%" />
-
-        {/* <object data={Data}
-            width="100%" 
-            height="100%"> 
-        </object> */}
-            </Box>}
+        <Box className={styles.PreviewDocuments}>
+            <embed src={Data} type="application/pdf" width="100%" height="100%" />
+        </Box>
     </Box>
 
     return(
@@ -495,14 +484,12 @@ function Documents(){
                     <p className={styles.TitleofContainer}>Documentos</p>
                 </div>
                 
-                {widthScreen<500?'':<IconButton onClick={handleDistribution} sx={{position:'fixed', top:'15%', left:'95%'}}>
+                <IconButton className={styles.distribution} onClick={handleDistribution} >
                     {distribution?<ViewModuleRounded fontSize="large"/>:<VerticalSplitRounded fontSize="large"/>}
-                </IconButton>}
-                {widthScreen<500?'':
-                    <IconButton onClick={handleOpenElement} sx={{position:'fixed', top:'15%', left:'90%'}}>
-                        <PostAddRounded fontSize="large"/>
-                    </IconButton>
-                }
+                </IconButton>
+                <IconButton className={styles.PostAdd} onClick={handleOpenElement}>
+                    <PostAddRounded fontSize="large"/>
+                </IconButton>
                 <Box className={styles.containerDocuments}>
                     {distribution?GridDocuments:InLineDocuments}
                 </Box>
@@ -613,6 +600,16 @@ const StyleComponent=makeStyles(()=>({
         alignItems: 'center',
         zIndex: 1300,
     },
+    distribution:{
+        position:'fixed !important',
+        top:'15%',
+        left:'95%'
+    },
+    PostAdd:{
+        position:'fixed !important',
+        top:'15%',
+        left:'90%',
+    },
     '@media screen and (orientation:portrait)':{
         TitleofContainer:{
             border: '1px solid #61616161',
@@ -623,7 +620,15 @@ const StyleComponent=makeStyles(()=>({
             borderRadius: '0.5em',
             color: '#616161',
         },
-        
+        PreviewDocuments:{
+            display:'none !important'
+        },
+        PostAdd:{
+            display:'none !important'
+        },
+        distribution:{
+            display:'none !important'
+        }
     },
     '@media screen and (orientation:landscape) and (min-width:1024px)':{
         containerSources:{
