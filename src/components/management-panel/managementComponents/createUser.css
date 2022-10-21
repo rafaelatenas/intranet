@@ -10,6 +10,7 @@
     width: 100%;
     justify-content: space-around;
     min-width: 700px;
+    margin: 1% 0;
 }
 .textField{
     overflow: visible !important;
