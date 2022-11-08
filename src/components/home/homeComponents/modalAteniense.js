@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Accordion, AccordionDetails, AccordionSummary, IconButton, TextField, Tooltip } from '@mui/material';
-import { CheckRounded, CloseRounded, ConstructionOutlined, ExpandMoreRounded, PreviewRounded } from '@mui/icons-material';
+import { CheckRounded, CloseRounded, ExpandMoreRounded, PreviewRounded } from '@mui/icons-material';
 import './ateniense.css'
 import { useState } from 'react';
 
