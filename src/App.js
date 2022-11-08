@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from './components/login/login';
 import Home from './components/home/home';
@@ -16,16 +17,16 @@ function App() {
     <AuthContextProvider>
       <BrowserRouter>
         <Routes>
-            {/*Rutas Públicas*/}
+
           <Route path="/" element={<Public/>}>
             <Route index element={<Login/>}/>
             {/* <Route exact path='/recoverypassword/:email/:
             ' element={<Login/>}/> */}
             <Route exact path="*" element={<NotFound/>}/>
           </Route>
-            {/*Rutas Privadas*/}
+
           <Route path="/home" element={<Private/>}>
-            <Route index element={<Home/>}/>
+            <Route path="/home" element={<Home/>}/>
               <Route exact path="/home/profile" element={<Profile/>}/>
               <Route exact path="/home/resources" element={<Downloadable/>}/>
               <Route exact path="/home/resources/documents" element={<Documents/>}/>
@@ -33,21 +34,10 @@ function App() {
               <Route exact path="/home/resources/courses" element={<Courses/>}/>
               <Route exact path="/home/management/" element={<ManagementPanel/>}/>
           </Route>
+
         </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
     </AuthContextProvider>
-    
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route exact path="/" element={<Login/>}/>
-    //     <Route exact path="home" element={<Home/>}/>
-    //     <Route exact path="home/profile" element={<Profile/>}/>
-    //     <Route exact path="/home/courses" element={<ContentUsers/>}/>
-    //     <Route exact path="/management" element={<ManagementPanel/>}/>
-    //     {/* RRHH */}
-    //     {/* <Route exact path="/management" element={<ManagementPanel/>}/> */}
-    //   </Routes>
-    // </BrowserRouter>
   );
 }
 

@@ -1,5 +1,5 @@
-import { MoreVertRounded } from "@mui/icons-material";
-import { Box, Button, Card, CardContent, CardHeader, Container, IconButton, Tooltip, Typography } from "@mui/material";
+import React from 'react';
+import { Box, Card, CardContent, Container } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -36,7 +36,7 @@ function Videos() {
             <Container className={styles.containerSources}>
                 <Box className={styles.GridVideos}>
                 {/* <iframe width="100%" height="auto" style={{minHeight:250}} src="https://www.youtube.com/embed/videoseries?list=PLDPHmW2atQwHfG_4jubiVa90pm_-ghI_w" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
-                    {dataVideos.map((value)=>( console.log(`https://www.youtube.com/embeb/${value.id.videoId}`),
+                    {dataVideos.map((value)=>( 
                         <Card className={styles.item}>
                             <CardContent className={styles.ContentItem}>
                                 <iframe width="100%" height="auto" style={{minHeight:250}} src={`https://www.youtube.com/embed/${value.id.videoId}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

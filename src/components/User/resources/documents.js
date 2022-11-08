@@ -1,7 +1,7 @@
-import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Icon, IconButton, Link, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Menu, MenuItem, Modal, Radio, RadioGroup, TextField, Tooltip, Typography } from "@mui/material";
+import {Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, Collapse, Container, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, IconButton, Link, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Menu, MenuItem, Modal, Radio, RadioGroup, TextField, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
 import HeaderComponent from '../../components/headerComponent'
-import { CheckRounded, CloseRounded, ConstructionOutlined, DeleteRounded, DriveFolderUploadRounded, EditRounded, ExpandMoreRounded, FileDownloadDoneRounded, FileDownloadRounded, FolderRounded, InsertDriveFileRounded, MoreVertRounded, OpenInNewRounded, PostAddRounded, PreviewRounded, StarBorder, UploadFileRounded, VerticalSplitRounded, ViewHeadlineOutlined, ViewModuleRounded } from "@mui/icons-material";
+import { CheckRounded, DeleteRounded, DriveFolderUploadRounded, ExpandMoreRounded, FileDownloadRounded, FolderRounded, InsertDriveFileRounded, MoreVertRounded, OpenInNewRounded, PostAddRounded, UploadFileRounded, VerticalSplitRounded, ViewModuleRounded } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 
 function Documents(){
@@ -9,20 +9,16 @@ function Documents(){
     const styles=StyleComponent()
 
     const [openModalContent, setOpenModalContent] = useState(false);
-    const [documents, setDocuments] = useState([{name:'', url:''}]);
     const [documentsT, setDocumentsT] = useState([])
     const [election, setElection] =useState('');
     const [disabled, setDisabled]=useState(true)
     const [url, setUrl] = useState([]);
-    const [expanded, setExpanded] = useState(false);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [error, setError] = useState(false);
-    const [redirect, setRedirect] = useState(false)
     const [distribution, setDistribution]=useState(false)
     const [delette, setDelette]=useState(false)
     const [anchorEl, setAnchorEl]=useState(null)
-    const widthScreen = window.innerWidth
     const [Data, setDATA]=useState()
     const [abrir, setAbrir]=useState(false)
 

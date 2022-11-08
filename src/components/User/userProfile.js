@@ -1,3 +1,4 @@
+import React from 'react';
 import { Avatar, Box, Button, Card, CardContent, Collapse, Container, Divider, Link, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Tooltip, Typography } from "@mui/material";
 import HeaderComponent from "../components/headerComponent";
 import './userProfile.css'

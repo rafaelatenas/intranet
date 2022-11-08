@@ -1,12 +1,13 @@
-import { Box, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material";
+import { Box, Button, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 import logoAtenas from '../../landing/images/Logo_Atenas_EliseBlanca.png'
 import { NavLink } from "react-router-dom";
 import './headerComponents.css'
-import {MenuRounded, AccountCircleRounded, DashboardRounded, FileDownloadDoneRounded, Logout} from '@mui/icons-material';
+import {MenuRounded, AccountCircleRounded, DashboardRounded, FileDownloadDoneRounded, Logout, ExitToApp} from '@mui/icons-material';
+import { useAuthContext } from "../../context/authContext"
 
 function HeaderComponent(){
-
+    const {logout}=useAuthContext()
     const widthScreen = window.innerWidth
     const [anchorEl, setAnchorEl]=useState(null)
     const [select, setSelect]=useState(2)
@@ -19,12 +20,18 @@ function HeaderComponent(){
     const handleCloseMenu=()=>{
         setAnchorEl(!anchorEl)
     }
+    const actions = [
+        { key:1,icon: <NavLink className='LinkIcons' to={`/home/profile`} ><AccountCircleRounded className='IconsSpeedDial' /></NavLink>, name: 'Configuraciones', admin: 0 },
+        { key:2,icon: <NavLink className='LinkIcons' to={`/home`} ><DashboardRounded className='IconsSpeedDial' /></NavLink>, name: 'Configuraciones', admin: 0 },
+        { key:3,icon: <NavLink className='LinkIcons' to={`/home/resources`} ><FileDownloadDoneRounded className='IconsSpeedDial' /></NavLink>, name: 'Configuraciones', admin: 0 },
+        { key:4,icon: <NavLink className='LinkIcons' to={`/home/management`} ><FileDownloadDoneRounded className='IconsSpeedDial' /></NavLink>, name: 'Configuraciones', admin: 0 },
+        { key:5,icon: <ExitToApp className='IconsSpeedDial' onClick={() => logout()} />, name: 'Salir', admin: 0 },
+    ];
     const opciones=[
         {name:'Mi Perfil', key:1, Icon:<AccountCircleRounded/> ,url:'/home/profile'},
         {name:'Inicio', key:2, Icon:<DashboardRounded/>,url:'/home'},
         {name:'Descargables', key:3, Icon:<FileDownloadDoneRounded/>,url:'/home/resources'},
         {name:'Panel Administrativo', key:3, Icon:<FileDownloadDoneRounded/>,url:'/home/management'},
-        {name:'Salir', key:4, Icon:<Logout/>,url:'/'}
     ]
         return(
             <Box className="boxHeaderComponent">

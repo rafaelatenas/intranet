@@ -1,24 +1,25 @@
 import React, { useState } from "react"
 import axios from "axios"
-import { TextField, FormControl, InputLabel, OutlinedInput, IconButton, Button, Container, Box, InputAdornment, FormHelperText, Modal, FormLabel, FormControlLabel, FormGroup, Checkbox } from "@mui/material"
+import { TextField, FormControl, IconButton, Button, Container, Box, InputAdornment, Modal, FormLabel, FormControlLabel, FormGroup, Checkbox } from "@mui/material"
 import { VisibilityOff, Visibility, EmailOutlined } from "@mui/icons-material"
 import atsLogo from '../../landing/images/Logo_Atenas.png'
 import './login.css'
 import ReCAPTCHA from "react-google-recaptcha"
-import { NavLink } from "react-router-dom"
 import atenasLogo from '../../landing/images/ATSLOGO.png'
+import { useAuthContext } from "../../context/authContext"
 
 export default function Login (){
+  const {login}=useAuthContext()
   const recaptchaRef = React.createRef()
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   const [formErrors, setFormErrors] = useState({Email: '', Password: '', EmailRecovery:''})
   const [emailValid, setEmailValid] = useState(false)
   const [passwordValid, setPasswordValid] = useState(false)
-  const [formValidValid, setFormValid] = useState(false)
+  // const [formValidValid, setFormValid] = useState(false)
   const [validToken, setValidToken] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-  const withdScreen = window.innerWidth
+  // const withdScreen = window.innerWidth
   const [open,setOpen] = useState(false)
   const [checked, setChecked] = React.useState(false);
   const [emailRecovery,setEmailRecovery] = useState('')
@@ -72,24 +73,21 @@ export default function Login (){
     setShowPassword(!showPassword) 
   };
   const enviarDatos=(e)=>{ 
-    e.preventDefault();
     var responseKey = recaptchaRef.current.getValue();
     var datosEnviar={
-      email:email,
-      password:password,
+      Correo:email,
+      Password:password,
       captcha:responseKey
     } 
-    axios.post(process.env.REACT_APP_API_ENDPOINT+"login",datosEnviar).then(result => {
-      var nombre=result.data.NombresUsuarios;
-      var apellidos=result.data.ApellidosUsuarios;  
+    axios.post(process.env.REACT_APP_API_ENDPOINT+"Login",datosEnviar).then(result => {
+      // var nombre=result.data.NombresUsuarios;
+      // var apellidos=result.data.ApellidosUsuarios;  
       sessionStorage.setItem('token', result.data.token);
       sessionStorage.setItem('user', result.data.Login);
       sessionStorage.setItem('Id_Cliente', result.data.ID_Cliente);
-      sessionStorage.setItem('success', result.data.success);
+      sessionStorage.setItem('successAuthAtenas', result.data.success);
+      login();
 
-      // if (result.data.success === true) {
-      //   login();
-      // }
     }).catch(err => {
         if(err.response) {
           console.log(err.response)
@@ -144,10 +142,8 @@ export default function Login (){
   const PasswordRecovery=()=>{
     console.log(0)
   }
-  function onSubmit(token) {
-    console.log(token)
-    // document.getElementById("demo-form").submit();
-  }
+
+  console.log(password.length)
     return(
       <section className="login">
         <Box className="card-login">
@@ -166,7 +162,7 @@ export default function Login (){
                 )
             }}
             />
-            <Button className="button" variant="outlined" href='/home'>Confirmar</Button>
+            <Button className="button" variant="outlined" onClick={()=>enviarDatos()}>Confirmar</Button>
             <Button className="buttonRecovery" onClick={()=>openModalPassword()}>¿Olvido su Clave?</Button>
           </FormControl>
           <Modal
