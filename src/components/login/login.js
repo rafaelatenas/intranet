@@ -99,6 +99,8 @@ export default function Login() {
       // var apellidos=result.data.ApellidosUsuarios;  
       sessionStorage.setItem('token', result.data.token);
       sessionStorage.setItem('cedula', result.data.CedulaUsuarios);
+      sessionStorage.setItem('avatar', result.data.AvatarUsuarios);
+      sessionStorage.setItem('imagen', result.data.ImagenUsuarios);
       sessionStorage.setItem('user', result.data.Login);
       sessionStorage.setItem('Id_Cliente', result.data.ID_Cliente);
       sessionStorage.setItem('successAuthAtenas', result.data.success);

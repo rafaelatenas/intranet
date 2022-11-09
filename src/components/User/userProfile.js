@@ -13,6 +13,7 @@ import AtenasLogo from '../../landing/images/comprimido/ats_logo.png'
 export default function Profile(){
     const cedula=sessionStorage.getItem('cedula')
     const token=sessionStorage.getItem('token')
+    const imagen = sessionStorage.getItem('imagen')
     const MySwal = withReactContent(Swal)
     const toast = MySwal.mixin({
     toast: true,
@@ -199,9 +200,7 @@ export default function Profile(){
                         {opena?Documents:''}
 
                     </Box>
-                    {data.Imagen?<img className="photoProfile scale-up-center" src={process.env.REACT_APP_API_URL_IMG+`/foto/${data.Cedula}/${data.Imagen}`} alt={data.Primer_Nombre+''+data.Primer_Apellido} title="" />:<img src={AtenasLogo} alt="Nombre de Usuario" title=""/>}
-
-                    <img className="photoProfile scale-up-center" src={process.env.REACT_APP_API_URL_IMG+`/foto/${data.Cedula}/${data.Imagen}`} alt='user' title=""/>
+                    {data.Imagen?<img className="photoProfile scale-up-center" src={process.env.REACT_APP_API_URL_IMG+`/foto/${cedula}/${imagen}`} alt={data.Primer_Nombre+''+data.Primer_Apellido} title="" />:<img src={AtenasLogo} alt="Nombre de Usuario" title=""/>}
                 </Container>
             </Box>
         </Container>

@@ -26,6 +26,8 @@ function ButtonsInteracction(props){
     const style = styles()
     const cedula=sessionStorage.getItem('cedula')
     const token=sessionStorage.getItem('token')
+    const avatar = sessionStorage.getItem('avatar')
+
 
     const [data, setData] = useState([]);
     useEffect(() => {
@@ -87,7 +89,7 @@ function ButtonsInteracction(props){
                             <p className={style.nameButton}>{data.Primer_Nombre+' '+data.Primer_Apellido}</p>
                             <p className={style.chargeButton}>{data.Cargo}</p>
                         </div>
-                        {data.Avatar?<img src={process.env.REACT_APP_API_URL_IMG+`/avatar/${data.Cedula}/${data.Avatar}`} alt={data.Primer_Nombre+''+data.Primer_Apellido} title="" className={style.personButton}/>:<img src={AtenasLogo} alt="Nombre de Usuario" title="" className={style.personButton}/>}
+                        {data.Avatar?<img src={process.env.REACT_APP_API_URL_IMG+`/avatar/${cedula}/${avatar}`} alt={data.Primer_Nombre+''+data.Primer_Apellido} title="" className={style.personButton}/>:<img src={AtenasLogo} alt="Nombre de Usuario" title="" className={style.personButton}/>}
                         <IconButton className={style.spaceAtenas}>
                             <NavLink to={'/home/profile'} className={style.link}>
                                 <p style={{color:'#616161'}}>Mi espacio <strong style={{color:'#0c5091'}}> ATENAS</strong></p>
