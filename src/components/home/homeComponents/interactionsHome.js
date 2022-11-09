@@ -1,13 +1,65 @@
 import { Box, Button, Card, CardContent, Container, IconButton, Modal, Portal } from "@mui/material";
 import React, { useEffect, useState } from "react";
-// import './interactionsHome.css'
+import './interactionsHome.css'
 import temporal from '../../../landing/images/comprimido/imagenTemporal.png'
 import AtenasAcademy from '../../../landing/images/comprimido/AtenasAcademy.png'
+import AtenasLogo from '../../../landing/images/comprimido/ats_logo.png'
 import { NavLink } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-
+import axios from "axios";
+import withReactContent from "sweetalert2-react-content";
+import Swal from 'sweetalert2'
 function ButtonsInteracction(props){
+
+    const MySwal = withReactContent(Swal)
+    const toast = MySwal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+    });
     const style = styles()
+    const cedula=sessionStorage.getItem('cedula')
+    const token=sessionStorage.getItem('token')
+
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const PeticionUsuario = async () => {
+        try {
+            await axios.get(process.env.REACT_APP_API_ENDPOINT + `ListarEmpleadosCedula/${cedula}`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+            })
+            .then(response => {
+            if (response.data.message) {
+                toast.fire({
+                icon: 'warning',
+                title: '' + response.data.message,
+                })
+            } else {
+                setData(response.data.data[0]);
+            }
+            })
+        } catch(error){
+            if (error.response.status === 400 || 500) {
+            toast.fire({
+                icon: 'error',
+                title: '' + error.response.data.message,
+            })
+            }
+            console.log(error.response.data.message);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+        }
+
+        }
+        PeticionUsuario();
+    }, []);
+    console.log(data)
     const cardContainerButtons3 = 
         <Card className={style.cardContainerButtons3}>
             <CardContent className={style.cardContentButtons3}>
@@ -32,10 +84,10 @@ function ButtonsInteracction(props){
                 <Card className={style.cardContainerButtons1}>
                     <CardContent className={style.cardContentButtons1}>
                         <div className={style.descriptionButton}>
-                            <p className={style.nameButton}>Nombre y Apellido</p>
-                            <p className={style.chargeButton}>Cargo que ocupa</p>
+                            <p className={style.nameButton}>{data.Primer_Nombre+' '+data.Primer_Apellido}</p>
+                            <p className={style.chargeButton}>{data.Cargo}</p>
                         </div>
-                        <img src={temporal} alt="Nombre de Usuario" title="" className={style.personButton}/>
+                        {data.Avatar?<img src={'http://localhost:3008/static/uploads/avatar/26873420/26873420.png'} alt="Nombre de Usuario" title="" className={style.personButton}/>:<img src={AtenasLogo} alt="Nombre de Usuario" title="" className={style.personButton}/>}
                         <IconButton className={style.spaceAtenas}>
                             <NavLink to={'/home/profile'} className={style.link}>
                                 <p style={{color:'#616161'}}>Mi espacio <strong style={{color:'#0c5091'}}> ATENAS</strong></p>

@@ -7,8 +7,8 @@ export const AuthContext = createContext({
 });
 
 export function AuthContextProvider({children}){
-    const [isAuthenticated, setAuthenticated] = useState(false)
-    // useState(sessionStorage.getItem('success'));
+    const [isAuthenticated, setAuthenticated] = useState(sessionStorage.getItem('successAuthAtenas'))
+    // useState(sessionStorage.getItem('successAuthAtenas'));
     console.log(isAuthenticated)
     const login = useCallback(function () {
         setAuthenticated(true)
@@ -16,7 +16,7 @@ export function AuthContextProvider({children}){
     const logout = useCallback(function () {
         setAuthenticated(false)
         sessionStorage.removeItem('token')
-        sessionStorage.removeItem('success')
+        sessionStorage.removeItem('successAuthAtenas')
         sessionStorage.removeItem('user')
     },[])
     const value = useMemo(

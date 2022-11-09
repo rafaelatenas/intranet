@@ -7,6 +7,7 @@ import {MenuRounded, AccountCircleRounded, DashboardRounded, FileDownloadDoneRou
 import { useAuthContext } from "../../context/authContext"
 
 function HeaderComponent(){
+    
     const {logout}=useAuthContext()
     const widthScreen = window.innerWidth
     const [anchorEl, setAnchorEl]=useState(null)
@@ -28,10 +29,10 @@ function HeaderComponent(){
         { key:5,icon: <ExitToApp className='IconsSpeedDial' onClick={() => logout()} />, name: 'Salir', admin: 0 },
     ];
     const opciones=[
-        {name:'Mi Perfil', key:1, Icon:<AccountCircleRounded/> ,url:'/home/profile'},
-        {name:'Inicio', key:2, Icon:<DashboardRounded/>,url:'/home'},
-        {name:'Descargables', key:3, Icon:<FileDownloadDoneRounded/>,url:'/home/resources'},
-        {name:'Panel Administrativo', key:3, Icon:<FileDownloadDoneRounded/>,url:'/home/management'},
+        {name:'Mi Perfil', key:1, elemento:<NavLink className='LinkIcons' style={{textDecoration:'none'}}  to={`/home/profile`} ><AccountCircleRounded className='IconsSpeedDial' /></NavLink>},
+        {name:'Inicio', key:2, elemento:<NavLink className='LinkIcons' style={{textDecoration:'none'}}  to={`/home`} ><DashboardRounded className='IconsSpeedDial' /></NavLink>},
+        {name:'Descargables', key:3, elemento:<NavLink className='LinkIcons' style={{textDecoration:'none'}}  to={`/home/resources`} ><FileDownloadDoneRounded className='IconsSpeedDial' /></NavLink>},
+        {name:'Panel Administrativo', key:3, elemento:<NavLink className='LinkIcons' style={{textDecoration:'none'}}  to={`/home/management`} ><FileDownloadDoneRounded className='IconsSpeedDial' /></NavLink>},
     ]
         return(
             <Box className="boxHeaderComponent">
@@ -61,17 +62,13 @@ function HeaderComponent(){
                     }}
                 >
                     {opciones.map((opcion)=>(
-                        <NavLink to={opcion.url} style={{textDecoration:'none'}} key={opcion.key}>
                             <MenuItem
                                 selected={opcion.key === select}
                                 onClick={()=>handleOpenMenu(opcion.key)}>
-                                <ListItemIcon>
-                                    {opcion.Icon}
-                                </ListItemIcon>
-                                {opcion.name}
+                                {opcion.elemento}{opcion.name}
                             </MenuItem>
-                        </NavLink>
                         ))}
+                        <IconButton onClick={()=>logout()}><ExitToApp/></IconButton>
                 </Menu>
                 {/* <Menu
                     id="basic-menu"

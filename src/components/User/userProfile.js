@@ -1,23 +1,74 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Avatar, Box, Button, Card, CardContent, Collapse, Container, Divider, Link, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Tooltip, Typography } from "@mui/material";
 import HeaderComponent from "../components/headerComponent";
 import './userProfile.css'
 import user from '../../landing/images/user.png'
 import { useState } from "react";
 import { DeleteRounded, DownloadRounded, ExpandMoreRounded, FileDownloadRounded, FolderRounded, InsertDriveFileRounded, OpenInNewRounded, StarBorder } from "@mui/icons-material";
-
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import axios from 'axios';
 
 export default function Profile(){
+    const cedula=sessionStorage.getItem('cedula')
+    const token=sessionStorage.getItem('token')
+    const MySwal = withReactContent(Swal)
+    const toast = MySwal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+    });
+
     const [opena, setopen]=useState(false)
     
     const handleDocuments =()=>{
         setopen(!opena)
     }
+
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const PeticionUsuario = async () => {
+        try {
+            await axios.get(process.env.REACT_APP_API_ENDPOINT + `ListarEmpleadosCedula/${cedula}`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+            })
+            .then(response => {
+            if (response.data.message) {
+                toast.fire({
+                icon: 'warning',
+                title: '' + response.data.message,
+                })
+            } else {
+                setData(response.data.data[0]);
+            }
+            })
+        } catch(error){
+            if (error.response.status === 400 || 500) {
+            toast.fire({
+                icon: 'error',
+                title: '' + error.response.data.message,
+            })
+            }
+            console.log(error.response.data.message);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+        }
+
+        }
+        PeticionUsuario();
+    }, []);
+console.log(data)
     const UserInformation = 
         <Card className="cardInformation">
             <CardContent className="contentInformation">
                 <Typography variant="h6">Nombre:</Typography>
-                <Typography variant="body2">Nombre del Usuario Bastante Largo</Typography>
+                <Typography variant="body2">{data.Primer_Nombre+' '+data.Segundo_Nombre+' '+data.Primer_Apellido+' '+data.Segundo_Apellido}</Typography>
                 <Divider/>
                 <Typography variant="h6">Cargo:</Typography>
                 <Typography variant="body2">Cargo del Usuario</Typography>
