@@ -125,9 +125,6 @@ export default function Login() {
     })
   }
   /* Validación Google */
-  const handleChangeLogin = () => {
-      onSubmitWithReCAPTCHA()
-  }
   const handleChecked = (event) => {
     const {checked}=event.target
     setChecked(event.target.checked);
@@ -148,13 +145,12 @@ export default function Login() {
   const isHuman = async () => {
     var responseKey = { captcha: recaptchaRef.current.getValue()};
     let valor= recaptchaRef.current.props.valor
-    console.log(valor)
     axios.post(process.env.REACT_APP_API_ENDPOINT + "ValidationCaptcha", responseKey)
       .then(result => {
         switch (result.data.success) {
           case true:
             setValidToken(true)
-            if (valor ===0) {
+            if (valor===0) {
               enviarDatos()
             }
             break;
@@ -171,7 +167,6 @@ export default function Login() {
   const openModalPassword = () => {
     setOpen(!open)
   }
-  
   const handleUserEmailRecovery = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -182,7 +177,6 @@ export default function Login() {
     console.log(0)
   }
 
-  console.log(password.length)
   return (
     <section className="login">
       <Box className="card-login">
@@ -208,7 +202,7 @@ export default function Login() {
             ref={recaptchaRef}
             valor={0}
           />
-          <Button className="button" variant="outlined" onClick={() => handleChangeLogin()}>Confirmar</Button>
+          <Button className="button" variant="outlined" onClick={onSubmitWithReCAPTCHA}>Confirmar</Button>
           <Button className="buttonRecovery" onClick={() => openModalPassword()}>¿Olvido su Clave?</Button>
         </FormControl>
         <Modal

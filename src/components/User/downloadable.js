@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Container, IconButton, Modal, Typography } from "@mui/material";
+import { Box, Card, CardContent, Container, IconButton } from "@mui/material";
 import React, { useState } from "react";
 import HeaderComponent from '../components/headerComponent'
 import './downloadable.css'
@@ -13,7 +13,7 @@ function Downloadable(){
     const styles = StyleComponent()
     const [openModalContent, setOpenModalContent] = useState(false);
     const screenWidht = window.innerWidth;
-    const [dataVideos, setDataVideos]=useState([]);
+    // const [dataVideos, setDataVideos]=useState([]);
 
     const recursos = [
         {name:'Documentos', key:1, url:'documents', imagen:documentos},
@@ -42,19 +42,19 @@ function Downloadable(){
         setOpenModalContent(false)
     }
     
-    const PeticionVideos=()=>{
-        axios.get(process.env.REACT_APP_API_URL).then(result => {
-            console.log(result.data)
-            setDataVideos(result.data.items)
-          }).catch(err => {
-              if(err.response) {
-                console.log(err.response)
-                console.log(err.response.data.message);
-                console.log(err.response.status);
-                console.log(err.response.headers);        
-              }       
-          })
-    }
+    // const PeticionVideos=()=>{
+    //     axios.get(process.env.REACT_APP_API_URL).then(result => {
+    //         console.log(result.data)
+    //         setDataVideos(result.data.items)
+    //       }).catch(err => {
+    //           if(err.response) {
+    //             console.log(err.response)
+    //             console.log(err.response.data.message);
+    //             console.log(err.response.status);
+    //             console.log(err.response.headers);        
+    //           }       
+    //       })
+    // }
 
 
     const BoxElements = 
@@ -64,7 +64,7 @@ function Downloadable(){
                 <Card key={content.key} id={`card${content.key}`} className="CardContent">
                     <CardContent className="CardItem">
                         <IconButton onClick={()=>console.log(content.name)}>
-                            <img src={`http://img.youtube.com/vi/${content.imagen}/0.jpg`}/>
+                            {/* <img src={`http://img.youtube.com/vi/${content.imagen}/0.jpg`}/> */}
                         {/* <iframe width="50%" height="50%" src={`https://www.youtube.com/embed/${content.imagen}`} title="running away | dreamcore playlist •°" frameborder="0" allow="accelerometer; autoplay:1; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe> */}
                             <p>{content.name}</p>
                         </IconButton>

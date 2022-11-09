@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { Avatar, Box, Button, Card, CardContent, Collapse, Container, Divider, Link, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Tooltip, Typography } from "@mui/material";
 import HeaderComponent from "../components/headerComponent";
 import './userProfile.css'
-import user from '../../landing/images/user.png'
 import { useState } from "react";
 import { DeleteRounded, DownloadRounded, ExpandMoreRounded, FileDownloadRounded, FolderRounded, InsertDriveFileRounded, OpenInNewRounded, StarBorder } from "@mui/icons-material";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import axios from 'axios';
+import AtenasLogo from '../../landing/images/comprimido/ats_logo.png'
+
 
 export default function Profile(){
     const cedula=sessionStorage.getItem('cedula')
@@ -63,7 +64,6 @@ export default function Profile(){
         }
         PeticionUsuario();
     }, []);
-console.log(data)
     const UserInformation = 
         <Card className="cardInformation">
             <CardContent className="contentInformation">
@@ -71,17 +71,23 @@ console.log(data)
                 <Typography variant="body2">{data.Primer_Nombre+' '+data.Segundo_Nombre+' '+data.Primer_Apellido+' '+data.Segundo_Apellido}</Typography>
                 <Divider/>
                 <Typography variant="h6">Cargo:</Typography>
-                <Typography variant="body2">Cargo del Usuario</Typography>
-                <Divider/>
-                <Typography variant="h6">Fecha de Ingreso:</Typography>
-                <Typography variant="body2">DD/MM/AAAA</Typography>
-                <Divider/>
-                <Typography variant="h6">Fecha de Ingreso:</Typography>
-                <Typography variant="body2">DD/MM/AAAA</Typography>
+                <Typography variant="body2">{data.Cargo}</Typography>
                 <Divider/>
                 <Typography variant="h6">Descripción del Cargo:</Typography>
                 <Typography variant="body2">Texto descriptivo correspondiente al cargo del Usuario</Typography>
                 <Divider/>
+                <Divider/>
+                <Typography variant="h6">Fecha de Ingreso:</Typography>
+                <Typography variant="body2">{data.Date}</Typography>
+                <Divider/>
+                <Typography variant="h6">Dirección:</Typography>
+                <Typography variant="body2">{data.Departamento}</Typography>
+                <Divider/>
+                <Typography variant="h6">Supervisor:</Typography>
+                <Typography variant="body2">{data.EstatuSupervisado}</Typography>
+                <Divider/>
+                <Typography variant="h6">Supervisados:</Typography>
+                <Typography variant="body2">{data.Supervisados}</Typography>
             </CardContent>
         </Card>;
 
@@ -193,8 +199,9 @@ console.log(data)
                         {opena?Documents:''}
 
                     </Box>
-                    
-                    <img className="photoProfile scale-up-center" src={user} alt='user' title=""/>
+                    {data.Imagen?<img className="photoProfile scale-up-center" src={process.env.REACT_APP_API_URL_IMG+`/foto/${data.Cedula}/${data.Imagen}`} alt={data.Primer_Nombre+''+data.Primer_Apellido} title="" />:<img src={AtenasLogo} alt="Nombre de Usuario" title=""/>}
+
+                    <img className="photoProfile scale-up-center" src={process.env.REACT_APP_API_URL_IMG+`/foto/${data.Cedula}/${data.Imagen}`} alt='user' title=""/>
                 </Container>
             </Box>
         </Container>
