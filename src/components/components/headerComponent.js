@@ -29,10 +29,10 @@ function HeaderComponent(){
         { key:5,icon: <ExitToApp className='IconsSpeedDial' onClick={() => logout()} />, name: 'Salir', admin: 0 },
     ];
     const opciones=[
-        {name:'Mi Perfil', key:1, elemento:<NavLink className='LinkIcons' style={{textDecoration:'none'}}  to={`/home/profile`} ><AccountCircleRounded className='IconsSpeedDial' /></NavLink>},
-        {name:'Inicio', key:2, elemento:<NavLink className='LinkIcons' style={{textDecoration:'none'}}  to={`/home`} ><DashboardRounded className='IconsSpeedDial' /></NavLink>},
-        {name:'Descargables', key:3, elemento:<NavLink className='LinkIcons' style={{textDecoration:'none'}}  to={`/home/resources`} ><FileDownloadDoneRounded className='IconsSpeedDial' /></NavLink>},
-        {name:'Panel Administrativo', key:3, elemento:<NavLink className='LinkIcons' style={{textDecoration:'none'}}  to={`/home/management`} ><FileDownloadDoneRounded className='IconsSpeedDial' /></NavLink>},
+        {name:'Mi Perfil', key:1, elemento:<NavLink className='LinkIcons' style={{textDecoration:'none'}}  to={`/home/profile`} ><AccountCircleRounded className='IconsSpeedDial' /> Mi Perfil</NavLink>},
+        {name:'Inicio', key:2, elemento:<NavLink className='LinkIcons' style={{textDecoration:'none'}}  to={`/home`} ><DashboardRounded className='IconsSpeedDial' /> Inicio</NavLink>},
+        {name:'Descargables', key:3, elemento:<NavLink className='LinkIcons' style={{textDecoration:'none'}}  to={`/home/resources`} ><FileDownloadDoneRounded className='IconsSpeedDial' /> Descargables</NavLink>},
+        {name:'Panel Administrativo', key:3, elemento:<NavLink className='LinkIcons' style={{textDecoration:'none'}}  to={`/home/management`} ><FileDownloadDoneRounded className='IconsSpeedDial' /> Panel Administrativo</NavLink>},
     ]
         return(
             <Box className="boxHeaderComponent">
@@ -65,7 +65,7 @@ function HeaderComponent(){
                             <MenuItem
                                 selected={opcion.key === select}
                                 onClick={()=>handleOpenMenu(opcion.key)}>
-                                {opcion.elemento}{opcion.name}
+                                {opcion.elemento}
                             </MenuItem>
                         ))}
                         <IconButton onClick={()=>logout()}><ExitToApp/></IconButton>
