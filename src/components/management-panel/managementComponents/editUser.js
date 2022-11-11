@@ -1,140 +1,515 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
-import { AddCircleRounded, Delete, Edit, ExpandMore, PersonAdd } from '@mui/icons-material';
-import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Modal, Tooltip } from '@mui/material';
-import AtenasLogo from '../../../landing/images/comprimido/ats_logo.png'
-import axios from "axios";
-import { useState } from 'react';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import CreateUser from './createUser';
+import React from "react"
+import { Box, Chip, FormControl, InputLabel, ListItemText, Select, Step, StepContent, StepLabel, Stepper, TextField } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import { useState } from "react";
 
-export default function EditUser(props) {
-  const MySwal = withReactContent(Swal)
-  const toast = MySwal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 5000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
+export default function EditUser(params) {
+    const style = styles()
+    const { data } = params;
+    const [consolaSeleccionada,setConsolaSeleccionada]=useState({
+        firstName:"",
+        secondName:"",
+        lastName:"",
+        secondLastName:"",
+        CI:"",
+        Age:"",
+        birthDay:"",
+        shirtSize:"",
+        jacketSize:"",
+        specialDay:"",
+        languages:[],
+        profession:"",
+        otherprofessions:"",
+        residence:"",
+        cell:"",
+        email:"",
+        officePhone:"",
+        extension:"",
+        joining:"",
+        charge:"",
+        area:"",
+        direction:"",
+        profitCode:"",
+        supervisor:[],
+        supervised:[],
+        perfil:"",
+        image:[],
+        avatar:[],
+    })
+    
+    const handleChange=e=>{
+        const {name, value}=e.target;
+        setConsolaSeleccionada(prevState=>({
+          ...prevState,
+          [name]: value
+        }))
     }
-  });
-  const token = sessionStorage.getItem('token')
-  const { dates } = props
-  const [user, setUser]=useState([])
-  const [openModalEdits, setOpenModalEdits]=useState(false)
-  const [openModalCreates, setOpenModalCreates]=useState(false)
+    return (
+        <Box style={{ width: '90%', height: '90%', background: '#fff', padding: 20 }}>
+            <Box style={{ width: '100%', height: '100%', background: '#fff' }}>
+                <Stepper width={'100%'} sx={{ overflow: 'visible', '& div': { overflow: 'visible' } }} orientation="vertical" activeStep={stepActive} >
+                    <Step>
+                        <StepLabel>Datos de Usuario</StepLabel>
+                        <StepContent>
+                            <Box className={style.boxStep} style={{ height: '90%' }}>
+                                <TextField className={style.textField} id="outlined-multiline" label="Primer Nombre"
+                                    value={data.Primer_Nombre && consolaSeleccionada.firstName} name={'firstName'}
+                                    onChange={(e) => handleUserInput(e)}
+                                />
+                                <TextField className={style.textField} id="outlined-multiline" label="Segundo Nombre"
+                                    value={secondName} name={'secondName'}
+                                    onChange={(e) => handleUserInput(e)}
+                                />
+                                <TextField className={style.textField} id="outlined-multiline" label="Primer Apellido"
+                                    value={lastName} name={'lastName'}
+                                    onChange={(e) => handleUserInput(e)}
+                                />
+                                <TextField className={style.textField} id="outlined-multiline" label="Segundo Apellido"
+                                    value={secondLastName} name={'secondLastName'}
+                                    onChange={(e) => handleUserInput(e)}
+                                />
+                                <TextField className={style.textField} id="outlined-multiline-flexible" label="CI"
+                                    value={CI} name={'CI'}
+                                    onChange={(e) => handleUserInput(e)}
+                                    type='number'
+                                />
+                                <TextField className={style.textField} id="outlined-multiline-flexible" label="Edad"
+                                    value={Age} name={'Age'}
+                                    onChange={(e) => handleUserInput(e)}
+                                    type='number'
+                                />
+                                <TextField className={style.textField} id="outlined-multiline-flexible" label="Fecha de Nacimiento"
+                                    value={birthDay} name={'birthDay'}
+                                    onChange={(e) => handleUserInput(e)}
+                                    type='date' InputLabelProps={{ shrink: true }}
+                                />
+                                <TextField className={style.textField} id="outlined-multiline-flexible" label="Talla de Camisa"
+                                    value={shirtSize} name={'shirtSize'}
+                                    onChange={(e) => handleUserInput(e)}
+                                />
+                                <TextField className={style.textField} id="outlined-multiline-flexible" label="Talla de Chaqueta"
+                                    value={jacketSize} name={'jacketSize'}
+                                    onChange={(e) => handleUserInput(e)}
+                                />
+                                <TextField className={style.textField} id="outlined-multiline-flexible" label="Día Especial"
+                                    value={specialDay} name={'specialDay'}
+                                    onChange={(e) => handleUserInput(e)}
+                                />
+                                <FormControl className={style.textField}>
+                                    <InputLabel id="demo-simple-select-label">Idiomas</InputLabel>
+                                    <Select
+                                        label='Idiomas'
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={languages} name={'languages'}
+                                        onChange={(e) => handleUserInput(e)}
+                                        onOpen={peticionIdiomas}
+                                        multiple
+                                        renderValue={(selected) => {
+                                            if (selected.length > 1 && selected.length < languagesSelect.length) {
+                                                return (<ListItemText sx={{ '& span': { fontSize: '10px' } }} primary={`(${selected.length}) Idiomas Marcados`} />)
+                                            } else if (selected.length === languages.length) {
+                                                return (
+                                                    <ListItemText sx={{ '& span': { fontSize: '10px' } }} primary={`Todos los Idiomas marcados (${selected.length})`} />
+                                                )
+                                            } else if (selected.length < 2) {
+                                                return (
+                                                    <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: 0.5 }}>
+                                                        {selected.map((value) => {
+                                                            for (let h = 0; h < languages.length; h++) {
+                                                                const element = languages[h];
+                                                                if (element.Id === value) {
+                                                                    return (<Chip sx={{ '& span': { fontSize: '10px' } }} key={value} label={element.Descripcion} />)
+                                                                }
+                                                            }
+                                                        })}
+                                                    </Box>
+                                                )
+                                            }
+                                        }}
+                                    >
+                                        <ListSubheader>
+                                            <Button startIcon={<AddRounded />} name='languages' onClick={() => handleNew('languages')} style={{ textTransform: 'capitalize' }}>Agregar Idioma</Button>
+                                        </ListSubheader>
+                                        {languagesSelect.map((item) => (
+                                            <MenuItem key={item.Id} value={item.Id} className='items'>
+                                                <Checkbox checked={languages.indexOf(item.Id) > -1} />
+                                                <ListItemText sx={{ fontSize: '10px' }} primary={item.Descripcion} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                                <FormControl className={style.textField}>
+                                    <InputLabel id="demo-simple-select-label">Profesión</InputLabel>
+                                    <Select
+                                        label='Profesión'
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={profession} name={'profession'}
+                                        onChange={(e) => handleUserInput(e)}
+                                        onOpen={peticionProfesiones}
+                                    >
+                                        <ListSubheader>
+                                            <Button startIcon={<AddRounded />} onClick={() => handleNew('profession')} style={{ textTransform: 'capitalize' }}>Agregar Profesión</Button>
+                                        </ListSubheader>
+                                        {professionSelect.map((item) => (
+                                            <MenuItem key={item.Id} value={item.Id} className='items'>
+                                                {/* <Checkbox checked={profession.indexOf(item.Id) > -1} /> */}
+                                                <ListItemText sx={{ fontSize: '10px' }} primary={item.Descripcion} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                                <TextField className={style.textField} id="outlined-multiline" label="Otras Profesiones"
+                                    value={otherprofessions} name={'otherprofessions'}
+                                    onChange={(e) => handleUserInput(e)}
+                                />
 
+                            </Box>
+                            <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                <Button variant="contained" onClick={handleNext}>Siguiente</Button>
+                            </Box>
+                        </StepContent>
+                    </Step>
+                    <Step>
+                        <StepLabel>Contacto y Residencia</StepLabel>
+                        <StepContent className="content">
+                            <Box className={style.boxStep}>
+                                <TextField className={style.textField} id="outlined-multiline-flexible" label="Residencia"
+                                    value={residence} name={'residence'}
+                                    onChange={(e) => handleUserInput(e)}
+                                />
+                                <TextField className={style.textField} id="outlined-multiline-flexible" label="Celular"
+                                    value={cell} name={'cell'}
+                                    type='tel'
+                                    onChange={(e) => handleUserInput(e)}
+                                />
+                                <TextField className={style.textField} id="outlined-multiline-flexible" label="Correo"
+                                    value={email} name={'email'}
+                                    type='email'
+                                    onChange={(e) => handleUserInput(e)}
+                                />
+                                <TextField className={style.textField} id="outlined-multiline-flexible" label="Telefono de Oficina"
+                                    value={officePhone} name={'officePhone'}
+                                    style={{ minWidth: 210 }} type='tel'
+                                    onChange={(e) => handleUserInput(e)}
+                                />
+                                <TextField className={style.textField} id="outlined-multiline-flexible" label="Extensión"
+                                    value={extension} name={'extension'}
+                                    style={{ minWidth: 210 }} type='number'
+                                    onChange={(e) => handleUserInput(e)}
+                                />
+                            </Box>
+                            <Box sx={{ display: "flex", flexDirection: "row", pt: 1 }}>
+                                <Button variant="contained" color="inherit" disabled={stepActive === 0} onClick={handleBack} sx={{ mr: 1 }} >Regresar</Button>
+                                {stepActive === 2 ?
+                                    <Button variant="contained" onClick={handleNext}>Enviar</Button>
+                                    : <Button variant="contained" onClick={handleNext}>Siguiente</Button>
+                                }
+                            </Box>
+                        </StepContent>
+                    </Step>
+                    <Step>
+                        <StepLabel>Datos Atenas</StepLabel>
+                        <StepContent sx={{ overflow: 'visible', '& div': { overflow: 'visible' } }}>
+                            <Box className={style.boxStep}>
+                                <TextField className={style.textField} id="outlined-multiline-flexible" label="Fecha de Ingreso a la Empresa"
+                                    value={joining} name={'joining'}
+                                    InputLabelProps={{ shrink: true }} type='date'
+                                    onChange={(e) => handleUserInput(e)}
+                                />
+                                <FormControl className={style.textField}>
+                                    <InputLabel id="demo-simple-select-label">Cargo</InputLabel>
+                                    <Select
+                                        label='Cargo'
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={charge} name={'charge'}
+                                        onChange={(e) => handleUserInput(e)}
+                                        onOpen={peticionCargo}
+                                    >
+                                        <ListSubheader>
+                                            <Button startIcon={<AddRounded />} onClick={() => handleNew('charge')} style={{ textTransform: 'capitalize' }}>Agregar Cargo</Button>
+                                        </ListSubheader>
+                                        {chargeSelect.map((item) => (
+                                            <MenuItem key={item.Id} value={item.Id} className='items'>
+                                                <ListItemText sx={{ fontSize: '10px' }} primary={item.Descripcion} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
 
-  const peticionUsuarioCI = (cedula) => {
-    let headersList = {
-      "Authorization": `Bearer ${token}`,
-      "Content-Type": "application/json"
-    }
-    let reqOptions = {
-      url: process.env.REACT_APP_API_ENDPOINT + `ListarEmpleadosCedula/${cedula}`,
-      method: "GET",
-      headers: headersList,
-    }
+                                <FormControl className={style.textField}>
+                                    <InputLabel id="demo-simple-select-label">Área</InputLabel>
+                                    <Select
+                                        label='Área'
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={area} name={'area'}
+                                        onChange={(e) => handleUserInput(e)}
+                                        onOpen={peticionArea}
+                                    >
+                                        <ListSubheader>
+                                            <Button startIcon={<AddRounded />} onClick={() => handleNew('area')} style={{ textTransform: 'capitalize' }}>Agregar Idioma</Button>
+                                        </ListSubheader>
+                                        {areaSelect.map((item) => (
+                                            <MenuItem key={item.Id} value={item.Id} className='items'>
+                                                <ListItemText sx={{ fontSize: '10px' }} primary={item.Descripcion} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                                <FormControl className={style.textField}>
+                                    <InputLabel id="demo-simple-select-label">Dirección</InputLabel>
+                                    <Select
+                                        label='Dirección'
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={direction} name={'direction'}
+                                        onChange={(e) => handleUserInput(e)}
+                                        onOpen={peticionDirection}
+                                    >
+                                        <ListSubheader>
+                                            <Button startIcon={<AddRounded />} onClick={() => handleNew('direction')} style={{ textTransform: 'capitalize' }}>Agregar nueva Dirección</Button>
+                                        </ListSubheader>
+                                        {directionSelect.map((item) => (console.log(item),
+                                            <MenuItem key={item.Id} value={item.Id} className='items'>
+                                                <ListItemText sx={{ fontSize: '10px' }} primary={item.Descripcion} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
 
-    axios.request(reqOptions)
-      .then(response => {
-        setUser(response.data.data[0])
-        if (response.data.message) {
-          toast.fire({
-            icon: 'warning',
-            title: '' + response.data.message,
-          })
-        } else {
-        }
-      }).catch(error => {
-        if (error.response.status === 400 || 500) {
-          toast.fire({
-            icon: 'error',
-            title: '' + error.response.data.message,
-          })
-        }
-        console.log(error.response.data.message);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-      })
-  }
-  const OpenModalEdit=(e)=>{
-    setOpenModalEdits(true)
-    peticionUsuarioCI(e)
-  }
-  const closeModalEdit=()=>{
-    setOpenModalEdits(false)
-  }
-  const OpenModalCreate=()=>{
-    setOpenModalCreates(true)
-  }
-  const closeModalCreate=()=>{
-    setOpenModalCreates(false)
-  }
-  console.log(user)
-  return (
-    <Box sx={{ height: '80%', gridGap: '5%', justifyContent: 'center', width: '100%', overflow: 'visible', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(90px, 20%))', gridTemplateRows: 'repeat(auto-fill, minmax(95px, 50%))' }}>
-      <Card onClick={OpenModalCreate} sx={{ boxShadow: '1px -1px 8px 1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)' }}>
-        <CardContent sx={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <IconButton sx={{ width: '160px', height: '160px', background: '#9f9a9a', '&:hover': { background: '#bbb8b885' } }}>
-            <PersonAdd sx={{ fontSize: 60, color: '#fff' }} />
-          </IconButton>
-        </CardContent>
-      </Card>
-      {dates.map((dato) => (console.log(dato),
-        <Card key={dato.Cedula} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} onClick={() => OpenModalEdit(dato.Cedula)}>
-          <CardHeader sx={{ padding: '8px' }}
-            avatar={
-              <Avatar aria-label="recipe" >
-                <img style={{ width: 24, height: 24 }} src={dato.Avatar ? process.env.REACT_APP_API_URL_IMG + `/avatar/${dato.Cedula}/${dato.Avatar}` : AtenasLogo} alt={dato.Primer_Nombre + ' ' + dato.Primer_Apellido} title='' />
-              </Avatar>
-            }
-            title={`Nombre: ${dato.Primer_Nombre + ' ' + dato.Primer_Apellido}`}
-            subheader={`Cargo: ${dato.Cargo} Departamento: ${dato.Departamento}`}
-          />
-          <CardMedia
-            component="img"
-            image={dato.Imagen ? process.env.REACT_APP_API_URL_IMG + `/foto/${dato.Cedula}/${dato.Imagen}` : AtenasLogo}
-            alt={dato.Primer_Nombre + '' + dato.Primer_Apellido}
-            sx={{ width: 'auto', height: '100%' }}
-          />
-        </Card>
-      ))}
-      <Modal
-        open={openModalEdits}
-        onClose={closeModalEdit}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <p>hplña</p>
-      </Modal>
-      <Modal
-        open={openModalCreates}
-        onClose={closeModalCreate}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box style={{position:'relative', left:'5%',top:'5%',width:'90%', height:'90%',display:'flex', alignItems:'center', justifyContent:'center', background: '#fff'}}>
-          <CreateUser
-            setOpenModalCreates={setOpenModalCreates}
-          />
+                                <TextField className={style.textField} id="outlined-multiline-flexible" label="Código de Profit"
+                                    value={profitCode} name={'profitCode'}
+                                    type='text' onChange={(e) => handleUserInput(e)}
+                                />
+                                <FormControl className={style.textField}>
+                                    <InputLabel id="demo-simple-select-label">Supervisor</InputLabel>
+                                    <Select
+                                        label='Supervisor'
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={supervisor} name={'supervisor'}
+                                        onChange={(e) => handleUserInput(e)}
+                                        onOpen={peticionSuperVisorSupervisado}
+                                        multiple
+                                        input={<OutlinedInput label='Supervisor' />}
+                                        renderValue={(selected) => {
+                                            if (selected.length > 1 && selected.length < superVISelect.length) {
+                                                return (<ListItemText sx={{ '& span': { fontSize: '10px' } }} primary={`(${selected.length}) Idiomas Marcados`} />)
+                                            } else if (selected.length === supervisor.length) {
+                                                return (
+                                                    <ListItemText sx={{ '& span': { fontSize: '10px' } }} primary={`Todos los Idiomas marcados (${selected.length})`} />
+                                                )
+                                            } else if (selected.length < 2) {
+                                                return (
+                                                    <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: 0.5 }}>
+                                                        {selected.map((value) => {
+                                                            for (let h = 0; h < supervisor.length; h++) {
+                                                                const element = supervisor[h];
+                                                                if (element.Id === value) {
+                                                                    return (<Chip sx={{ '& span': { fontSize: '10px' } }} key={value} label={element.Descripcion} />)
+                                                                }
+                                                            }
+                                                        })}
+                                                    </Box>
+                                                )
+                                            }
+                                        }}
+                                    >
+                                        {superVISelect.map((item) => (
+                                            <MenuItem key={item.Cedula} value={item.Cedula} className='items'>
+                                                <Checkbox checked={supervisor.indexOf(item.Cedula) > -1} />
+                                                <ListItemText sx={{ fontSize: '10px' }} primary={item.Primer_Nombre + " " + item.Primer_Apellido} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+
+                                <FormControl className={style.textField}>
+                                    <InputLabel id="demo-simple-select-label">Supervisado</InputLabel>
+                                    <Select
+                                        multiple
+                                        label='Supervisado'
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={supervised} name={'supervised'}
+                                        onChange={(e) => handleUserInput(e)}
+                                        onOpen={peticionSuperVisorSupervisado}
+                                        renderValue={(selected) => {
+                                            if (selected.length > 1 && selected.length < superVISelect.length) {
+                                                return (<ListItemText sx={{ '& span': { fontSize: '10px' } }} primary={`(${selected.length}) Idiomas Marcados`} />)
+                                            } else if (selected.length === supervised.length) {
+                                                return (
+                                                    <ListItemText sx={{ '& span': { fontSize: '10px' } }} primary={`Todos los Idiomas marcados (${selected.length})`} />
+                                                )
+                                            } else if (selected.length < 2) {
+                                                return (
+                                                    <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: 0.5 }}>
+                                                        {selected.map((value) => {
+                                                            for (let h = 0; h < supervised.length; h++) {
+                                                                const element = supervised[h];
+                                                                if (element.Id === value) {
+                                                                    return (<Chip sx={{ '& span': { fontSize: '10px' } }} key={value} label={element.Descripcion} />)
+                                                                }
+                                                            }
+                                                        })}
+                                                    </Box>
+                                                )
+                                            }
+                                        }}
+                                    >
+                                        <ListSubheader>
+                                            <Button startIcon={<AddRounded />} onClick={() => handleNew('supervised')} style={{ textTransform: 'capitalize' }}>Agregar Idioma</Button>
+                                        </ListSubheader>
+                                        {superVISelect.map((item) => (
+                                            <MenuItem key={item.Cedula} value={item.Cedula} className='items'>
+                                                <Checkbox checked={supervised.indexOf(item.Cedula) > -1} />
+                                                <ListItemText sx={{ fontSize: '10px' }} primary={item.Primer_Nombre + " " + item.Primer_Apellido} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                                <FormControl className={style.textField}>
+                                    <InputLabel id="demo-simple-select-label">Perfil de Usuario</InputLabel>
+                                    <Select
+                                        label='Perfil de Usuario'
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={perfil} name={'perfil'}
+                                        onChange={(e) => handleUserInput(e)}
+                                        onOpen={peticionPerfil}
+                                        renderValue={(selected) => {
+                                            console.log(selected)
+                                            if (selected.length > 1 && selected.length < perfilSelect.length) {
+                                                return (<ListItemText sx={{ '& span': { fontSize: '10px' } }} primary={`(${selected.length}) Idiomas Marcados`} />)
+                                            } else if (selected.length === perfil.length) {
+                                                return (
+                                                    <ListItemText sx={{ '& span': { fontSize: '10px' } }} primary={`Todos los Idiomas marcados (${selected.length})`} />
+                                                )
+                                            } else if (selected.length < 2) {
+                                                return (
+                                                    <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: 0.5 }}>
+                                                        {selected.map((value) => {
+                                                            for (let h = 0; h < perfil.length; h++) {
+                                                                const element = perfil[h];
+                                                                if (element.Id === value) {
+                                                                    return (<Chip sx={{ '& span': { fontSize: '10px' } }} key={value} label={element.Descripcion} />)
+                                                                }
+                                                            }
+                                                        })}
+                                                    </Box>
+                                                )
+                                            }
+                                        }}
+                                    >
+                                        <ListSubheader>
+                                            <Button startIcon={<AddRounded />} onClick={() => handleNew('perfil')} style={{ textTransform: 'capitalize' }}>Agregar Perfil</Button>
+                                        </ListSubheader>
+                                        {perfilSelect.map((item) => (console.log(item.Id, perfil),
+                                            <MenuItem key={item.Id} value={item.Id} className='items'>
+                                                {/* <Checkbox checked={perfil.indexOf(item.Id) > -1} /> */}
+                                                <ListItemText sx={{ fontSize: '10px' }} primary={item.Descripcion} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Box>
+                            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+
+                                <Button variant="contained" color="inherit" disabled={stepActive === 0} onClick={handleBack} sx={{ mr: 1 }} >Regresar</Button>
+                                <Tooltip title='Marque aquí si desea continuar con las imagenes del usuario.'>
+                                    <Button variant="contained" onClick={handleNext}>Siguiente</Button>
+                                </Tooltip>
+                                <Tooltip title='Si no posee las fotos del usuario, marque aquí.'>
+                                    <Button variant="contained" color="success" onClick={handleRegister}>Enviar</Button>
+                                </Tooltip>
+                            </Box>
+                        </StepContent>
+                    </Step>
+                    <Step sx={{ minHeight: 210 }}>
+                        <StepLabel>Imagenes de Usuario</StepLabel>
+                        <StepContent sx={{ overflow: 'visible', '& div': { overflow: 'visible' } }}>
+                            <Box className={style.boxStep} sx={{ height: '70%', gridTemplateRows: 'repeat(auto-fit, minmax(60px, 100%))' }}>
+                                <Card sx={{ width: 130, height: 115, boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 50%), 0px 1px 1px 0px rgb(0 0 0 / 60%), 0px 1px 3px 0px rgb(0 0 0 / 50%)' }}>
+                                    <CardActionArea type="button" sx={{ width: '100%', height: '100%' }}>
+                                        <Typography sx={{ textAlign: 'center' }}>Cargar Imagen</Typography>
+                                        <Button aria-label="upload picture" component="label" startIcon={<AddAPhotoRounded sx={{ fontSize: '50px !important' }} />} style={{ width: '100%', height: '80%', display: 'flex', justifyContent: 'center' }}>
+                                            <input hidden accept="image/png" type="file"
+                                                value={image} name={'foto'}
+                                                onChange={(e) => handleUserInput(e)}
+                                            />
+                                        </Button>
+                                    </CardActionArea>
+                                </Card>
+                                <Card sx={{ width: 130, height: 115, boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 50%), 0px 1px 1px 0px rgb(0 0 0 / 60%), 0px 1px 3px 0px rgb(0 0 0 / 50%)' }}>
+                                    <CardActionArea type="button" sx={{ width: '100%', height: '100%' }}>
+                                        <Typography sx={{ textAlign: 'center' }}>Cargar Avatar</Typography>
+                                        <Button aria-label="upload picture" component="label" startIcon={<AccountCircleRounded sx={{ fontSize: '50px !important' }} />} style={{ width: '100%', height: '80%', display: 'flex', justifyContent: 'center' }}>
+                                            <input hidden accept="image/png" type="file"
+                                                value={avatar} name={'avatar'}
+                                                onChange={(e) => handleUserInput(e)}
+                                            />
+                                        </Button>
+                                    </CardActionArea>
+                                </Card>
+                            </Box>
+                            <Box sx={{ display: "flex", flexDirection: "row", pt: 1 }}>
+                                <Button variant="contained" color="inherit" disabled={stepActive === 0} onClick={handleBack} sx={{ mr: 1 }} >Regresar</Button>
+                                <Button variant="contained" color="success" onClick={handleRegister}>Enviar</Button>
+                            </Box>
+                        </StepContent>
+                    </Step>
+                </Stepper>
+
+                {stepActive === 4 ? (
+                    <Paper square elevation={0}>
+                        <Typography>Se ha realizado el registro con Exito</Typography>
+                        <Button onClick={handleContinue} sx={{ mt: 1, mr: 1 }}>
+                            {'Registrar un Nuevo Usuario'}
+                        </Button>
+                    </Paper>
+                ) : ''}
+                <ModalElements
+                    valor={element}
+                    valorCreacion={valorCreacion}
+                    openModal={openModal}
+                    closemodal={() => handleNew()}
+                />
+            </Box>
         </Box>
-        
-        
-      </Modal>
-      {/* <DataGrid
-        rows={dates}
-        columns={columns}
-        pageSize={5}
-        getRowId={(row) => row.Cedula}
-        rowsPerPageOptions={[5]}
-        disableSelectionOnClick
-      /> */}
-    </Box>
-  );
+    )
 }
+const styles = makeStyles({
+    boxStep: {
+        height: '75%',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 25%))',
+        gridTemplateRows: 'repeat(auto-fit, minmax(60px, 25%))',
+        justifyItems: 'center',
+        overflow: 'visible'
+    },
+    boxField: {
+        overflow: 'visible !important',
+        display: 'inline-flex',
+        width: '100%',
+        justifyContent: 'space-around',
+        minWidth: 700,
+        margin: '1% 0',
+    },
+    textField: {
+        overflow: 'visible !important',
+        width: '80%',
+        maxHeight: 60
+    },
+    modalPhoto: {
+        width: '40% !important',
+        height: '50%',
+        position: 'absolute',
+        left: '30%',
+        top: '25%',
+        background: '#fff',
+        borderRadius: '1em',
+    }
+})
