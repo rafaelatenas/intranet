@@ -3,7 +3,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Container, Divider,
 import React from "react";
 import HeaderComponent from "../components/headerComponent";
 import CreateUser from "./managementComponents/createUser";
-import EditUser from "./managementComponents/editUser";
+import CardUser from "./managementComponents/CardUser";
 import './managementPanel.css'
 import axios from "axios";
 
@@ -222,7 +222,7 @@ class ManagementPanel extends React.Component {
                             <Search />
                         </Paper>
                     </Slide>
-                    <EditUser dates={this.state.listEmpleados} />
+                    <CardUser dates={this.state.listEmpleados} />
                     {/* <Accordion className="Accordion" expanded={this.state.ElementExpanded === 'panel1' && this.state.expanded===true} onChange={()=>this.handleChange('panel1')}>
                         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreRounded/>}>
                             <Typography>Registrar Usuario</Typography>

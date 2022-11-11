@@ -11,7 +11,6 @@ function Home(props){
     const style = styles()
     const [activo, setActivo]=useState('')
     const [openModal, setOpenModal]=useState(false)
-    const [dates, setDates]=useState([])
 
     const handleActiveClick=(data)=>{
         setActivo(data)

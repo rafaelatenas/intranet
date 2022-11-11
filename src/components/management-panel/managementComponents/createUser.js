@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Card, CardActionArea, Checkbox, Chip, FormControl, InputLabel, ListItemText, ListSubheader, MenuItem, OutlinedInput, Paper, Select, Step, StepContent, StepLabel, Stepper, TextField, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Card, CardActionArea, Checkbox, Chip, Divider, FormControl, InputLabel, ListItemText, ListSubheader, MenuItem, OutlinedInput, Paper, Select, Step, StepContent, StepLabel, Stepper, TextField, Tooltip, Typography } from "@mui/material";
 import './createUser.css'
 import { AccountCircleRounded, AddAPhotoRounded, AddRounded } from "@mui/icons-material";
 import ModalElements from "./elementsToform";
@@ -40,6 +40,7 @@ export default function CreateUser(props) {
     const [profitCode, setProfitCode] = useState("")
     const [supervisor, setSupervisor] = useState([])
     const [supervised, setSupervised] = useState([])
+    const [perfil, setPerfil] = useState("")
     const [image, setImage] = useState([])
     const [avatar, setAvatar] = useState([])
 
@@ -49,11 +50,15 @@ export default function CreateUser(props) {
     const [areaSelect, setAreaSelect] = useState([])
     const [directionSelect, setDirectionSelect] = useState([])
     const [superVISelect, setSuperVISelect] = useState([])
+    const [perfilSelect, setPerfilSelect] = useState([])
 
     const [openModal, setOpenModal] = useState(false)
     const [openModalPhoto, setOpenModalPhoto] = useState(false)
     const [stepActive, setStepActive] = useState(0)
     const [valorCreacion, setValorCreacion] = useState("")
+
+    /* Elemntos */
+    const [element, setElement]=useState([])
 
     const handleUserInput = (e) => {
         const { name, value, files } = e.target;
@@ -137,6 +142,7 @@ export default function CreateUser(props) {
                 setArea(value)
                 break;
             case 'direction':
+                console.log(value)
                 setDirection(value)
                 break;
             case 'profitCode':
@@ -148,13 +154,72 @@ export default function CreateUser(props) {
             case 'supervised':
                 setSupervised(value)
                 break;
+            case 'perfil':
+                setPerfil(value)
+                break;
             default:
                 break;
         }
     }
+    console.log(perfil)
     const handleNew = (e) => {
         setValorCreacion(e)
         setOpenModal(!openModal)
+        ListarElement(e)
+    }
+
+    /* Peticiones Elementos */
+    const ListarElement = (valorCreacion)=>{
+        let  urlString;
+        switch (valorCreacion) {
+            case 'languages':
+                urlString='ListarIdioma'
+                break;
+            case 'profession':
+                urlString='ListarProfesiones'
+                break;
+            case 'charge':
+                urlString='ListarCargo'
+            break;
+            case 'area':
+                urlString='ListarArea'
+                break;
+            case 'direction':
+                urlString='ListarDepartamento'
+                break;
+            case 'perfil':
+                urlString='ListarPerfil'
+                break;        
+            default:
+
+                break;
+        }
+        let headersList = {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json" 
+        }
+        let reqOptions = {
+            url: process.env.REACT_APP_API_ENDPOINT+urlString,
+            method: "GET",
+            headers: headersList,
+        }
+           
+        axios.request(reqOptions)
+        .then(response => {
+            setElement(response.data.data)
+            console.log(response)
+          }).catch(error => {
+            if (error.response.status === 400 || 500) {
+            //   toast.fire({
+            //     icon: 'error',
+            //     title: '' + error.response.data.message,
+            //   })
+            }
+            console.log(error.response.data.message);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          })
+
     }
 
     /* Controles Paso a Paso */
@@ -166,10 +231,6 @@ export default function CreateUser(props) {
     }
     const handleContinue = () => {
         setStepActive(0)
-    }
-    const handleCancel =()=>{
-        setStepActive(null)
-        setOpenModalCreates(false)
     }
     /* Peticiones Select */
     /* Idiomas */
@@ -358,6 +419,37 @@ export default function CreateUser(props) {
             })
 
     }
+    const peticionPerfil = async () => {
+        let reqOptions = {
+            url: process.env.REACT_APP_API_ENDPOINT + "ListarPerfil",
+            method: "GET",
+            headers: headersList,
+        }
+
+        await axios.request(reqOptions)
+            .then(response => {
+                console.log(response.data.data)
+                if (response.data.message) {
+                    //   toast.fire({
+                    //     icon: 'warning',
+                    //     title: '' + response.data.message,
+                    //   })
+                } else {
+                    setPerfilSelect(response.data.data);
+                }
+            }).catch(error => {
+                if (error.response.status === 400 || 500) {
+                    //   toast.fire({
+                    //     icon: 'error',
+                    //     title: '' + error.response.data.message,
+                    //   })
+                }
+                console.log(error.response.data.message);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            })
+
+    }
 
     /* Registro */
     const handleRegister = () => {
@@ -372,7 +464,11 @@ export default function CreateUser(props) {
                 break;
         }
 
-        var datos = {
+        let headersList = {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+        }
+        const datos = {
             Cedula: CI,
             Primer_Nombre: firstName,
             Segundo_Nombre: secondName,
@@ -380,12 +476,12 @@ export default function CreateUser(props) {
             Segundo_Apellido: secondLastName,
             Fecha_Nac: birthDay,
             Edad: Age,
-            Id_Perfil: 'console',
-            Id_Profesion: 'Id_Profesion',
-            Otras_Profesiones: 'Otras_Profesiones',
-            Id_Idiomas: 'Id_Idiomas',
-            Talla_Camisa: 'Talla_Camisa',
-            Talla_Chaqueta: shirtSize,
+            Id_Perfil: perfil,
+            Id_Profesion: profession,
+            Otras_Profesiones: otherprofessions,
+            Id_Idiomas: languages,
+            Talla_Camisa: shirtSize,
+            Talla_Chaqueta: jacketSize,
             Dia_Especial: specialDay,
             Residencia: residence,
             Celular: cell,
@@ -401,9 +497,15 @@ export default function CreateUser(props) {
             Supervisor: supervisor,
             Supervisados: supervised
         }
-        axios.post('http://localhost:3008/Intranet/AddEmpleados', {
-            datos
-        }).then((result) => {
+        let reqOptions = {
+            url: process.env.REACT_APP_API_ENDPOINT + 'AddEmpleados',
+            method: "POST",
+            headers: headersList,
+            data: datos,
+        }
+        
+        axios.request(reqOptions)
+        .then((result) => {
             console.log(result);
             console.log(result.data);
 
@@ -423,6 +525,7 @@ export default function CreateUser(props) {
                 fd.append('foto', element);
                 fd.append('cedula', CI);
                 urlString = 'AddFotoEmpleados'
+                console.log(10)
                 break;
             case 'avatar':
                 urlString = 'AddAvatarEmpleados'
@@ -452,15 +555,15 @@ export default function CreateUser(props) {
                 console.log(error.response.headers);
             })
     }
-
     const handleUserInputDirection = (e) => {
+        console.log(e)
         const { value } = e.target
         setDirection(value)
     }
     return (
         <Box style={{ width: '90%', height: '90%', background: '#fff', padding:20 }}>
             <Box style={{ width: '100%', height: '100%', background: '#fff' }}>
-                <Stepper width={'100%'} orientation="vertical" activeStep={stepActive} >
+                <Stepper width={'100%'} sx={{overflow:'visible', '& div':{overflow:'visible'}}} orientation="vertical" activeStep={stepActive} >
                     <Step>
                         <StepLabel>Datos de Usuario</StepLabel>
                         <StepContent>
@@ -496,7 +599,6 @@ export default function CreateUser(props) {
                                     onChange={(e) => handleUserInput(e)}
                                     type='date' InputLabelProps={{ shrink: true }}
                                 />
-
                                 <TextField className={style.textField} id="outlined-multiline-flexible" label="Talla de Camisa"
                                     value={shirtSize} name={'shirtSize'}
                                     onChange={(e) => handleUserInput(e)}
@@ -505,24 +607,10 @@ export default function CreateUser(props) {
                                     value={jacketSize} name={'jacketSize'}
                                     onChange={(e) => handleUserInput(e)}
                                 />
-                                <FormControl className={style.textField}>
-                                    <InputLabel id="demo-simple-select-label">Día Especial</InputLabel>
-                                    <Select
-                                        label='Dia Especial'
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        value={specialDay} name={'specialDay'}
-                                        onChange={(e) => handleUserInput(e)}
-
-                                    >
-                                        <ListSubheader>
-                                            <Button startIcon={<AddRounded />} onClick={handleNew} style={{ textTransform: 'capitalize' }}>Agregar Día Especial</Button>
-                                        </ListSubheader>
-                                        <MenuItem value={10}>Ten</MenuItem>
-                                        <MenuItem value={20}>Twenty</MenuItem>
-                                        <MenuItem value={30}>Thirty</MenuItem>
-                                    </Select>
-                                </FormControl>
+                                <TextField className={style.textField} id="outlined-multiline-flexible" label="Día Especial"
+                                    value={specialDay} name={'specialDay'}
+                                    onChange={(e) => handleUserInput(e)}
+                                />
                                 <FormControl className={style.textField}>
                                     <InputLabel id="demo-simple-select-label">Idiomas</InputLabel>
                                     <Select
@@ -588,8 +676,6 @@ export default function CreateUser(props) {
                                         ))}
                                     </Select>
                                 </FormControl>
-
-
                                 <TextField className={style.textField} id="outlined-multiline" label="Otras Profesiones"
                                     value={otherprofessions} name={'otherprofessions'}
                                     onChange={(e) => handleUserInput(e)}
@@ -597,8 +683,7 @@ export default function CreateUser(props) {
 
                             </Box>
                             <Box sx={{ display: "flex", flexDirection: "row" }}>
-                                <Button onClick={handleNext}>Siguiente</Button>
-                                <Button onClick={handleCancel}>Cancelar</Button>
+                                <Button variant="contained" onClick={handleNext}>Siguiente</Button>
                             </Box>
                         </StepContent>
                     </Step>
@@ -631,11 +716,11 @@ export default function CreateUser(props) {
                                     onChange={(e) => handleUserInput(e)}
                                 />
                             </Box>
-                            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                                <Button color="inherit" disabled={stepActive === 0} onClick={handleBack} sx={{ mr: 1 }} >Regresar</Button>
+                            <Box sx={{ display: "flex", flexDirection: "row", pt: 1 }}>
+                                <Button variant="contained" color="inherit" disabled={stepActive === 0} onClick={handleBack} sx={{ mr: 1 }} >Regresar</Button>
                                 {stepActive === 2 ?
-                                    <Button onClick={handleNext}>Enviar</Button>
-                                    : <Button onClick={handleNext}>Siguiente</Button>
+                                    <Button variant="contained" onClick={handleNext}>Enviar</Button>
+                                    : <Button variant="contained" onClick={handleNext}>Siguiente</Button>
                                 }
                             </Box>
                         </StepContent>
@@ -660,7 +745,7 @@ export default function CreateUser(props) {
                                         onOpen={peticionCargo}
                                     >
                                         <ListSubheader>
-                                            <Button startIcon={<AddRounded />} onClick={() => handleNew('charge')} style={{ textTransform: 'capitalize' }}>Agregar Idioma</Button>
+                                            <Button startIcon={<AddRounded />} onClick={() => handleNew('charge')} style={{ textTransform: 'capitalize' }}>Agregar Cargo</Button>
                                         </ListSubheader>
                                         {chargeSelect.map((item) => (
                                             <MenuItem key={item.Id} value={item.Id} className='items'>
@@ -669,6 +754,7 @@ export default function CreateUser(props) {
                                         ))}
                                     </Select>
                                 </FormControl>
+                                
                                 <FormControl className={style.textField}>
                                     <InputLabel id="demo-simple-select-label">Área</InputLabel>
                                     <Select
@@ -696,13 +782,13 @@ export default function CreateUser(props) {
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         value={direction} name={'direction'}
-                                        onChange={(e) => handleUserInputDirection(e)}
+                                        onChange={(e) => handleUserInput(e)}
                                         onOpen={peticionDirection}
                                     >
                                         <ListSubheader>
                                             <Button startIcon={<AddRounded />} onClick={() => handleNew('direction')} style={{ textTransform: 'capitalize' }}>Agregar nueva Dirección</Button>
                                         </ListSubheader>
-                                        {directionSelect.map((item) => (
+                                        {directionSelect.map((item) => (console.log(item),
                                             <MenuItem key={item.Id} value={item.Id} className='items'>
                                                 <ListItemText sx={{ fontSize: '10px' }} primary={item.Descripcion} />
                                             </MenuItem>
@@ -801,14 +887,58 @@ export default function CreateUser(props) {
                                         ))}
                                     </Select>
                                 </FormControl>
+                                <FormControl className={style.textField}>
+                                    <InputLabel id="demo-simple-select-label">Perfil de Usuario</InputLabel>
+                                    <Select
+                                        label='Perfil de Usuario'
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={perfil} name={'perfil'}
+                                        onChange={(e) => handleUserInput(e)}
+                                        onOpen={peticionPerfil}
+                                        renderValue={(selected) => { console.log(selected)
+                                            if (selected.length > 1 && selected.length < perfilSelect.length) {
+                                                return (<ListItemText sx={{ '& span': { fontSize: '10px' } }} primary={`(${selected.length}) Idiomas Marcados`} />)
+                                            } else if (selected.length === perfil.length) {
+                                                return (
+                                                    <ListItemText sx={{ '& span': { fontSize: '10px' } }} primary={`Todos los Idiomas marcados (${selected.length})`} />
+                                                )
+                                            } else if (selected.length < 2) {
+                                                return (
+                                                    <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: 0.5 }}>
+                                                        {selected.map((value) => {
+                                                            for (let h = 0; h < perfil.length; h++) {
+                                                                const element = perfil[h];
+                                                                if (element.Id === value) {
+                                                                    return (<Chip sx={{ '& span': { fontSize: '10px' } }} key={value} label={element.Descripcion} />)
+                                                                }
+                                                            }
+                                                        })}
+                                                    </Box>
+                                                )
+                                            }
+                                        }}
+                                    >
+                                        <ListSubheader>
+                                            <Button startIcon={<AddRounded />} onClick={() => handleNew('perfil')} style={{ textTransform: 'capitalize' }}>Agregar Perfil</Button>
+                                        </ListSubheader>
+                                        {perfilSelect.map((item) => ( console.log(item.Id, perfil),
+                                            <MenuItem key={item.Id} value={item.Id} className='items'>
+                                                {/* <Checkbox checked={perfil.indexOf(item.Id) > -1} /> */}
+                                                <ListItemText sx={{ fontSize: '10px' }} primary={item.Descripcion} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
                             </Box>
                             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                                <Button color="inherit" disabled={stepActive === 0} onClick={handleBack} sx={{ mr: 1 }} >Regresar</Button>
+
+                                <Button variant="contained" color="inherit" disabled={stepActive === 0} onClick={handleBack} sx={{ mr: 1 }} >Regresar</Button>
                                 <Tooltip title='Marque aquí si desea continuar con las imagenes del usuario.'>
-                                    <Button onClick={handleNext}>Siguiente</Button>
+                                    <Button variant="contained" onClick={handleNext}>Siguiente</Button>
                                 </Tooltip>
                                 <Tooltip title='Si no posee las fotos del usuario, marque aquí.'>
-                                    <Button onClick={handleRegister}>Enviar</Button>
+                                    <Button variant="contained" color="success" onClick={handleRegister}>Enviar</Button>
                                 </Tooltip>
                             </Box>
                         </StepContent>
@@ -840,13 +970,14 @@ export default function CreateUser(props) {
                                     </CardActionArea>
                                 </Card>
                             </Box>
-                            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                                <Button color="inherit" disabled={stepActive === 0} onClick={handleBack} sx={{ mr: 1 }} >Regresar</Button>
-                                <Button onClick={handleRegister}>Enviar</Button>
+                            <Box sx={{ display: "flex", flexDirection: "row", pt: 1 }}>
+                                <Button variant="contained" color="inherit" disabled={stepActive === 0} onClick={handleBack} sx={{ mr: 1 }} >Regresar</Button>
+                                <Button variant="contained" color="success" onClick={handleRegister}>Enviar</Button>
                             </Box>
                         </StepContent>
                     </Step>
                 </Stepper>
+                
                 {stepActive === 4 ? (
                     <Paper square elevation={0}>
                         <Typography>Se ha realizado el registro con Exito</Typography>
@@ -856,7 +987,8 @@ export default function CreateUser(props) {
                     </Paper>
                 ) : ''}
                 <ModalElements
-                    valor={valorCreacion}
+                    valor={element}
+                    valorCreacion={valorCreacion}
                     openModal={openModal}
                     closemodal={() => handleNew()}
                 />
